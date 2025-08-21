@@ -52,6 +52,7 @@ Craft over noise. Fewer, better, slower.
 Culture as compass. Present-tense signals, designed to endure.
 Independent by choice. Decentralized thinking, sovereign in approach.
 ```
+*Note: Philosophy headers ("Craft over noise.", "Culture as compass.", "Independent by choice.") are styled in brand gold for emphasis.*
 
 ### 4. Our Work
 ```
@@ -79,7 +80,7 @@ contact@tukugroup.com
 ### Colors
 - **Primary Black**: `#000000`
 - **Primary White**: `#FFFFFF`  
-- **Gold Accent**: `#C19A4B`
+- **Gold Accent**: `#C19A4B` (used for philosophy headers)
 
 ### Typography
 - **Primary Font**: JetBrains Mono (monospace)
