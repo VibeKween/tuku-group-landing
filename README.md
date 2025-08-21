@@ -43,7 +43,7 @@ Independent ideas. Thoughtful brands. Assembled with intention.
 ### 2. About Tuku Group
 ```
 A creative house for ventures that matter.
-We hold what we believe in and guide brands that share our ethos.
+We make real what we believe in and guide brands that share our ethos.
 ```
 
 ### 3. Philosophy

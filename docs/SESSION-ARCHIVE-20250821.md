@@ -21,7 +21,7 @@
 ### Final Copy Decisions Made
 - **"Assembled with intention"** (not "built" - softer tone)
 - **"Creative house for ventures that matter"** (concise, impactful)
-- **"We hold what we believe in"** (removed parent/child confusion)
+- **"We make real what we believe in"** (active creation vs passive holding)
 - **"Emerging labels"** (variety from "small brands")
 - **Single use of "craft"** throughout (in philosophy section only)
 
