@@ -163,7 +163,7 @@ To make changes to the live site:
 
 🎉 **First GitHub Repository Created**  
 ✅ **Ultra-minimal landing page deployed**  
-🚀 **Live at**: https://hashkween.github.io/tuku-group-landing  
+🚀 **Live at**: https://vibekween.github.io/tuku-group-landing  
 📚 **Complete documentation updated**  
 🔐 **SSH authentication configured**  
 

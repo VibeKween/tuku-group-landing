@@ -78,7 +78,7 @@ cd "/Users/falonbahal/Desktop/SITE BUILD TUKU GROUP"
 git add .
 git commit -m "Description of changes"
 git push origin main
-# Site automatically updates at https://hashkween.github.io/tuku-group-landing
+# Site automatically updates at https://vibekween.github.io/tuku-group-landing
 ```
 
 ### Starting Local Development
@@ -178,7 +178,7 @@ python3 -m http.server 8000
 
 🎉 **First GitHub Repository**: Successfully created and deployed  
 ✅ **Ultra-minimal Landing Page**: Live and functional  
-🚀 **Professional Web Presence**: https://hashkween.github.io/tuku-group-landing  
+🚀 **Professional Web Presence**: https://vibekween.github.io/tuku-group-landing  
 📚 **Complete Documentation**: README and DEVELOPMENT-LOG updated  
 🔐 **SSH Authentication**: Configured for seamless updates  
 🎨 **Brand Voice Established**: Manifesto copy refined and finalized  
@@ -191,7 +191,7 @@ python3 -m http.server 8000
 
 When returning to this project:
 
-1. **Check live site**: https://hashkween.github.io/tuku-group-landing
+1. **Check live site**: https://vibekween.github.io/tuku-group-landing
 2. **Review current files**: All documentation is up-to-date
 3. **Test local setup**: `python3 -m http.server 8000` in project folder
 4. **Verify SSH**: `ssh -T git@github.com` should authenticate

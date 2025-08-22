@@ -121,7 +121,7 @@
 ## Session Impact
 
 ### Live Site Status
-- **URL**: https://hashkween.github.io/tuku-group-landing
+- **URL**: https://vibekween.github.io/tuku-group-landing
 - **Functionality**: [Working/Issues]
 - **Performance**: [Good/Needs attention]
 
