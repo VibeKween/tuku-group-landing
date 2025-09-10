@@ -641,8 +641,8 @@
     margin-bottom: 32px;
     line-height: 1.4;
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .article-content-category {
@@ -653,7 +653,8 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-right: 8px;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .article-content-title {
