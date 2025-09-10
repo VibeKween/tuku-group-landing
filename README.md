@@ -214,12 +214,15 @@ contact@tukugroup.com
 **Purpose**: "Cultural intelligence in the age of code" - Present-tense insights and observations that inform TUKU's creative work.
 
 **Features**:
-- Modal-based reading experience (never navigate away from main page)
-- Clean, minimal design aligned with TUKU aesthetic
+- Unified design system with editorial cohesion and clean visual hierarchy
+- Modal-based reading experience with comprehensive text sizing controls (A/A toggle)
+- Clean, minimal design with systematic gold accent usage and hover interactions
 - Search functionality with overlay interface
-- Responsive typography optimized for long-form reading
-- Article categorization by Research and Reflection
+- Mobile-responsive typography with single-line status descriptions
+- Article categorization by Research and Reflection with consistent piece type indicators
+- Perfect modal header spacing with proper visual rhythm
 - Founder's note integration
+- Root-cause development methodology ensuring clean, maintainable architecture
 
 **Content Structure**:
 - Research essays exploring cultural patterns and methodologies
