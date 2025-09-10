@@ -187,19 +187,45 @@ contact@tukugroup.com
 ```
 /
 ├── index.html
+├── signals/                    # SIGNALS cultural intelligence blog
+│   ├── index.html             # Clean /signals/ URL
+│   ├── signals.css            # SIGNALS-specific styling
+│   └── js/
+│       └── signals.js         # Modal system, search, interactions
 ├── css/
-│   └── main.css
+│   └── main.css              # Shared styling
 ├── fonts/ (ready for custom fonts)
 ├── images/ (ready for assets)
+├── docs/                     # Documentation and session archives
 ├── .gitignore
 ├── README.md
-└── DEVELOPMENT-LOG.md
+├── DEVELOPMENT-LOG.md
+└── CLAUDE.md                # Project instructions for Claude Code
 ```
 
 ## Live Site
 
-**GitHub Repository**: [Repository URL]  
-**Live URL**: [GitHub Pages URL]
+**Homepage**: https://vibekween.github.io/tuku-group-landing/  
+**SIGNALS Blog**: https://vibekween.github.io/tuku-group-landing/signals/  
+**Repository**: https://github.com/VibeKween/tuku-group-landing
+
+## SIGNALS Cultural Intelligence Blog
+
+**Purpose**: "Cultural intelligence in the age of code" - Present-tense insights and observations that inform TUKU's creative work.
+
+**Features**:
+- Modal-based reading experience (never navigate away from main page)
+- Clean, minimal design aligned with TUKU aesthetic
+- Search functionality with overlay interface
+- Responsive typography optimized for long-form reading
+- Article categorization by Research and Reflection
+- Founder's note integration
+
+**Content Structure**:
+- Research essays exploring cultural patterns and methodologies
+- Reflection pieces on authenticity, adaptation, and agency
+- Chronological organization (newest first)
+- Declarative, concise excerpts matching homepage tone
 
 ## Deployment
 
