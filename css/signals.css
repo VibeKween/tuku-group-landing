@@ -9,7 +9,7 @@
 
 /* === HEADER SPACING === */
 .block p + .signals-title-row {
-    margin-top: 24px;
+    margin-top: 40px;
 }
 
 .signals-title-row {
@@ -22,14 +22,12 @@
 .tuku-link {
     color: var(--color-black);
     text-decoration: none;
-    border-bottom: 1px solid var(--color-black);
-    padding-bottom: 1px;
-    transition: opacity 0.2s ease;
+    transition: color 0.2s ease;
     font-weight: 500;
 }
 
 .tuku-link:hover {
-    opacity: 0.7;
+    color: #666;
 }
 
 /* === SIGNALS HEADER === */
