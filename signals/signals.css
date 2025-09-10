@@ -49,6 +49,7 @@
     font-weight: 400;
     color: var(--color-black);
     opacity: 0.7;
+    white-space: nowrap;
 }
 
 /* === PULSING GREEN LIGHT === */
@@ -174,6 +175,7 @@
     opacity: 0.7;
     display: inline-block;
     position: relative;
+    margin-bottom: 12px;
 }
 
 .piece-type-indicator::after {
@@ -641,8 +643,8 @@
     margin-bottom: 32px;
     line-height: 1.4;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
 }
 
 .article-content-category {
@@ -785,9 +787,7 @@
     .article-content-meta {
         font-size: 0.65rem;
         margin-bottom: 24px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
+        gap: 6px;
     }
     
     .article-content-body p {
@@ -905,6 +905,11 @@
 
     .breadcrumb-separator {
         font-size: 0.9rem;
+    }
+    
+    /* Keep status description on one line */
+    .status-description {
+        font-size: 0.85rem;
     }
 
     .search-btn {
