@@ -113,6 +113,20 @@ a:hover {
   border: 0 !important;
 }
 
+/* SIGNALS Link */
+.signals-link {
+  color: var(--color-black);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-black);
+  padding-bottom: 1px;
+  transition: opacity 0.2s ease;
+  font-weight: 500;
+}
+
+.signals-link:hover {
+  opacity: 0.7;
+}
+
 /* Selection */
 ::selection {
   background-color: var(--color-black);

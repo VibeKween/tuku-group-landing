@@ -29,10 +29,11 @@ Phase separation: 40ms pause between clearing and building
 ### Phrases Configuration
 ```javascript
 this.phrases = [
-  "OF THE CULTURE",    // 14 characters (longest)
-  "CRYPTOGAINS",       // 11 characters
-  "CDT GLOBAL",        // 10 characters
-  "[REDACTED]"         // 10 characters
+  "ISLE OF VERT PUBLISHING",  // 23 characters (longest)
+  "OF THE CULTURE",           // 14 characters
+  "PLAIN VANILLE",            // 13 characters
+  "FIELDBOTZ",                // 9 characters
+  "[REDACTED]"                // 10 characters
 ];
 ```
 
@@ -57,12 +58,12 @@ this.phrases = [
 ];
 ```
 
-### Responsive Breakpoints (Updated August 24, 2025)
+### Responsive Breakpoints (Updated August 28, 2025)
 ```css
-Desktop (1024px+):   14px font, 20px char width, 30px height
-Tablet (768-1023px): 12px font, 18px char width, 28px height
-Mobile (480-767px):  10px font, 14px char width, 24px height
-Small (<480px):      8px font, 12px char width, 20px height
+Desktop (1024px+):   12px font, 18px char width, 27px height
+Tablet (768-1023px): 10px font, 16px char width, 25px height
+Mobile (480-767px):  9px font, 13px char width, 22px height
+Small (<480px):      7px font, 11px char width, 18px height
 
 Status Text:         0.625rem (10px) - reduced from 0.75rem for improved visual hierarchy
 ```
@@ -151,4 +152,4 @@ To add new clients or modify phrases:
 
 ---
 
-*Component developed for Tuku Group landing page - Updated August 24, 2025*
+*Component developed for Tuku Group landing page - Updated August 28, 2025*
