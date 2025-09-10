@@ -706,16 +706,17 @@
     color: var(--color-black);
 }
 
-/* External link styling */
+/* External link styling - thin underlines */
 .article-content-body a {
     color: var(--color-gold);
     text-decoration: none;
-    border-bottom: 1px solid var(--color-gold);
-    transition: opacity 0.2s ease;
+    border-bottom: 1px solid rgba(193, 154, 75, 0.4);
+    transition: opacity 0.2s ease, border-color 0.2s ease;
 }
 
 .article-content-body a:hover {
-    opacity: 0.7;
+    opacity: 0.8;
+    border-bottom-color: var(--color-gold);
 }
 
 .article-content-body p {
@@ -812,21 +813,21 @@
         margin-bottom: 24px;
     }
     
-    /* Improve link readability on mobile */
+    /* Mobile links with thin underlines */
     .article-content-body a {
         color: var(--color-gold);
         text-decoration: none;
-        border-bottom: 2px solid var(--color-gold);
-        padding: 3px 1px;
-        font-weight: 500;
+        border-bottom: 1px solid rgba(193, 154, 75, 0.4);
+        padding: 1px 0;
+        font-weight: 400;
         font-synthesis: none;
         -webkit-font-smoothing: antialiased;
-        transition: opacity 0.2s ease, background-color 0.2s ease;
+        transition: opacity 0.2s ease, border-color 0.2s ease;
     }
     
     .article-content-body a:hover {
-        opacity: 0.8;
-        background-color: rgba(193, 154, 75, 0.1);
+        opacity: 0.85;
+        border-bottom-color: var(--color-gold);
     }
     
     /* Add visual breaks for long paragraphs */
