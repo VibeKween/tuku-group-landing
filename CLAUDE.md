@@ -86,7 +86,8 @@ Original Tuku Group landing page - the foundation manifesto site that establishe
 - Terminal aesthetic elements
 - Mobile-responsive single-column layout
 
-**Live Deployment:** https://vibekween.github.io/tuku-group-landing
+**Live Deployment:** https://tukugroup.com
+**Previous URL:** https://vibekween.github.io/tuku-group-landing (GitHub Pages - kept as backup)
 
 **Status:** Production ready with split-flap component integrated
 
@@ -101,6 +102,41 @@ Original Tuku Group landing page - the foundation manifesto site that establishe
 - Every element serves the manifesto message
 - Intentional whitespace and typography
 - No unnecessary frameworks or dependencies
+
+## Development Workflow
+
+**CRITICAL: Production-Safe Development Process**
+
+Since this site connects to the public tukugroup.com domain, ALL development must follow this mandatory workflow:
+
+### Mandatory Branch Strategy
+```bash
+# ALWAYS work in dev branch
+git checkout dev     # Switch to dev branch for all development
+
+# NEVER push directly to main branch during development
+```
+
+### Development Process (MANDATORY)
+1. **Local Development**: Test at http://localhost:3000 (or file:///)
+2. **Dev Branch Commits**: Push work-in-progress to dev branch only
+3. **Production Approval Gate**: Claude Code MUST prompt for explicit approval before production push
+4. **Production Deploy**: Only when approved by user to main branch → tukugroup.com
+
+### Claude Code Production Safeguards
+**MANDATORY PROMPT BEFORE PRODUCTION:**
+```
+🚨 PRODUCTION DEPLOYMENT APPROVAL REQUIRED 🚨
+
+Changes ready for production:
+- [List specific changes made]
+- Local testing: [Completed/Status]
+- Quality checks: [Passed/Issues]
+
+⚠️  This will deploy to live public site (tukugroup.com)
+
+Proceed with production deployment? (Requires explicit approval)
+```
 
 ## Development Standards
 
