@@ -160,6 +160,11 @@
     margin-bottom: 0;
 }
 
+/* Individual article type indicators */
+.article-preview .piece-type-indicator {
+    margin-bottom: 8px;
+}
+
 .article-preview:hover {
     transform: translateX(4px);
     transition: transform 0.2s ease;
