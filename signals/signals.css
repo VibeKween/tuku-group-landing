@@ -153,6 +153,11 @@
 .article-preview {
     cursor: pointer;
     transition: opacity 0.2s ease;
+    margin-bottom: 24px;
+}
+
+.article-preview:last-child {
+    margin-bottom: 0;
 }
 
 .article-preview:hover {
