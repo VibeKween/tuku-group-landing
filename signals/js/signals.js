@@ -44,27 +44,27 @@ class SignalsBlog {
                         <h1 class="article-content-title">What Survives When Everything Changes</h1>
                     </div>
                     <div class="article-content-body">
-                        <p>My grandmother's recipes exist now in three forms: handwritten cards in faded ink, a digital document I typed to preserve them, and the modified versions I actually cook-adjusted for ingredients I can find, techniques I can manage, time I have available.</p>
+                        <p>My grandmother's recipes exist now in three forms: handwritten cards in faded ink, a digital document I typed to preserve them, and the modified versions I actually cook—adjusted for ingredients I can find, techniques I can manage, time I have available.</p>
                         
                         <p>Which version is authentic?</p>
                         
-                        <p>The handwritten cards carry the weight of her hand, the authority of original source. The digital document preserves exact measurements and instructions. But the recipes I actually make-adapted to my kitchen, my skill, my family's tastes-these are the ones that live, that continue to create the tastes and memories that connect us across generations.</p>
+                        <p>The handwritten cards carry the weight of her hand, the authority of original source. The digital document preserves exact measurements and instructions. But the recipes I actually make—adapted to my kitchen, my skill, my family's tastes—these are the ones that live, that continue to create the tastes and memories that connect us across generations.</p>
                         
                         <p>The research on digital cultural preservation raises this question at institutional scale: What survives when everything changes? Communities worldwide grapple with translating living traditions into digital forms, knowing that translation always involves transformation.</p>
                         
                         <p>I think about the Indigenous language apps that teach pronunciation but can't transmit the spiritual context in which certain words are spoken. The virtual museum tours that let you examine artifacts in detail but can't convey the ceremonial significance of seeing them in proper context. The cultural traditions shared on social media platforms designed for entertainment and commerce.</p>
                         
-                        <p>Something is always lost in translation. But something is also always gained-reach, accessibility, connection across distance and time. The question isn't whether to adapt-living cultures always adapt. The question is whether communities retain agency over the terms of adaptation.</p>
+                        <p>Something is always lost in translation. But something is also always gained—reach, accessibility, connection across distance and time. The question isn't whether to adapt—living cultures always adapt. The question is whether communities retain agency over the terms of adaptation.</p>
                         
-                        <p>The most powerful digital cultural projects I've encountered are those where communities maintain control over their narratives. Not just consultation-actual authority over how their traditions are represented, who has access, under what conditions.</p>
+                        <p>The most powerful digital cultural projects I've encountered are those where communities maintain control over their narratives. Not just consultation—actual authority over how their traditions are represented, who has access, under what conditions.</p>
                         
                         <p>In these projects, authenticity emerges not through perfect replication but through purposeful adaptation. Communities make conscious choices about which elements are essential to preserve, which aspects can be modified, what new possibilities digital spaces enable.</p>
                         
-                        <p>I've watched elders teaching traditional crafts over video calls, adapting ancient pedagogies to digital formats. The medium is entirely new, but the relationship-elder to student, knowledge holder to knowledge seeker-remains intact. What survives isn't the specific form of transmission but the essential dynamic of cultural continuity.</p>
+                        <p>I've watched elders teaching traditional crafts over video calls, adapting ancient pedagogies to digital formats. The medium is entirely new, but the relationship—elder to student, knowledge holder to knowledge seeker—remains intact. What survives isn't the specific form of transmission but the essential dynamic of cultural continuity.</p>
                         
-                        <p>This suggests that authenticity might be less about preserving specific forms and more about preserving agency-the community's capacity to make decisions about its own cultural evolution.</p>
+                        <p>This suggests that authenticity might be less about preserving specific forms and more about preserving agency—the community's capacity to make decisions about its own cultural evolution.</p>
                         
-                        <p>When external organizations digitize cultural materials without community input, they often focus on documenting artifacts rather than supporting living practice. But when communities lead their own digital initiatives, they tend to prioritize connection and continuity-using technology to strengthen relationships rather than simply preserve objects.</p>
+                        <p>When external organizations digitize cultural materials without community input, they often focus on documenting artifacts rather than supporting living practice. But when communities lead their own digital initiatives, they tend to prioritize connection and continuity—using technology to strengthen relationships rather than simply preserve objects.</p>
                         
                         <p>The paradox of preservation through transformation resolves when communities retain authority over both preservation and transformation. Authenticity becomes not about unchanging tradition but about continuous intentional evolution guided by community values.</p>
                         
@@ -72,7 +72,7 @@ class SignalsBlog {
                         
                         <p>What survives when everything changes is not specific forms but the capacity to maintain meaning through transformation. The power to shape technology rather than be shaped by it. The authority to determine what is essential and what can evolve.</p>
                         
-                        <p>In this framework, the most authentic digital cultural expressions may be those that demonstrate how communities actively direct their own adaptation-preserving not just tradition but the traditional authority to guide cultural evolution.</p>
+                        <p>In this framework, the most authentic digital cultural expressions may be those that demonstrate how communities actively direct their own adaptation—preserving not just tradition but the traditional authority to guide cultural evolution.</p>
                         
                         <p><em>Keywords: cultural authenticity, adaptive tradition, community agency, digital preservation, purposeful adaptation</em></p>
                     </div>
@@ -100,41 +100,96 @@ class SignalsBlog {
                         <h1 class="article-content-title">Designing for the More-Than-Human</h1>
                     </div>
                     <div class="article-content-body">
-                        <p>The question arrives quietly in design studios and planning meetings: What if human needs aren't the only needs that matter?</p>
+                        <p>The question arrives quietly in design studios: What if human needs aren't the only needs that matter?</p>
                         
-                        <p>For decades, human-centered design has been the gold standard of thoughtful practice. Understand the user. Solve human problems. Create experiences that serve human purposes. But as climate crisis intensifies and biodiversity collapses accelerate, a new framework emerges from the margins: more-than-human-centered design.</p>
+                        <p>For decades, human-centered design has been the gold standard. Understand the user. Solve human problems. Create experiences that serve human purposes. But as environmental pressures mount, a new framework emerges: more-than-human-centered design.</p>
                         
                         <h2>Expanding the Circle of Consideration</h2>
                         
-                        <p>This isn't about abandoning human needs but expanding the circle of consideration. <a href="https://www.nature.com/articles/s40494-024-01403-1" target="_blank">Recent research in ecological design systems</a> shows practitioners incorporating the perspectives and requirements of entire ecosystems into conservation infrastructure projects. Urban planners now consider how transportation systems impact not just human communities but ecological systems, designing infrastructure that contributes to environmental regeneration and biodiversity conservation.</p>
+                        <p>This isn't about abandoning human needs but expanding consideration. <a href="https://www.nature.com/articles/s40494-024-01403-1" target="_blank">Recent research in ecological design systems</a> shows practitioners incorporating ecosystem perspectives into conservation infrastructure. Urban planners now consider how transportation systems impact ecological systems, designing infrastructure that contributes to environmental regeneration.</p>
                         
-                        <p>The shift represents more than methodology-it's a philosophical reorientation. Traditional design thinking assumes human intelligence as the primary source of insight. More-than-human approaches acknowledge that other species and ecological systems possess their own forms of intelligence and agency that can inform better design outcomes.</p>
+                        <p>The shift represents more than methodology—it's philosophical reorientation. Traditional design assumes human intelligence as the primary insight source. More-than-human approaches acknowledge that other species and ecological systems possess their own forms of intelligence that can inform better outcomes.</p>
                         
-                        <p>In practice, this looks like multispecies design thinking workshops where planners map the needs of migratory birds alongside pedestrian traffic flows. It means infrastructure projects that ask not just "How do humans move through this space?" but "How do water, air, seeds, and wildlife move through this space?"</p>
+                        <p>In practice, this means multispecies design workshops where planners map migratory bird needs alongside pedestrian flows. Infrastructure projects ask not just "How do humans move through this space?" but "How do water, air, seeds, and wildlife move through this space?"</p>
                         
-                        <p><a href="https://www.thearcticinstitute.org/leveraging-indigenous-knowledge-effective-nature-based-solutions-arctic/" target="_blank">The Arctic Institute</a> documents compelling examples of this approach in nature-based solutions that leverage Indigenous knowledge systems. These methodologies recognize that Indigenous communities have always designed with more-than-human perspectives, creating systems that serve human needs while supporting the ecological relationships that make human life possible.</p>
+                        <p><a href="https://www.thearcticinstitute.org/leveraging-indigenous-knowledge-effective-nature-based-solutions-arctic/" target="_blank">The Arctic Institute</a> documents compelling examples in nature-based solutions leveraging Indigenous knowledge systems. These methodologies recognize that Indigenous communities have always designed with more-than-human perspectives, creating systems that serve human needs while supporting ecological relationships.</p>
                         
                         <h2>From Human-Centered to Ecosystem-Centered Practice</h2>
                         
                         <p>What emerges is design that thinks in longer time horizons and broader relationships. Instead of optimizing for immediate human convenience, practitioners consider seven-generation impacts. Instead of designing for isolated human use cases, they design for ecosystem health.</p>
                         
-                        <p>This expansion of design scope reveals the limitations of purely anthropocentric approaches. When transportation planning considers only human mobility, it often fragments habitats and disrupts migration patterns. When urban development considers only human density, it frequently eliminates green corridors essential for urban wildlife.</p>
+                        <p>This expansion reveals limitations of purely anthropocentric approaches. When transportation planning considers only human mobility, it fragments habitats and disrupts migration patterns. When urban development considers only human density, it eliminates green corridors essential for urban wildlife.</p>
                         
                         <p>More-than-human design doesn't diminish human importance but places human flourishing within larger systems of interdependence. The recognition: human well-being ultimately depends on ecological well-being.</p>
                         
-                        <p>The methodology requires new forms of listening and observation. Designers must learn to read landscape as more than backdrop, to understand water flow as design constraint, to recognize plant succession as design opportunity. They develop skills in interspecies empathy-the capacity to consider needs and experiences radically different from human ones.</p>
+                        <p>The methodology requires new forms of listening and observation. Designers learn to read landscape as more than backdrop, understand water flow as design constraint, recognize plant succession as opportunity. They develop interspecies empathy—capacity to consider needs radically different from human ones.</p>
                         
-                        <p>This work often emerges from Indigenous design traditions that never separated human and natural systems. As mainstream design embraces these insights, it rediscovers principles of reciprocity and stewardship that industrial design culture had forgotten.</p>
+                        <p>This work often emerges from Indigenous design traditions that never separated human and natural systems. As mainstream design embraces these insights, it rediscovers principles of reciprocity and stewardship that industrial culture had forgotten.</p>
                         
-                        <p>The implications extend beyond environmental projects. Product design begins asking how objects will decompose, how materials will return to earth. Architecture considers building orientation not just for human comfort but for bird migration patterns. Urban planning treats green infrastructure not as amenity but as essential habitat.</p>
+                        <p>The implications extend beyond environmental projects. Product design asks how objects will decompose. Architecture considers building orientation for bird migration patterns. Urban planning treats green infrastructure as essential habitat, not amenity.</p>
                         
-                        <p>Critics worry about the practical implications of expanding design considerations so broadly. How do you optimize for everyone-including non-human everyone? The response from practitioners is that this apparent complexity actually clarifies priorities. When you design for ecosystem health, you often discover solutions that serve human needs more sustainably.</p>
+                        <p>Critics worry about expanding design considerations so broadly. How do you optimize for everyone—including non-human everyone? Practitioners respond that this apparent complexity actually clarifies priorities. When you design for ecosystem health, you often discover solutions that serve human needs more sustainably.</p>
                         
-                        <p>The emergence of more-than-human design represents a maturation of environmental consciousness in creative practice. It moves beyond the simplistic binary of humans versus nature toward recognition of humans within nature-participants in ecological systems that require our care and consideration.</p>
+                        <p>More-than-human design represents maturation of environmental consciousness in creative practice. It moves beyond the binary of humans versus nature toward recognition of humans within nature—participants in ecological systems requiring our care.</p>
                         
-                        <p>This isn't design for the sake of other species-it's design that recognizes our ultimate dependence on the health of larger living systems. When we design for the more-than-human, we design for the conditions that make human flourishing possible.</p>
+                        <p>When we design for the more-than-human, we design for the conditions that make human flourishing possible.</p>
                         
                         <p><em>Keywords: ecological design, more-than-human design, biodiversity conservation, multispecies thinking, indigenous design, ecosystem health</em></p>
+                    </div>
+                `
+            },
+            {
+                id: 'more-than-human-design-reflection',
+                category: 'REFLECTION',
+                packageTheme: 'Ecological Design',
+                pieceType: 'reflection',
+                title: 'Learning to Listen to What Cannot Speak',
+                date: 'Sept 9, 2025',
+                readingTime: '4 min read',
+                excerpt: 'Personal reflection on expanding design empathy beyond human experience to include the needs and intelligence of entire ecosystems.',
+                content: `
+                    <div class="article-content-header">
+                        <div class="piece-type-indicator piece-reflection">REFLECTION</div>
+                        <div class="article-content-category">Ecological Design</div>
+                        <div class="article-content-meta">
+                            <span class="article-date">Sept 9, 2025</span>
+                            <span class="meta-separator">•</span>
+                            <span class="reading-time">4 min read</span>
+                        </div>
+                        <h1 class="article-content-title">Learning to Listen to What Cannot Speak</h1>
+                    </div>
+                    <div class="article-content-body">
+                        <p>I walk through the city differently now, aware of the conversations happening just beyond human frequency.</p>
+                        
+                        <p>The sidewalk cracks where tree roots push upward, seeking light and water that concrete won't allow. Storm drains that channel rainwater away from where it wants to pool and percolate. Buildings that stand deaf to the migration patterns of birds who've navigated this route for millennia.</p>
+                        
+                        <p>The research on more-than-human design asks us to expand our empathy beyond human experience. But empathy suggests understanding through similarity, and there's little similarity between human consciousness and the intelligence of watersheds or mycorrhizal networks.</p>
+                        
+                        <p>What's required is something different—a kind of humility that recognizes agency in beings and systems we can't fully comprehend. The river knows where it wants to flow. The forest understands succession in ways we can barely map. The soil holds memory of relationships we're only beginning to discover.</p>
+                        
+                        <p>This isn't romantic anthropomorphizing. It's recognition that other forms of intelligence operate on timescales and through processes that human-centered thinking rarely considers. When we design only for human needs, we often work against these larger intelligences.</p>
+                        
+                        <p>I think of the urban planners learning to read landscapes as participants rather than resources. They speak of discovering that what initially appears as constraint—preserving bird corridors, protecting wetlands, maintaining native plant communities—often reveals itself as opportunity for more elegant human solutions.</p>
+                        
+                        <p>There's something liberating in surrendering the burden of human-only intelligence. When you design for ecosystem health, you align with processes that have been optimizing for sustainability far longer than human civilization has existed.</p>
+                        
+                        <p>But the practice requires a different kind of listening. Not the focus group or user interview that human-centered design depends on, but attention to slower rhythms, longer cycles, relationships that extend beyond individual lifespans.</p>
+                        
+                        <p>I find myself pausing at the edge of construction sites, wondering what the disrupted soil might teach about water flow, what the displaced plants might reveal about seasonal patterns, what the altered topography might mean for creatures whose needs we never considered.</p>
+                        
+                        <p>This expansion of design consideration doesn't diminish human importance—it places human flourishing within systems of interdependence that make our well-being possible. We begin to understand that designing for the health of larger living systems is designing for our own survival.</p>
+                        
+                        <p>The most profound shift is temporal. Human-centered design optimizes for current users with immediate needs. More-than-human design thinks in generations—considering not just present inhabitants but future ones, not just human futures but ecological ones.</p>
+                        
+                        <p>In this extended perspective, the urgent and important begin to separate more clearly. What serves immediate human convenience may undermine the conditions that make long-term human thriving possible.</p>
+                        
+                        <p>Perhaps this is what wisdom looks like in an age of ecological crisis: the capacity to design not just for ourselves but for the larger web of relationships that sustains all life.</p>
+                        
+                        <p>We're learning to listen to what cannot speak in human language but communicates through patterns, flows, and relationships that preceded our presence and will extend beyond our tenure.</p>
+                        
+                        <p>In that listening, we find not limitation but guidance toward ways of making that honor both human creativity and the larger creativity of living systems.</p>
+                        
+                        <p><em>Keywords: ecological empathy, more-than-human listening, design humility, ecosystem intelligence, interdependence</em></p>
                     </div>
                 `
             },
@@ -198,6 +253,63 @@ class SignalsBlog {
                         <p>The future may depend on learning to innovate like our ancestors: with patience, relationship, and attention to consequences that extend far beyond our individual lifespans.</p>
                         
                         <p><em>Keywords: indigenous design, seven-generation thinking, reciprocal innovation, sustainable methodology, community stewardship, regenerative systems</em></p>
+                    </div>
+                `
+            },
+            {
+                id: 'indigenous-innovation-reflection',
+                category: 'REFLECTION',
+                packageTheme: 'Indigenous Design',
+                pieceType: 'reflection',
+                title: 'On Slowing Down to Move Forward',
+                date: 'Sept 2, 2025',
+                readingTime: '4 min read',
+                excerpt: 'Personal reflection on learning patience and relationship from Indigenous methodologies that prioritize seven-generation thinking.',
+                content: `
+                    <div class="article-content-header">
+                        <div class="piece-type-indicator piece-reflection">REFLECTION</div>
+                        <div class="article-content-category">Indigenous Design</div>
+                        <div class="article-content-meta">
+                            <span class="article-date">Sept 2, 2025</span>
+                            <span class="meta-separator">•</span>
+                            <span class="reading-time">4 min read</span>
+                        </div>
+                        <h1 class="article-content-title">On Slowing Down to Move Forward</h1>
+                    </div>
+                    <div class="article-content-body">
+                        <p>I used to measure progress by acceleration. How quickly could ideas become products? How rapidly could concepts scale? Speed felt like intelligence, urgency like importance.</p>
+                        
+                        <p>Then I encountered the seven-generation principle: consider the impact of every decision on the seventh generation to come. Not seven years—seven generations. Roughly 140 years into a future I will never see.</p>
+                        
+                        <p>The principle stops you mid-thought. The urgent question—Will this work?—expands into something more complex: Will this work for the great-great-great-great-great-grandchildren of people not yet born?</p>
+                        
+                        <p>This isn't hypothetical philosophy for Indigenous communities practicing traditional governance. It's practical methodology for navigating complex decisions with consequences that extend far beyond immediate visibility.</p>
+                        
+                        <p>I think about the creative projects that felt most meaningful in my own work. They weren't the fastest ones, or even the most efficient. They were the ones that grew slowly, that honored the relationships they emerged from, that considered impacts I hadn't initially thought to measure.</p>
+                        
+                        <p>Indigenous innovation methodologies suggest that depth might be more valuable than speed, that relationship might be more important than efficiency, that sustainability might require forms of thinking that move counter to contemporary optimization culture.</p>
+                        
+                        <p>There's humility in this recognition. The assumption that faster is better, that newer is superior, that individual brilliance trumps collective wisdom—these assumptions look less like progress and more like blindness when viewed from seven-generation perspective.</p>
+                        
+                        <p>I've watched organizations attempt to adopt Indigenous principles as techniques—seven-generation thinking as strategic planning tool, relationship-based design as stakeholder engagement process. The results feel hollow because they miss the fundamental reorientation these approaches require.</p>
+                        
+                        <p>Indigenous innovation isn't about better methods; it's about different values. It's about optimizing for resilience over growth, for community health over individual achievement, for long-term sustainability over short-term gains.</p>
+                        
+                        <p>The shift feels counter-cultural in an environment that rewards disruption and celebrates breaking things. But maybe disruption was never the goal—maybe it was a side effect of innovation practiced without wisdom, creativity pursued without relationship, progress measured without consequence consideration.</p>
+                        
+                        <p>When I slow down enough to consider seven generations, different questions emerge. Not just "Will this work?" but "Who does this serve? What does this cost? How does this support or diminish the conditions that make life possible?"</p>
+                        
+                        <p>These questions don't paralyze decision-making; they clarify it. When you're designing for 140 years in the future, certain choices become obviously unsustainable, while others reveal themselves as genuinely generative.</p>
+                        
+                        <p>Perhaps this is what maturity looks like in creative practice: the capacity to move beyond the narcissism of immediate results toward the responsibility of long-term consequence. Not because it's morally superior, but because it's practically necessary.</p>
+                        
+                        <p>Indigenous methodologies remind us that innovation has always existed—that the most sophisticated technologies are often the ones that have sustained communities across thousands of years of changing conditions.</p>
+                        
+                        <p>We're not learning to innovate. We're learning to innovate responsibly, with attention to the relationships and consequences that extend far beyond our individual lifespans.</p>
+                        
+                        <p>The longest view, it turns out, often reveals the clearest path forward.</p>
+                        
+                        <p><em>Keywords: seven-generation thinking, Indigenous wisdom, sustainable innovation, long-term consequence, creative responsibility</em></p>
                     </div>
                 `
             }

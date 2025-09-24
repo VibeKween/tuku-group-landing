@@ -137,11 +137,19 @@ mailto:contact@tukugroup.com?subject=Start%20a%20conversation%20—%20Tuku%20Gro
 
 ---
 
-## Words to Avoid (Learned)
+## Words to Avoid (Comprehensive)
 
+### TUKU-Specific Learned Avoidances
 - **"Build"** (too generic, harsh) → Use "craft," "assemble," "hold"
 - **"Parent/child"** language → Confusing in business context
 - **Repetitive "noise"** references → Establish once, don't repeat
+
+### Master Voice Spec Banned Words/Phrases
+- **realm, delve, vast landscape, shaping the future, journey, akin, equitable, contribute, welcome, today, we'll unpack, paradigm shift, paving the way, navigate/navigating**
+- **Overhype, breathless futurism, smug minimalism, dystopian/utopian declarations**
+- **Negative framing as default** (avoid "not," "don't," "isn't")
+- **Woo, sci-fi tones, or vague metaphor chains**
+- **Gendered or stereotypical anecdotes**
 - **Corporate jargon** → Keep language authentic and direct
 
 ---
