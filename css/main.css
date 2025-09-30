@@ -6,6 +6,45 @@
   box-sizing: border-box;
 }
 
+/* Cloud Background Component */
+.cloud-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, 
+    #f0f9ff 0%, 
+    #e0f2fe 12%, 
+    rgba(240, 249, 255, 0.6) 25%, 
+    rgba(240, 249, 255, 0.3) 40%, 
+    rgba(240, 249, 255, 0.15) 60%, 
+    rgba(240, 249, 255, 0.05) 80%, 
+    transparent 100%);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -10;
+}
+
+#cloudCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Ensure body and main content are positioned properly */
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+}
+
 :root {
   --color-black: #000000;
   --color-white: #FFFFFF;
