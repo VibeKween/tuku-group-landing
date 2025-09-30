@@ -32,6 +32,47 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  pointer-events: none;
+}
+
+.cloud-refresh-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #5691c8;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  border: none;
+  padding: 8px;
+  background: none;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  z-index: 100;
+  cursor: pointer;
+  max-width: calc(50vw - 40px);
+  display: block;
+}
+
+.cloud-refresh-link:hover {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+  transform: translateY(-1px);
+}
+
+/* Mobile adjustments for refresh link */
+@media (max-width: 768px) {
+  .cloud-refresh-link {
+    top: 16px;
+    right: 16px;
+    font-size: 0.7rem;
+    max-width: calc(50vw - 32px);
+  }
 }
 
 /* Ensure body and main content are positioned properly */
