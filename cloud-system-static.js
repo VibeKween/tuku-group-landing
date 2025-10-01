@@ -9,7 +9,7 @@
 const CloudConfig = Object.freeze({
     MOBILE_BREAKPOINT: 768,
     SCALE_FACTORS: { MOBILE: 1.0, DESKTOP: 1.4 },
-    CLOUD_COUNTS: { MOBILE: 6, DESKTOP: 10 },  // Includes edge clouds for natural sky feel
+    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 6 },  // Reduced for cleaner, contemplative sky
     COLORS: {
         FILL: 'rgba(255, 255, 255, 0.85)',
         STROKE: 'rgba(70, 100, 130, 0.7)', // Slate blue
@@ -19,16 +19,16 @@ const CloudConfig = Object.freeze({
 
 // 38 Unique Cloud Formation Templates - First 10 Ensure Diverse Rotation
 const CloudFormations = Object.freeze([
-    // Guaranteed Diverse First 10 (1-10) - Balanced Vertical/Horizontal Mix
+    // Guaranteed Diverse First 10 (1-10) - Well-formed clouds only
     { id: 'massive-cumulus', baseShape: 'cumulus', variant: 1, scale: { min: 1.2, max: 1.8 } },        // Large fluffy
-    { id: 'thin-streak', baseShape: 'streak', variant: 1, scale: { min: 0.3, max: 0.6 } },             // Horizontal thin
     { id: 'elongated-wisp', baseShape: 'wisp', variant: 1, scale: { min: 0.8, max: 1.2 } },            // Horizontal medium
+    { id: 'curvy-stream', baseShape: 'wisp', variant: 2, scale: { min: 0.7, max: 1.1 } },              // Horizontal curvy
     { id: 'tall-tower', baseShape: 'tower', variant: 1, scale: { min: 0.9, max: 1.3 } },               // Vertical tower
-    { id: 'ultra-thin-streak', baseShape: 'streak', variant: 2, scale: { min: 0.4, max: 0.7 } },       // Horizontal ultra-thin
+    { id: 'wave-formation', baseShape: 'wisp', variant: 4, scale: { min: 0.8, max: 1.3 } },            // Horizontal wavy
     { id: 'forming-cloud', baseShape: 'forming', variant: 1, scale: { min: 0.6, max: 1.0 } },          // Horizontal forming
     { id: 'high-cirrus', baseShape: 'cirrus', variant: 1, scale: { min: 0.7, max: 1.1 } },             // Horizontal wispy
     { id: 'cotton-ball', baseShape: 'cumulus', variant: 4, scale: { min: 0.9, max: 1.3 } },            // Round medium
-    { id: 'whisper-streak', baseShape: 'streak', variant: 3, scale: { min: 0.2, max: 0.5 } },          // Horizontal whisper
+    { id: 'broken-strand', baseShape: 'wisp', variant: 3, scale: { min: 0.6, max: 1.0 } },             // Horizontal textured
     { id: 'tiny-puffs', baseShape: 'puffs', variant: 1, scale: { min: 0.2, max: 0.4 } },               // Small scattered
     
     // Additional Large Fluffy Clouds (11-16)
@@ -200,7 +200,7 @@ class StaticCloudSystem {
     calculatePositions(viewport) {
         const { width, height, isMobile } = viewport;
         const positions = [];
-        const mainCloudCount = isMobile ? 5 : 7;
+        const mainCloudCount = isMobile ? 3 : 4;
         
         // Create unpredictable distribution patterns
         const distributionMode = Math.floor(Math.random() * 4);
@@ -304,12 +304,66 @@ class StaticCloudSystem {
         }
         
         // Add edge clouds with more variety
-        const edgeCount = isMobile ? 1 : 3;
+        const edgeCount = isMobile ? 1 : 2;
         for (let i = 0; i < edgeCount; i++) {
             positions.push(this.generateEdgePosition(width, height));
         }
         
-        return positions;
+        // Apply collision detection to prevent cloud stacking
+        return this.resolveCollisions(positions, width, height, isMobile);
+    }
+
+    /**
+     * Resolve cloud collisions to prevent stacking
+     */
+    resolveCollisions(positions, width, height, isMobile) {
+        const resolvedPositions = [];
+        const minDistance = isMobile ? 120 : 180; // Minimum distance between cloud centers
+        const maxAttempts = 20; // Prevent infinite loops
+        
+        for (let i = 0; i < positions.length; i++) {
+            let position = positions[i];
+            let attempts = 0;
+            let validPosition = false;
+            
+            while (!validPosition && attempts < maxAttempts) {
+                validPosition = true;
+                
+                // Check against all previously placed clouds
+                for (let j = 0; j < resolvedPositions.length; j++) {
+                    const existing = resolvedPositions[j];
+                    const distance = Math.sqrt(
+                        Math.pow(position.x - existing.x, 2) + 
+                        Math.pow(position.y - existing.y, 2)
+                    );
+                    
+                    if (distance < minDistance) {
+                        validPosition = false;
+                        
+                        // Try to nudge the position away from collision
+                        const angle = Math.atan2(position.y - existing.y, position.x - existing.x);
+                        const nudgeDistance = minDistance - distance + 20; // Extra buffer
+                        
+                        position = {
+                            x: position.x + Math.cos(angle) * nudgeDistance,
+                            y: position.y + Math.sin(angle) * nudgeDistance
+                        };
+                        
+                        // Keep position within reasonable bounds (allow some off-screen for edge clouds)
+                        position.x = Math.max(-width * 0.3, Math.min(width * 1.3, position.x));
+                        position.y = Math.max(-height * 0.3, Math.min(height * 1.1, position.y));
+                        
+                        break;
+                    }
+                }
+                
+                attempts++;
+            }
+            
+            resolvedPositions.push(position);
+        }
+        
+        return resolvedPositions;
     }
 
     /**
@@ -440,15 +494,15 @@ class StaticCloudSystem {
         
         // Different stroke layers for delicate vs regular clouds
         const strokeLayers = isDelicate ? [
-            { lineWidth: 1.4, opacity: 0.75, variation: 0.4 }, // Thinner main stroke
-            { lineWidth: 0.9, opacity: 0.55, variation: 0.3 }, // Light accent
-            { lineWidth: 0.5, opacity: 0.35, variation: 0.2 }, // Whisper detail
-            { lineWidth: 0.3, opacity: 0.20, variation: 0.1 }  // Gossamer touch
+            { lineWidth: 1.4, opacity: 0.65, variation: 0.4 }, // Thinner main stroke
+            { lineWidth: 0.9, opacity: 0.45, variation: 0.3 }, // Light accent
+            { lineWidth: 0.5, opacity: 0.30, variation: 0.2 }, // Whisper detail
+            { lineWidth: 0.3, opacity: 0.15, variation: 0.1 }  // Gossamer touch
         ] : [
-            { lineWidth: 2.4, opacity: 0.85, variation: 0.6 }, // Main thick stroke
-            { lineWidth: 1.6, opacity: 0.65, variation: 0.4 }, // Medium weight
-            { lineWidth: 1.0, opacity: 0.45, variation: 0.3 }, // Thin accent
-            { lineWidth: 0.6, opacity: 0.25, variation: 0.2 }  // Whisper details
+            { lineWidth: 2.4, opacity: 0.60, variation: 0.6 }, // Main thick stroke (reduced from 0.85)
+            { lineWidth: 1.6, opacity: 0.45, variation: 0.4 }, // Medium weight (reduced from 0.65)
+            { lineWidth: 1.0, opacity: 0.32, variation: 0.3 }, // Thin accent (reduced from 0.45)
+            { lineWidth: 0.6, opacity: 0.18, variation: 0.2 }  // Whisper details (reduced from 0.25)
         ];
         
         strokeLayers.forEach((layer, index) => {
