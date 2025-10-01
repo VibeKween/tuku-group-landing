@@ -29,7 +29,7 @@
     <!-- Theme & Performance -->
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="index, follow">
-    <link rel="stylesheet" href="css/main.css?v=1.4">
+    <link rel="stylesheet" href="css/main.css?v=1.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -95,11 +95,19 @@
 <body>
     <!-- Cloud Background Component -->
     <div class="cloud-background">
-        <canvas id="cloudCanvas"></canvas>
+        <!-- Canvas will be created dynamically by JavaScript -->
     </div>
 
     <!-- Cloud Refresh Link -->
-    <a href="#" class="cloud-refresh-link" onclick="window.location.reload(); return false;">what do you see?</a>
+    <a href="#" class="cloud-refresh-link" onclick="event.preventDefault(); if(window.StaticCloudSystem) { window.StaticCloudSystem.regenerateClouds(); } else { window.location.reload(true); } return false;">what do you see?</a>
+
+    <!-- Static Cloud System - External JS -->
+    <script src="cloud-system-static.js"></script>
+    
+    <script>
+        // Cloud system is now handled by external cloud-system-static.js file
+        console.log('✅ Main script loaded - static cloud system external');
+    </script>
 
     <!-- Main Content Layer -->
     <main class="page">
@@ -250,297 +258,12 @@
     </style>
 
     <script>
-        // Cloud Background Component Configuration
-        const cloudConfig = {
-            cloudCount: 8,
-            lineWidth: 1.8,
-            cloudColor: '#7a152e',
-            complexity: 2,
-            density: 0.6 // Controls cloud distribution density
-        };
-
-        class CloudBackgroundComponent {
-            constructor(config) {
-                this.canvas = document.getElementById('cloudCanvas');
-                this.ctx = this.canvas.getContext('2d');
-                this.config = config;
-                
-                this.setupCanvas();
-                this.generate();
-                
-                // Debounced resize handler for performance
-                let resizeTimeout;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        this.setupCanvas();
-                        this.generate();
-                    }, 250);
-                });
-                
-                // Mobile orientation change handler
-                window.addEventListener('orientationchange', () => {
-                    setTimeout(() => {
-                        this.setupCanvas();
-                        this.generate();
-                    }, 300);
-                });
-            }
-            
-            setupCanvas() {
-                // Match exact viewport dimensions - no overflow
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-                
-                // Set canvas style dimensions for proper scaling
-                this.canvas.style.width = window.innerWidth + 'px';
-                this.canvas.style.height = window.innerHeight + 'px';
-                
-                // Handle high DPI displays
-                const dpr = window.devicePixelRatio || 1;
-                this.canvas.width = window.innerWidth * dpr;
-                this.canvas.height = window.innerHeight * dpr;
-                this.ctx.scale(dpr, dpr);
-            }
-            
-            random() { return Math.random(); }
-            
-            organicPoint(x, y, variation = 10) {
-                return {
-                    x: x + (this.random() - 0.5) * variation,
-                    y: y + (this.random() - 0.5) * variation
-                };
-            }
-            
-            
-            drawWisp(centerX, centerY, scale, offset) {
-                const ctx = this.ctx;
-                
-                // Restore original proportions for natural cloud shapes
-                const width = (80 + this.random() * 120) * scale;
-                const height = (40 + this.random() * 60) * scale;
-                const segments = 5 + Math.floor(this.random() * 4);
-                
-                const xOffset = (offset - 0.5) * width * 0.4;
-                const yOffset = (this.random() - 0.5) * height * 0.4;
-                
-                ctx.beginPath();
-                
-                const points = [];
-                for (let i = 0; i <= segments; i++) {
-                    const angle = (i / segments) * Math.PI * 2;
-                    const radiusVar = 0.7 + this.random() * 0.5;
-                    const x = centerX + xOffset + Math.cos(angle) * width * radiusVar;
-                    const y = centerY + yOffset + Math.sin(angle) * height * radiusVar;
-                    points.push(this.organicPoint(x, y, 12 * scale));
-                }
-                
-                ctx.moveTo(points[0].x, points[0].y);
-                
-                for (let i = 0; i < points.length - 1; i++) {
-                    const p1 = points[i];
-                    const p2 = points[i + 1];
-                    const cp1 = this.organicPoint(
-                        p1.x + (p2.x - p1.x) * 0.5,
-                        p1.y,
-                        18 * scale
-                    );
-                    const cp2 = this.organicPoint(
-                        p1.x + (p2.x - p1.x) * 0.5,
-                        p2.y,
-                        18 * scale
-                    );
-                    
-                    ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, p2.x, p2.y);
-                }
-                
-                ctx.stroke();
-                
-                // Internal details
-                if (this.random() > 0.4 && this.config.complexity > 1) {
-                    ctx.globalAlpha *= 0.5;
-                    ctx.lineWidth = this.config.lineWidth * 0.6;
-                    
-                    const innerLines = 1 + Math.floor(this.random() * 2);
-                    for (let l = 0; l < innerLines; l++) {
-                        const inset = 0.3 + this.random() * 0.4;
-                        ctx.beginPath();
-                        
-                        const startAngle = this.random() * Math.PI * 2;
-                        const endAngle = startAngle + Math.PI * (0.4 + this.random() * 0.6);
-                        
-                        const sx = centerX + xOffset + Math.cos(startAngle) * width * inset;
-                        const sy = centerY + yOffset + Math.sin(startAngle) * height * inset;
-                        const sp = this.organicPoint(sx, sy, 10 * scale);
-                        
-                        ctx.moveTo(sp.x, sp.y);
-                        
-                        const mx = centerX + xOffset + Math.cos((startAngle + endAngle) / 2) * width * (inset + 0.1);
-                        const my = centerY + yOffset + Math.sin((startAngle + endAngle) / 2) * height * (inset + 0.1);
-                        const mp = this.organicPoint(mx, my, 10 * scale);
-                        
-                        const ex = centerX + xOffset + Math.cos(endAngle) * width * inset;
-                        const ey = centerY + yOffset + Math.sin(endAngle) * height * inset;
-                        const ep = this.organicPoint(ex, ey, 10 * scale);
-                        
-                        ctx.quadraticCurveTo(mp.x, mp.y, ep.x, ep.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            
-            generate() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                const clouds = [];
-                const isMobile = window.innerWidth <= 768;
-                
-                // Adjust cloud count for mobile
-                let cloudCount = Math.ceil(this.config.cloudCount * this.config.density);
-                if (isMobile) {
-                    cloudCount = Math.max(3, Math.floor(cloudCount * 0.6)); // Fewer clouds on mobile
-                }
-                
-                for (let i = 0; i < cloudCount; i++) {
-                    // Get position that avoids content areas
-                    const position = this.getPositionAvoidingContent();
-                    
-                    // Scale clouds appropriately for mobile
-                    let scale;
-                    if (isMobile) {
-                        scale = 0.3 + this.random() * 0.4; // Smaller clouds on mobile
-                    } else {
-                        scale = 0.4 + this.random() * 0.6;
-                    }
-                    
-                    // Calculate base opacity based on viewport position
-                    let opacity = this.calculateOpacity(position.y);
-                    
-                    // Reduce opacity if cloud is in text area
-                    if (this.isInTextArea(position.x, position.y)) {
-                        opacity *= 0.4; // Make 60% transparent behind text (40% of normal)
-                    }
-                    
-                    clouds.push({ x: position.x, y: position.y, scale, opacity });
-                }
-                
-                clouds.forEach(cloud => {
-                    this.drawCloudWithOpacity(cloud.x, cloud.y, cloud.scale, cloud.opacity);
-                });
-            }
-            
-            getPositionAvoidingContent() {
-                // Use actual viewport dimensions (not canvas dimensions)
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-                const isMobile = viewportWidth <= 768;
-                
-                // Define header height based on viewport size
-                let headerHeight;
-                if (isMobile) {
-                    // Mobile: more conservative header space
-                    headerHeight = Math.min(250, viewportHeight * 0.35);
-                } else {
-                    // Desktop: larger header space  
-                    headerHeight = Math.min(400, viewportHeight * 0.45);
-                }
-                
-                // Account for maximum cloud size to prevent cutoffs
-                const maxCloudWidth = isMobile ? 120 : 200; // Estimated max cloud width
-                const maxCloudHeight = isMobile ? 80 : 120; // Estimated max cloud height
-                
-                // Safe margins accounting for cloud dimensions
-                const horizontalMargin = Math.max(20, maxCloudWidth / 2);
-                const verticalMargin = Math.max(20, maxCloudHeight / 2);
-                
-                // Generate position within safe bounds that prevent any cutoffs
-                const x = horizontalMargin + (this.random() * (viewportWidth - (horizontalMargin * 2)));
-                const y = verticalMargin + (this.random() * (headerHeight - verticalMargin * 2));
-                
-                return { x, y };
-            }
-            
-            isInTextArea(x, y) {
-                // Define text areas based on typical content layout
-                const viewportWidth = window.innerWidth;
-                const contentWidth = Math.min(600, viewportWidth - 40);
-                const contentLeft = (viewportWidth - contentWidth) / 2;
-                const contentRight = contentLeft + contentWidth;
-                const isMobile = viewportWidth <= 768;
-                
-                // Text area boundaries
-                const textAreas = [
-                    // TUKU GROUP title area
-                    {
-                        left: contentLeft - 50,
-                        right: contentRight + 50,
-                        top: isMobile ? 40 : 60,
-                        bottom: isMobile ? 120 : 150
-                    },
-                    // Three-line manifesto area
-                    {
-                        left: contentLeft - 30,
-                        right: contentRight + 30,
-                        top: isMobile ? 140 : 180,
-                        bottom: isMobile ? 240 : 300
-                    }
-                ];
-                
-                // Check if cloud position overlaps any text area
-                return textAreas.some(area => 
-                    x >= area.left && x <= area.right && 
-                    y >= area.top && y <= area.bottom
-                );
-            }
-            
-            weightedRandomY() {
-                // Weight distribution toward top 60% of viewport
-                const bias = Math.pow(this.random(), 1.5);
-                return bias * this.canvas.height;
-            }
-            
-            calculateOpacity(y) {
-                const viewportHeight = window.innerHeight;
-                
-                if (y < viewportHeight * 0.4) {
-                    return 0.8 + this.random() * 0.2; // Strong opacity in header area
-                } else if (y < viewportHeight * 0.7) {
-                    return 0.4 + this.random() * 0.3; // Medium opacity in content area
-                } else {
-                    const fadeProgress = (y - viewportHeight * 0.7) / (viewportHeight * 0.3);
-                    return Math.max(0.05, 0.4 * (1 - fadeProgress)); // Fade out at bottom
-                }
-            }
-            
-            drawCloudWithOpacity(startX, startY, scale, baseOpacity) {
-                const ctx = this.ctx;
-                const lw = this.config.lineWidth;
-                
-                ctx.strokeStyle = this.config.cloudColor;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                
-                const wisps = 2 + this.config.complexity;
-                const layers = 1 + Math.floor(this.config.complexity / 2);
-                
-                for (let layer = 0; layer < layers; layer++) {
-                    const layerOpacity = (0.7 - (layer * 0.2)) * baseOpacity;
-                    ctx.globalAlpha = layerOpacity;
-                    ctx.lineWidth = lw * (1 - layer * 0.2);
-                    
-                    for (let w = 0; w < wisps; w++) {
-                        this.drawWisp(startX, startY, scale, w / wisps);
-                    }
-                }
-                
-                ctx.globalAlpha = 1.0;
-            }
-        }
-
-        // Initialize Cloud Background Component
-        document.addEventListener('DOMContentLoaded', () => {
-            new CloudBackgroundComponent(cloudConfig);
-        });
+        // Legacy cloud animation code removed - now handled by cloud-system-static.js
+        console.log('✅ Legacy cloud animation code removed - using static cloud system');
+    </script>
+    
+    <script>
+        // Scroll debugging now handled by cloud-system-static.js
 
         class SplitFlapDisplay {
             constructor(containerId) {
