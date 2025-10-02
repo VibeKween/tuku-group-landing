@@ -12,7 +12,7 @@ const CloudConfig = Object.freeze({
     CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Further reduced for cleaner, contemplative sky
     COLORS: {
         FILL: 'rgba(255, 255, 255, 0.85)',
-        STROKE: 'rgba(70, 100, 130, 0.7)', // Slate blue
+        STROKE: 'rgba(135, 170, 200, 0.7)', // Complementary sky blue
         STROKE_WIDTH: 1.8
     }
 });
@@ -519,7 +519,7 @@ class StaticCloudSystem {
      */
     drawVariableWeightStroke(formation, layer, layerIndex) {
         // Set base stroke properties
-        this.ctx.strokeStyle = `rgba(70, 100, 130, ${layer.opacity})`;
+        this.ctx.strokeStyle = `rgba(135, 170, 200, ${layer.opacity})`;
         this.ctx.lineWidth = layer.lineWidth;
         
         // For the main layers, add some natural line weight variation
@@ -530,7 +530,7 @@ class StaticCloudSystem {
                 const opacityVariation = 1 + (Math.random() - 0.5) * 0.3;
                 
                 this.ctx.lineWidth = layer.lineWidth * weightVariation;
-                this.ctx.strokeStyle = `rgba(70, 100, 130, ${layer.opacity * opacityVariation})`;
+                this.ctx.strokeStyle = `rgba(135, 170, 200, ${layer.opacity * opacityVariation})`;
                 
                 // Slight offset for natural hand-drawn feel
                 this.ctx.save();
