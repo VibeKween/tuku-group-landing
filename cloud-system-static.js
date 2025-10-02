@@ -9,7 +9,7 @@
 const CloudConfig = Object.freeze({
     MOBILE_BREAKPOINT: 768,
     SCALE_FACTORS: { MOBILE: 1.0, DESKTOP: 1.4 },
-    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 6 },  // Reduced for cleaner, contemplative sky
+    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Further reduced for cleaner, contemplative sky
     COLORS: {
         FILL: 'rgba(255, 255, 255, 0.85)',
         STROKE: 'rgba(70, 100, 130, 0.7)', // Slate blue
@@ -200,7 +200,7 @@ class StaticCloudSystem {
     calculatePositions(viewport) {
         const { width, height, isMobile } = viewport;
         const positions = [];
-        const mainCloudCount = isMobile ? 3 : 4;
+        const mainCloudCount = isMobile ? 3 : 3;
         
         // Create unpredictable distribution patterns
         const distributionMode = Math.floor(Math.random() * 4);
