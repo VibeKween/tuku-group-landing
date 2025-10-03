@@ -9,7 +9,7 @@
 const CloudConfig = Object.freeze({
     MOBILE_BREAKPOINT: 768,
     SCALE_FACTORS: { MOBILE: 1.0, DESKTOP: 1.4 },
-    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Further reduced for cleaner, contemplative sky
+    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Mobile optimized count for performance while maintaining visibility
     COLORS: {
         FILL: 'rgba(255, 255, 255, 0.85)',
         STROKE: 'rgba(135, 170, 200, 0.7)', // Complementary sky blue
@@ -121,16 +121,35 @@ class StaticCloudSystem {
     }
 
     /**
-     * Setup canvas dimensions
+     * Setup canvas dimensions with mobile optimizations
      */
     setupCanvas() {
         const viewport = this.getViewportDimensions();
-        this.canvas.width = viewport.width;
-        this.canvas.height = viewport.height;
+        
+        // Mobile optimization: Use device pixel ratio for crisp rendering
+        const dpr = window.devicePixelRatio || 1;
+        const isMobile = viewport.isMobile;
+        
+        // Mobile optimization: Limit DPR to prevent excessive memory usage
+        const optimizedDPR = isMobile ? Math.min(dpr, 2) : dpr;
+        
+        this.canvas.width = viewport.width * optimizedDPR;
+        this.canvas.height = viewport.height * optimizedDPR;
         
         // Set canvas style dimensions
         this.canvas.style.width = viewport.width + 'px';
         this.canvas.style.height = viewport.height + 'px';
+        
+        // Scale canvas context for high DPI displays
+        this.ctx.scale(optimizedDPR, optimizedDPR);
+        
+        // Mobile optimization: Set canvas rendering hints
+        if (isMobile) {
+            this.ctx.imageSmoothingEnabled = false; // Disable for better performance
+            this.ctx.imageSmoothingQuality = 'low';
+        }
+        
+        console.log(`🖥️ Canvas setup: ${viewport.width}x${viewport.height} @ ${optimizedDPR}x DPR (mobile: ${isMobile})`);
     }
 
     /**
@@ -195,116 +214,122 @@ class StaticCloudSystem {
     }
 
     /**
-     * Calculate cloud positions - highly unpredictable with natural clustering and voids
+     * Define content zones where clouds should be avoided
+     */
+    getContentZones(viewport) {
+        const { width, height, isMobile } = viewport;
+        
+        if (isMobile) {
+            // Mobile: More targeted zones to preserve cloud visibility
+            return [
+                // Core text content only (narrower protection)
+                {
+                    x: width * 0.1,
+                    y: height * 0.15,
+                    width: width * 0.8,
+                    height: height * 0.6,
+                    buffer: 40 // Smaller buffer for mobile
+                },
+                // Split-flap component zone (smaller area)
+                {
+                    x: width * 0.05,
+                    y: height * 0.88,
+                    width: width * 0.9,
+                    height: height * 0.12,
+                    buffer: 30 // Minimal buffer
+                }
+            ];
+        } else {
+            // Desktop: Original protective zones
+            return [
+                // Main content area
+                {
+                    x: width * 0.1,
+                    y: height * 0.1,
+                    width: width * 0.6,
+                    height: height * 0.75,
+                    buffer: 80
+                },
+                // Split-flap component zone
+                {
+                    x: 0,
+                    y: height * 0.85,
+                    width: width,
+                    height: height * 0.15,
+                    buffer: 60
+                }
+            ];
+        }
+    }
+
+    /**
+     * Check if a cloud position intersects with content zones
+     */
+    intersectsContentZone(x, y, cloudRadius, contentZones) {
+        for (const zone of contentZones) {
+            const zoneLeft = zone.x - zone.buffer;
+            const zoneRight = zone.x + zone.width + zone.buffer;
+            const zoneTop = zone.y - zone.buffer;
+            const zoneBottom = zone.y + zone.height + zone.buffer;
+            
+            // Check if cloud center + radius overlaps with zone
+            if (x + cloudRadius > zoneLeft && 
+                x - cloudRadius < zoneRight && 
+                y + cloudRadius > zoneTop && 
+                y - cloudRadius < zoneBottom) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Generate valid cloud position avoiding content zones
+     */
+    generateValidPosition(viewport, contentZones, attempts = 0) {
+        const { width, height } = viewport;
+        const maxAttempts = 30;
+        
+        if (attempts >= maxAttempts) {
+            // Fall back to edge position if we can't find a valid main position
+            return this.generateEdgePosition(width, height);
+        }
+
+        // Generate a random position
+        const x = width * Math.random();
+        const y = height * Math.random();
+        const cloudRadius = 60; // Smaller radius to allow closer positioning
+        
+        // Check if this position conflicts with content zones
+        if (!this.intersectsContentZone(x, y, cloudRadius, contentZones)) {
+            return { x, y };
+        }
+        
+        // Try again with increased attempts
+        return this.generateValidPosition(viewport, contentZones, attempts + 1);
+    }
+
+    /**
+     * Calculate cloud positions with content avoidance
      */
     calculatePositions(viewport) {
         const { width, height, isMobile } = viewport;
         const positions = [];
-        const mainCloudCount = isMobile ? 3 : 3;
+        const mainCloudCount = isMobile ? 3 : 3; // Optimized cloud count for performance
+        const contentZones = this.getContentZones(viewport);
         
-        // Create unpredictable distribution patterns
-        const distributionMode = Math.floor(Math.random() * 4);
+        console.log('🚫 Content avoidance zones defined:', contentZones.length, 'zones');
+        console.log('📱 Mobile optimized cloud count:', mainCloudCount);
         
-        switch (distributionMode) {
-            case 0: // Clustered sky - clouds grouped together with empty areas
-                const clusterCount = isMobile ? 2 : 3;
-                for (let cluster = 0; cluster < clusterCount; cluster++) {
-                    // Random cluster center
-                    const centerX = width * (0.1 + Math.random() * 0.8);
-                    const centerY = height * (0.1 + Math.random() * 0.7);
-                    const clusterSize = isMobile ? 2 : 2-3;
-                    
-                    for (let i = 0; i < Math.ceil(mainCloudCount / clusterCount); i++) {
-                        if (positions.length < mainCloudCount) {
-                            positions.push({
-                                x: centerX + (Math.random() - 0.5) * width * 0.3,   // Cluster spread
-                                y: centerY + (Math.random() - 0.5) * height * 0.25  // Vertical cluster spread
-                            });
-                        }
-                    }
-                }
-                break;
-                
-            case 1: // Linear formation - clouds following weather patterns
-                const isHorizontal = Math.random() > 0.5;
-                const basePosition = Math.random();
-                
-                for (let i = 0; i < mainCloudCount; i++) {
-                    const progress = i / (mainCloudCount - 1);
-                    const scatter = (Math.random() - 0.5) * 0.2; // Add scatter to line
-                    
-                    if (isHorizontal) {
-                        positions.push({
-                            x: width * (0.05 + progress * 0.9 + scatter),
-                            y: height * (basePosition * 0.6 + 0.1 + scatter)
-                        });
-                    } else {
-                        positions.push({
-                            x: width * (basePosition * 0.6 + 0.1 + scatter),
-                            y: height * (0.05 + progress * 0.8 + scatter)
-                        });
-                    }
-                }
-                break;
-                
-            case 2: // Asymmetric heavy - most clouds on one side
-                const heavySide = Math.random() > 0.5 ? 'left' : 'right';
-                const heavyPercent = 0.7; // 70% of clouds on heavy side
-                const heavyCount = Math.floor(mainCloudCount * heavyPercent);
-                
-                for (let i = 0; i < mainCloudCount; i++) {
-                    if (i < heavyCount) {
-                        // Heavy side clustering
-                        const sideX = heavySide === 'left' 
-                            ? width * (0.05 + Math.random() * 0.45)  // Left 5-50%
-                            : width * (0.55 + Math.random() * 0.4);  // Right 55-95%
-                        positions.push({
-                            x: sideX,
-                            y: height * (0.05 + Math.random() * 0.8)
-                        });
-                    } else {
-                        // Sparse on other side
-                        const sparseX = heavySide === 'left'
-                            ? width * (0.6 + Math.random() * 0.35)   // Right side sparse
-                            : width * (0.05 + Math.random() * 0.4);  // Left side sparse
-                        positions.push({
-                            x: sparseX,
-                            y: height * (0.1 + Math.random() * 0.7)
-                        });
-                    }
-                }
-                break;
-                
-            case 3: // Completely chaotic - pure randomness with weighted zones
-            default:
-                for (let i = 0; i < mainCloudCount; i++) {
-                    // Weighted randomness - prefer certain zones but allow anywhere
-                    const zoneWeight = Math.random();
-                    let xRange, yRange;
-                    
-                    if (zoneWeight < 0.4) {
-                        // 40% chance: Upper sky preference
-                        xRange = { min: 0.0, max: 1.0 };
-                        yRange = { min: 0.0, max: 0.5 };
-                    } else if (zoneWeight < 0.7) {
-                        // 30% chance: Center sky
-                        xRange = { min: 0.2, max: 0.8 };
-                        yRange = { min: 0.2, max: 0.7 };
-                    } else {
-                        // 30% chance: Anywhere (including edges and corners)
-                        xRange = { min: -0.1, max: 1.1 };
-                        yRange = { min: -0.1, max: 1.0 };
-                    }
-                    
-                    positions.push({
-                        x: width * (xRange.min + Math.random() * (xRange.max - xRange.min)),
-                        y: height * (yRange.min + Math.random() * (yRange.max - yRange.min))
-                    });
-                }
+        // Generate clouds while avoiding content zones
+        for (let i = 0; i < mainCloudCount; i++) {
+            const position = this.generateValidPosition(viewport, contentZones);
+            positions.push(position);
+            console.log(`🌥️ Cloud ${i + 1} positioned at (${Math.round(position.x)}, ${Math.round(position.y)})`);
         }
         
-        // Add edge clouds with more variety
-        const edgeCount = isMobile ? 1 : 2;
+        // Add edge clouds with mobile-optimized count
+        const edgeCount = isMobile ? 1 : 2; // Reduce mobile edge clouds for performance
         for (let i = 0; i < edgeCount; i++) {
             positions.push(this.generateEdgePosition(width, height));
         }
@@ -318,7 +343,7 @@ class StaticCloudSystem {
      */
     resolveCollisions(positions, width, height, isMobile) {
         const resolvedPositions = [];
-        const minDistance = isMobile ? 120 : 180; // Minimum distance between cloud centers
+        const minDistance = isMobile ? 40 : 60; // Allow closer clouds for natural overlap
         const maxAttempts = 20; // Prevent infinite loops
         
         for (let i = 0; i < positions.length; i++) {
@@ -946,14 +971,12 @@ class StaticCloudSystem {
     }
 
     /**
-     * Start interval-based regeneration as backup for scroll
+     * Start interval-based regeneration (DISABLED FOR STATIC EXPERIENCE)
      */
     startIntervalRegeneration() {
-        console.log('🔄 Starting interval-based cloud regeneration every 10 seconds');
-        setInterval(() => {
-            console.log('⏰ Interval regeneration triggered');
-            this.regenerateClouds();
-        }, 10000); // Every 10 seconds
+        // Interval-based cloud regeneration has been disabled for a calmer experience
+        // Clouds now remain static throughout the user's visit
+        console.log('🔄 Interval-based cloud regeneration disabled for static experience');
     }
 
     /**
@@ -973,69 +996,83 @@ class StaticCloudSystem {
     bindEvents() {
         console.log('🔧 Setting up event listeners...');
         
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (this.isInitialized) {
-                this.setupCanvas();
-                this.generateClouds();
-                this.render();
-            }
-        });
-
-        // Handle scroll-based cloud regeneration
+        // Setup scroll regeneration (now disabled) and resize handling
         this.setupScrollRegeneration();
         
         console.log('✅ Event listeners setup complete');
     }
 
     /**
-     * Setup scroll-based cloud regeneration
+     * Setup scroll-based cloud regeneration (DISABLED FOR STATIC EXPERIENCE)
      */
     setupScrollRegeneration() {
-        let lastScrollY = window.scrollY;
-        let scrollAccumulator = 0;
-        const scrollThreshold = 200; // Reduced threshold for more responsive regeneration
+        // Cloud regeneration on scroll has been disabled for a calmer, more contemplative experience
+        // The clouds now remain static throughout the user's visit for better UX
+        console.log('🌥️ Scroll-based cloud regeneration disabled for static experience');
         
-        console.log('🌥️ Setting up scroll-based cloud regeneration with threshold:', scrollThreshold);
-        console.log('🌥️ Initial scroll position:', window.scrollY);
+        // Setup debounced resize handling to prevent mobile jumpiness
+        this.setupDebouncedResize();
+    }
+
+    /**
+     * Setup debounced resize handling - MOBILE FULLY STATIC
+     */
+    setupDebouncedResize() {
+        let resizeTimeout;
+        let lastWidth = window.innerWidth;
+        let lastHeight = window.innerHeight;
         
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            const scrollDelta = Math.abs(currentScrollY - lastScrollY);
-            
-            scrollAccumulator += scrollDelta;
-            
-            console.log(`📜 Scroll - Current: ${currentScrollY}, Delta: ${scrollDelta}, Accumulated: ${scrollAccumulator}`);
-            
-            // Regenerate clouds when scroll threshold is reached
-            if (scrollAccumulator >= scrollThreshold) {
-                console.log('🌥️ Scroll threshold reached - regenerating clouds...');
-                this.generateClouds();
-                this.render();
-                scrollAccumulator = 0; // Reset accumulator
-                console.log('✅ Clouds regenerated via scroll');
+        // Use consistent mobile detection method
+        const viewport = this.getViewportDimensions();
+        if (viewport.isMobile) {
+            console.log('📱 Mobile device detected - skipping resize handler setup for fully static experience');
+            return;
+        }
+        
+        const handleResize = () => {
+            // Double-check mobile status on every resize to prevent any mobile interference
+            const currentViewport = this.getViewportDimensions();
+            if (currentViewport.isMobile) {
+                console.log('📱 Mobile detected during resize - aborting handler');
+                return;
             }
             
-            lastScrollY = currentScrollY;
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
+            
+            const currentWidth = window.innerWidth;
+            const currentHeight = window.innerHeight;
+            
+            // Only regenerate if there's a significant dimension change
+            const widthChange = Math.abs(currentWidth - lastWidth);
+            const heightChange = Math.abs(currentHeight - lastHeight);
+            const significantChange = widthChange > 50 || heightChange > 100;
+            
+            if (!significantChange) {
+                console.log('🔇 Ignoring minor resize event');
+                return;
+            }
+            
+            // Debounce regeneration to prevent multiple rapid calls
+            resizeTimeout = setTimeout(() => {
+                if (this.isInitialized) {
+                    console.log('🔄 Significant resize detected - regenerating clouds');
+                    console.log(`📊 Dimension change: ${widthChange}px width, ${heightChange}px height`);
+                    
+                    this.setupCanvas();
+                    this.generateClouds();
+                    this.render();
+                    
+                    // Update last known dimensions
+                    lastWidth = currentWidth;
+                    lastHeight = currentHeight;
+                }
+            }, 250); // 250ms debounce delay
         };
-
-        // Add scroll listener with debugging
-        window.addEventListener('scroll', () => {
-            console.log('🔥 SCROLL EVENT FIRED!'); // Immediate feedback
-            // Use requestAnimationFrame for better performance than setTimeout
-            requestAnimationFrame(handleScroll);
-        });
         
-        console.log('✅ Scroll listener attached for cloud regeneration');
-        
-        // Test scroll detection immediately
-        setTimeout(() => {
-            console.log('🧪 Testing scroll detection...');
-            window.scrollTo(0, 10);
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 100);
-        }, 1000);
+        window.addEventListener('resize', handleResize);
+        console.log('✅ Desktop-only resize handler setup complete');
     }
 }
 
