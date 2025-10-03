@@ -1021,15 +1021,22 @@ class StaticCloudSystem {
         let resizeTimeout;
         let lastWidth = window.innerWidth;
         let lastHeight = window.innerHeight;
-        const isMobile = window.innerWidth <= CloudConfig.MOBILE_BREAKPOINT;
         
-        // MOBILE: Completely static experience - no resize handling at all
-        if (isMobile) {
+        // Use consistent mobile detection method
+        const viewport = this.getViewportDimensions();
+        if (viewport.isMobile) {
             console.log('📱 Mobile device detected - skipping resize handler setup for fully static experience');
             return;
         }
         
         const handleResize = () => {
+            // Double-check mobile status on every resize to prevent any mobile interference
+            const currentViewport = this.getViewportDimensions();
+            if (currentViewport.isMobile) {
+                console.log('📱 Mobile detected during resize - aborting handler');
+                return;
+            }
+            
             if (resizeTimeout) {
                 clearTimeout(resizeTimeout);
             }
