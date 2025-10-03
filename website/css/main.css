@@ -1,0 +1,351 @@
+/* Ultra-Minimal Manifesto Style - Tuku Group */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Cloud Background Component */
+.cloud-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, 
+    #f0f9ff 0%, 
+    #e0f2fe 12%, 
+    rgba(240, 249, 255, 0.6) 25%, 
+    rgba(240, 249, 255, 0.3) 40%, 
+    rgba(240, 249, 255, 0.15) 60%, 
+    rgba(240, 249, 255, 0.05) 80%, 
+    transparent 100%);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.cloud-sketches {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+  opacity: 1;
+  overflow: visible !important;
+}
+
+/* Individual cloud sketch elements with hand-drawn aesthetic */
+.cloud-sketch {
+  filter: blur(0.3px); /* Subtle paper texture effect */
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Vary the sketch qualities for each cloud - like different pencil pressures */
+.cloud-1 {
+  opacity: 0.85;
+  filter: blur(0.25px);
+}
+
+.cloud-2 {
+  opacity: 0.75;
+  filter: blur(0.35px);
+}
+
+.cloud-3 {
+  opacity: 0.65;
+  filter: blur(0.4px);
+}
+
+.cloud-4 {
+  opacity: 0.55;
+  filter: blur(0.45px);
+}
+
+/* Responsive adjustments for cloud visibility */
+@media (max-width: 768px) {
+  .cloud-sketches {
+    opacity: 0.9; /* Slightly more visible on mobile for clarity */
+  }
+  
+  .cloud-sketch {
+    filter: blur(0.2px); /* Less blur on mobile screens */
+  }
+}
+
+.cloud-refresh-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  font-size: 0.75rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #5691c8;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: none;
+  border: none;
+  padding: 8px;
+  background: none;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+  z-index: 100;
+  cursor: pointer;
+  max-width: calc(50vw - 40px);
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+.cloud-refresh-link:hover {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+}
+
+.cloud-refresh-link:active {
+  opacity: 1;
+  transform: none;
+}
+
+/* Special hover state for cloud refresh - subtle indication */
+.cloud-refresh-link:hover {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+  color: #4a7ba7; /* Slightly deeper blue to match sky gradient */
+}
+
+.cloud-refresh-link:focus {
+  outline: none;
+}
+
+/* Mobile adjustments for refresh link */
+@media (max-width: 768px) {
+  .cloud-refresh-link {
+    top: 16px;
+    right: 16px;
+    font-size: 0.7rem;
+    max-width: calc(50vw - 32px);
+    transition: opacity 0.2s ease;
+  }
+  
+  .cloud-refresh-link:hover {
+    transform: none;
+  }
+  
+  /* Prevent mobile layout shifts */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  .page {
+    transform: translateZ(0);
+  }
+  
+  h1 {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Reduced motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  .cloud-sketch {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Ensure body and main content are positioned properly */
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  will-change: auto;
+}
+
+/* Prevent layout shifts on mobile */
+h1 {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+:root {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gold: #C19A4B;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.block {
+  margin-bottom: 80px;
+}
+
+.block:last-child {
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+a {
+  color: var(--color-black);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  border-bottom: 1px solid var(--color-black);
+  padding-bottom: 1px;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+.footer {
+  margin-top: 120px;
+  opacity: 0.6;
+}
+
+.footer p {
+  font-size: 0.75rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .page {
+    padding: 30px 16px;
+  }
+  
+  .block {
+    margin-bottom: 60px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .footer {
+    margin-top: 80px;
+  }
+}
+
+/* Philosophy headers */
+.philosophy-header {
+  color: var(--color-gold);
+}
+
+/* Accessibility - Visually Hidden */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* SIGNALS Link */
+.signals-link {
+  color: var(--color-black);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-black);
+  padding-bottom: 1px;
+  transition: opacity 0.2s ease;
+  font-weight: 500;
+}
+
+.signals-link:hover {
+  opacity: 0.7;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+::-moz-selection {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Static Cloud Sketches - No Animation */
+
+/* Completely static clouds with hand-drawn aesthetic */
+.cloud-sketch {
+  transform-origin: center;
+  /* All animations and transitions removed */
+}
+
+/* Cloud base styles - completely static */
+.cloud-1 {
+  opacity: 0.8;
+}
+
+.cloud-2 {
+  opacity: 0.9;
+}
+
+.cloud-3 {
+  opacity: 0.7;
+}
+
+.cloud-4 {
+  opacity: 0.85;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .cloud-sketch {
+    animation: none;
+  }
+}
