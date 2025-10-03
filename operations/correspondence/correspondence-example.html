@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuku Group - Correspondence Template</title>
+    <meta name="description" content="Tuku Group professional correspondence template with contemplative cloud background.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Reuse existing CSS -->
+    <link rel="stylesheet" href="css/main.css?v=1.5">
+    
+    <style>
+        /* Correspondence Template Styles */
+        .correspondence-template {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        .letterhead {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .company-name {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.025em;
+            margin-bottom: 10px;
+            font-synthesis: none;
+        }
+        
+        .company-tagline {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+        }
+        
+        .correspondence-content {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-black);
+            font-synthesis: none;
+            line-height: 1.65;
+        }
+        
+        /* Style inline bullet points within paragraphs */
+        .paragraph {
+            position: relative;
+        }
+        
+        .paragraph br {
+            line-height: 1.4;
+        }
+        
+        .subject-line {
+            font-weight: 500;
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .greeting {
+            margin-bottom: 20px;
+        }
+        
+        .paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 42px 0 22px 0;
+            color: var(--color-gold);
+            letter-spacing: -0.02em;
+            font-synthesis: none;
+        }
+        
+        .subsection-header {
+            font-size: 1.05rem;
+            font-weight: 450;
+            margin: 32px 0 16px 0;
+            letter-spacing: -0.01em;
+            font-synthesis: none;
+        }
+        
+        .bullet-list {
+            margin: 16px 0;
+            padding-left: 22px;
+        }
+        
+        .bullet-list li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .inline-bullet {
+            font-size: 0.85em;
+            opacity: 0.8;
+            display: block;
+            margin: 4px 0;
+        }
+        
+        .signature {
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .signature-line {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .signature-name {
+            font-weight: 500;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 50px 0;
+            opacity: 0.5;
+            font-size: 1.2rem;
+        }
+        
+        .estimate {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px 20px;
+            border-left: 3px solid var(--color-gold);
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        
+        .closing-statement {
+            background: rgba(240, 249, 255, 0.5);
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 4px;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .correspondence-template {
+                padding: 30px 16px;
+            }
+            
+            .company-name {
+                font-size: 1.5rem;
+            }
+            
+            .section-header {
+                font-size: 1.2rem;
+            }
+            
+            .paragraph {
+                text-align: left;
+            }
+        }
+        
+        /* Static Cloud Background for Correspondence */
+        .static-cloud-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, 
+                #f0f9ff 0%, 
+                #e0f2fe 12%, 
+                rgba(240, 249, 255, 0.6) 25%, 
+                rgba(240, 249, 255, 0.3) 40%, 
+                rgba(240, 249, 255, 0.15) 60%, 
+                rgba(240, 249, 255, 0.05) 80%, 
+                transparent 100%);
+            pointer-events: none;
+            z-index: -10;
+        }
+
+        .static-cloud-background::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 120px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 60px;
+            opacity: 0.3;
+        }
+
+        /* Smaller supporting cloud - right side */
+        .static-cloud-background::after {
+            content: '';
+            position: absolute;
+            top: 25%;
+            right: 15%;
+            width: 80px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            opacity: 0.25;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .correspondence-template {
+                padding: 20px;
+            }
+            
+            .static-cloud-background::before,
+            .static-cloud-background::after {
+                opacity: 0.15;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Static Cloud Background for Correspondence -->
+    <div class="static-cloud-background">
+        <!-- Static decorative clouds for readability -->
+    </div>
+
+    <!-- Correspondence Content -->
+    <main class="correspondence-template">
+        <header class="letterhead">
+            <div class="company-name">TUKU GROUP</div>
+            <div class="company-tagline">Independent ideas. Thoughtful brands. Assembled with intention.</div>
+        </header>
+        
+        <div class="correspondence-content">
+            <div class="greeting">
+                Dear Ravi,
+            </div>
+            
+            <div class="paragraph">
+                We've been thinking about CRYPTOGAINS' business model — and we need to clarify which system you want us to architect. Are we building for your <strong>Premium Package</strong> (annual advisory fee + 33% at liquidation) or your <strong>Concierge Service</strong> ($5k setup + 20% at doubles/triples + 300% renewal cycles)?
+            </div>
+            
+            <div class="paragraph">
+                The technical foundation differs significantly between these approaches, so let's align on the service model first.
+            </div>
+            
+            <div class="divider">∗</div>
+            
+            <div class="paragraph">
+                We've been studying your Concierge Service spreadsheets — how you track Tony's $114k across 30+ assets, Logan's concentrated 15-asset approach, Matt's lean $10k starter portfolio. There's something elegant about the rules you've built: $5k setup, 20% profit on doubles AND triples, renewal at 300% portfolio growth.
+            </div>
+            
+            <div class="paragraph">
+                What if we could take that logic and make it <em>architectural</em>? Not just digitize the spreadsheet, but create a system that thinks the way you think about portfolio cycles and milestone events.
+            </div>
+            
+            <div class="paragraph">
+                Here's what we see:
+            </div>
+            
+            <div class="divider">∗</div>
+            
+            <h1 class="section-header">THE BLUEPRINT</h1>
+            <div style="font-style: italic; opacity: 0.7; margin-bottom: 40px;">CRYPTOGAINS Portfolio Architecture</div>
+            
+            <h2 class="section-header">Foundation Layer</h2>
+            
+            <div class="paragraph">
+                <strong>What we build first.</strong> An advisor's command center that knows your rules and enforces them quietly in the background.
+            </div>
+            
+            <div class="paragraph">
+                <strong>Cycle Management</strong><br>
+                Every client gets a baseline. Logan's 9/29/25 setup becomes the fixed reference point — no more manual tracking of "where we started."
+            </div>
+            
+            <div class="paragraph">
+                <strong>Lot Architecture</strong><br>
+                Tony's 12.5 ETH at $3,200 lives as one discrete unit. The system remembers every purchase, every price, every entry point.
+            </div>
+            
+            <div class="paragraph">
+                <strong>Price Intelligence</strong><br>
+                Matt's "rounded off value" column disappears. CoinGecko feeds become the single source of truth, updating silently.
+            </div>
+            
+            <div class="paragraph">
+                <strong>Milestone Detection</strong><br>
+                The moment ETH moves from $2,000 to $4,000, the system knows. Hit $6,000? Second 20% fee event. BTC goes $40k → $80k → $120k? Two separate profit alerts. Every milestone tracked, every fee calculated automatically.
+            </div>
+            
+            <div class="paragraph">
+                <strong>Dashboard (Lean MVP)</strong><br>
+                You log in. See: Tony (+140%, 1 fee pending), Logan (+220%, watching), Matt (+85%, no events). The essentials, nothing more.
+            </div>
+            
+            <div class="paragraph">
+                <strong>Manual Billing</strong><br>
+                For now, the system surfaces alerts. You prepare invoices. Full control stays with you.
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0; opacity: 0.6; font-style: italic;">Foundation: 50–65 hours</div>
+            
+            <div class="divider">∗</div>
+            
+            <h2 class="section-header">Extension Layer</h2>
+            
+            <div class="paragraph">
+                <strong>What we add when you're ready.</strong> Client portals replace emailed spreadsheets. Stripe integration makes billing automatic. Analytics provide visual insights. The foundation scales to 100+ clients without breaking.
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0; opacity: 0.6; font-style: italic;">Extensions: +25–60 hours (modular)</div>
+            
+            <div class="divider">∗</div>
+            
+            <h2 class="section-header">Language System</h2>
+            
+            <div class="paragraph">
+                Every system needs shared vocabulary. We'll build yours around the terms already in your workflow:
+            </div>
+            
+            <div class="paragraph">
+                <strong>CYCLE</strong> → Portfolio lifecycle from $5k setup to 300% renewal<br>
+                <strong>MILESTONE</strong> → Price events that trigger 20% fees (2×, 3×) and portfolio renewal (300%)<br>
+                <strong>TRIGGER</strong> → The exact moment a threshold is crossed<br>
+                <strong>SNAPSHOT</strong> → Recorded reference price at portfolio setup<br>
+                <strong>LOT</strong> → Single asset purchase (units × entry price)
+            </div>
+            
+            <div class="divider">∗</div>
+            
+            <h2 class="section-header">Open Questions</h2>
+            
+            <div class="paragraph">
+                Before we build, let's settle the details that will shape everything:
+            </div>
+            
+            <div class="paragraph">
+                <strong>Data source</strong> — CoinGecko's free tier or premium feeds?<br>
+                <strong>Mid-cycle funds</strong> — New $25k deposit: fresh cycle or blended baseline?<br>
+                <strong>Access model</strong> — Keep it advisor-only or add client logins later?<br>
+                <strong>Billing approach</strong> — Manual control vs. automated invoicing?<br>
+                <strong>Tracking granularity</strong> — Every lot separate or aggregate by asset?
+            </div>
+            
+            <div class="divider">∗</div>
+            
+            <h2 class="section-header">How We Work</h2>
+            
+            <div class="paragraph">
+                <strong>Discovery</strong> (10–15 hrs) → We map your current workflow, identify edge cases, finalize the data model<br>
+                <strong>Foundation</strong> (40–50 hrs) → We build the MVP that handles your core rules<br>
+                <strong>Extensions</strong> (25–60 hrs) → We add features as CRYPTOGAINS grows
+            </div>
+            
+            <div class="divider">∗</div>
+            
+            <div class="paragraph">
+                This isn't a scope document. It's an invitation to collaborate on something that feels like it was designed specifically for the way you think about portfolio management.
+            </div>
+            
+            <div class="paragraph">
+                At Tuku Group, we don't digitize workflows — we design systems that think.
+            </div>
+            
+            <div class="signature" style="margin-top: 50px;">
+                <div class="signature-name">Tuku Group</div>
+                <div style="font-size: 0.8em; opacity: 0.6; margin-top: 10px;">October 2025</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        console.log('✅ Correspondence template loaded with static decorative clouds');
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuku Group - Custom Quote Template</title>
+    <meta name="description" content="Customizable Tuku Group quote and correspondence template.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Reuse existing CSS -->
+    <link rel="stylesheet" href="css/main.css?v=1.5">
+    
+    <style>
+        /* Quote Template Specific Styles */
+        .quote-template {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .quote-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .quote-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .quote-text {
+            font-size: 1.25rem;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0 0 40px 0;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quote-attribution {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+        
+        .quote-footer {
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.75rem;
+            margin-top: 60px;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .quote-template {
+                padding: 40px 16px;
+            }
+            
+            .quote-header {
+                font-size: 1.25rem;
+                margin-bottom: 40px;
+            }
+            
+            .quote-text {
+                font-size: 1.1rem;
+                line-height: 1.5;
+            }
+            
+            .quote-attribution {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .cloud-refresh-link {
+                display: none;
+            }
+            
+            .quote-template {
+                min-height: auto;
+                padding: 40px 20px;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Same Cloud Background Component -->
+    <div class="cloud-background">
+        <!-- Canvas will be created dynamically by JavaScript -->
+    </div>
+
+    <!-- Cloud Refresh Link -->
+    <a href="#" class="cloud-refresh-link" onclick="event.preventDefault(); if(window.StaticCloudSystem) { window.StaticCloudSystem.regenerateClouds(); } else { window.location.reload(true); } return false;">what do you see?</a>
+
+    <!-- CUSTOMIZABLE QUOTE TEMPLATE -->
+    <main class="quote-template">
+        <header class="quote-header">
+            <!-- EDIT THIS: Company/Brand Name -->
+            TUKU GROUP
+        </header>
+        
+        <div class="quote-content">
+            <blockquote class="quote-text">
+                <!-- EDIT THIS: Your quote content -->
+                "[Your quote text goes here. Keep it thoughtful and intentional, aligned with the craft over noise philosophy.]"
+            </blockquote>
+            
+            <div class="quote-attribution">
+                <!-- EDIT THIS: Attribution -->
+                — [Author Name or Source]
+            </div>
+        </div>
+        
+        <footer class="quote-footer">
+            <!-- EDIT THIS: Footer text -->
+            <p>© 2025 [Your Company], LLC.<br>[Your tagline or description]</p>
+        </footer>
+    </main>
+
+    <!-- Same Cloud System -->
+    <script src="cloud-system-static.js"></script>
+    
+    <script>
+        // Cloud system is handled by external cloud-system-static.js file
+        console.log('✅ Custom quote template loaded with static cloud system');
+    </script>
+</body>
+</html>

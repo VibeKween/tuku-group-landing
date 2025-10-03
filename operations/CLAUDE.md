@@ -74,6 +74,37 @@ find . -name "*.css" -exec sed -i '' 's/old-contact@/new-contact@/g' {} +
 
 **Root Cause Prevention:** This process prevents inconsistencies between page content, meta data, and component-specific information.
 
+## Document Flow Methodology
+
+**CRITICAL: Anchor → Reference Pattern - Professional Document Flow**
+
+**TUKU Group Standard:** This writing principle applies across all TUKU Group proposals, correspondence, and technical documentation.
+
+When presenting complex information (business models, technical specifications, financial structures), always follow this flow pattern:
+
+### **The Anchor → Reference Pattern:**
+1. **Establish the anchor** - Present complete details once, early in the document
+2. **Create the namespace** - Use consistent terminology to reference back  
+3. **Maintain reference flow** - Subsequent mentions use the established namespace without repeating details
+
+### **Example Implementation:**
+- **Anchor**: "CONCIERGE service (also called PREMIUM PACKAGE) with its $5k setup, 20% performance fees on individual doubles, and 300% portfolio growth target"
+- **Namespace**: "CONCIERGE/PREMIUM PACKAGE", "this fee structure", "asset-level performance fees"
+- **References**: All subsequent mentions use the namespace, not the full details
+
+### **Benefits:**
+- **Reduces redundancy** while maintaining clarity
+- **Creates professional flow** that respects reader intelligence  
+- **Establishes authority** through precise initial definition
+- **Enables concise references** throughout the document
+
+### **Application Areas:**
+- **Business proposals**: Fee structures, service definitions, technical requirements
+- **Correspondence**: Project specifications, client portfolios, strategic frameworks
+- **Technical documentation**: System architectures, component specifications, workflow processes
+
+**Root Cause Prevention:** This methodology prevents document fatigue from repetitive details while ensuring readers have complete context for understanding complex concepts.
+
 ## Project Overview
 
 Original Tuku Group landing page - the foundation manifesto site that established the design system and brand philosophy for all subsequent projects.

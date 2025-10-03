@@ -1,0 +1,41 @@
+GMAIL SIGNATURE - COPY THIS CODE EXACTLY:
+
+<table cellpadding="0" cellspacing="0" border="0" style="font-family: 'JetBrains Mono', 'Courier New', monospace; max-width: 380px;">
+    <tr>
+        <td style="background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 40%, rgba(240, 249, 255, 0.4) 80%, transparent 100%); padding: 18px 20px; border-radius: 6px;">
+            <div style="text-align: center;">
+                <div style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 16px; font-weight: bold; letter-spacing: -0.025em; margin-bottom: 8px; color: #000000; font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+                    FALON | <strong>TUKU GROUP</strong>
+                </div>
+                <div style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 11px; opacity: 0.75; font-style: italic; font-weight: 300; color: #000000; line-height: 1.4; font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+                    Independent ideas. Thoughtful brands. Assembled with intention.
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+GMAIL SETUP INSTRUCTIONS:
+1. Select and copy the HTML code above (from <table to </table>)
+2. Open Gmail → Settings (gear icon) → "See all settings"
+3. Go to "General" tab → Scroll to "Signature" section
+4. Click the formatting toolbar icon (looks like "Aa") → "Edit HTML"
+5. Paste the copied HTML code
+6. Click "OK" → Save Changes
+
+FALLBACK VERSION (No Gradient):
+
+<table cellpadding="0" cellspacing="0" border="0" style="font-family: 'JetBrains Mono', 'Courier New', monospace;">
+    <tr>
+        <td style="padding: 15px 0; border-top: 1px solid #e0e0e0;">
+            <div style="text-align: left;">
+                <div style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 16px; font-weight: bold; letter-spacing: -0.025em; margin-bottom: 8px; color: #000000; font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+                    FALON | <strong>TUKU GROUP</strong>
+                </div>
+                <div style="font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 11px; opacity: 0.75; font-style: italic; font-weight: 300; color: #000000; line-height: 1.3; font-synthesis: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">
+                    Independent ideas. Thoughtful brands. Assembled with intention.
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>

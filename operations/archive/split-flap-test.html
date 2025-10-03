@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split-Flap Display Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background-color: #fff;
+            color: #000;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .split-flap-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .split-flap-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status-light {
+            width: 12px;
+            height: 12px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .status-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+
+        .split-flap-display {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+        }
+
+        .flap-char {
+            width: 20px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 500;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .flap-char-inner {
+            transition: transform 60ms ease-in-out;
+        }
+
+        /* Responsive breakpoints */
+        @media (max-width: 1023px) {
+            .flap-char {
+                width: 18px;
+                height: 28px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .flap-char {
+                width: 14px;
+                height: 24px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .flap-char {
+                width: 12px;
+                height: 20px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="split-flap-container">
+        <div class="split-flap-status">
+            <div class="status-light"></div>
+            <span class="status-text">IN PROGRESS</span>
+        </div>
+        <div class="split-flap-display" id="splitFlapDisplay"></div>
+    </div>
+
+    <script>
+        class SplitFlapDisplay {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.phrases = [
+                    "OF THE CULTURE",
+                    "CRYPTOGAINS", 
+                    "CDT GLOBAL",
+                    "[REDACTED]"
+                ];
+                this.currentPhraseIndex = 0;
+                this.maxLength = Math.max(...this.phrases.map(phrase => phrase.length));
+                this.characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                this.isAnimating = false;
+                
+                this.init();
+                this.startCycle();
+            }
+
+            init() {
+                // Create character slots
+                this.container.innerHTML = '';
+                for (let i = 0; i < this.maxLength; i++) {
+                    const charSlot = document.createElement('div');
+                    charSlot.className = 'flap-char';
+                    charSlot.innerHTML = '<div class="flap-char-inner"> </div>';
+                    this.container.appendChild(charSlot);
+                }
+                this.charSlots = this.container.querySelectorAll('.flap-char');
+            }
+
+            async animateToPhrase(phrase) {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+                
+                const paddedPhrase = phrase.padEnd(this.maxLength, ' ');
+                const currentText = Array.from(this.charSlots).map(slot => 
+                    slot.querySelector('.flap-char-inner').textContent
+                );
+
+                // Identify positions that need clearing (trailing characters)
+                const clearingPositions = [];
+                for (let i = phrase.length; i < this.maxLength; i++) {
+                    if (currentText[i] && currentText[i] !== ' ') {
+                        clearingPositions.push(i);
+                    }
+                }
+
+                // Start animation with 100ms delay
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                // First pass: Clear trailing characters with smooth, fast animation
+                if (clearingPositions.length > 0) {
+                    const clearPromises = clearingPositions.map(async (pos, idx) => {
+                        // Stagger the clearing slightly for fluid effect
+                        await new Promise(resolve => setTimeout(resolve, idx * 15));
+                        await this.animateCharacter(pos, ' ', currentText[pos], 'clear');
+                    });
+                    await Promise.all(clearPromises);
+                    
+                    // Brief pause after clearing
+                    await new Promise(resolve => setTimeout(resolve, 40));
+                }
+
+                // Second pass: Animate to new characters sequentially
+                for (let i = 0; i < phrase.length; i++) {
+                    const targetChar = paddedPhrase[i];
+                    const currentChar = this.charSlots[i].querySelector('.flap-char-inner').textContent;
+                    
+                    if (targetChar !== currentChar) {
+                        await this.animateCharacter(i, targetChar, currentChar, 'normal');
+                    }
+                    
+                    // Smooth delay before next character
+                    const delay = targetChar === ' ' ? 20 : 45;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+                
+                this.isAnimating = false;
+            }
+
+            async animateCharacter(index, targetChar, currentChar, animationType = 'normal') {
+                const charSlot = this.charSlots[index];
+                const charInner = charSlot.querySelector('.flap-char-inner');
+                
+                // Determine animation parameters based on type
+                let cycles, speed;
+                
+                if (animationType === 'clear') {
+                    // Ultra-smooth clearing animation
+                    cycles = 3;
+                    speed = 35;
+                } else if (targetChar === ' ') {
+                    // Space animation - very fast
+                    cycles = 1;
+                    speed = 18;
+                } else if (currentChar === ' ') {
+                    // Emerging from space - slightly more cycles for impact
+                    cycles = 5;
+                    speed = 65;
+                } else {
+                    // Normal character change
+                    cycles = 6;
+                    speed = 70;
+                }
+
+                // Animate through random characters with smooth progression
+                for (let cycle = 0; cycle < cycles; cycle++) {
+                    const randomChar = this.characters[Math.floor(Math.random() * this.characters.length)];
+                    charInner.textContent = randomChar;
+                    
+                    // Slightly vary timing for more organic feel
+                    const variance = Math.random() * 10 - 5; // ±5ms variance
+                    await new Promise(resolve => setTimeout(resolve, speed + variance));
+                }
+
+                // Set final character with a slight pause for emphasis
+                charInner.textContent = targetChar;
+                await new Promise(resolve => setTimeout(resolve, 10));
+            }
+
+            startCycle() {
+                const animateNext = async () => {
+                    const phrase = this.phrases[this.currentPhraseIndex];
+                    await this.animateToPhrase(phrase);
+                    
+                    this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.phrases.length;
+                    
+                    // Wait 4 seconds before next phrase
+                    setTimeout(animateNext, 4000);
+                };
+
+                // Start immediately
+                animateNext();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new SplitFlapDisplay('splitFlapDisplay');
+        });
+    </script>
+</body>
+</html>
