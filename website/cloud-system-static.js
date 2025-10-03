@@ -9,7 +9,7 @@
 const CloudConfig = Object.freeze({
     MOBILE_BREAKPOINT: 768,
     SCALE_FACTORS: { MOBILE: 1.0, DESKTOP: 1.4 },
-    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Further reduced for cleaner, contemplative sky
+    CLOUD_COUNTS: { MOBILE: 4, DESKTOP: 5 },  // Mobile optimized count for performance while maintaining visibility
     COLORS: {
         FILL: 'rgba(255, 255, 255, 0.85)',
         STROKE: 'rgba(135, 170, 200, 0.7)', // Complementary sky blue
@@ -121,16 +121,35 @@ class StaticCloudSystem {
     }
 
     /**
-     * Setup canvas dimensions
+     * Setup canvas dimensions with mobile optimizations
      */
     setupCanvas() {
         const viewport = this.getViewportDimensions();
-        this.canvas.width = viewport.width;
-        this.canvas.height = viewport.height;
+        
+        // Mobile optimization: Use device pixel ratio for crisp rendering
+        const dpr = window.devicePixelRatio || 1;
+        const isMobile = viewport.isMobile;
+        
+        // Mobile optimization: Limit DPR to prevent excessive memory usage
+        const optimizedDPR = isMobile ? Math.min(dpr, 2) : dpr;
+        
+        this.canvas.width = viewport.width * optimizedDPR;
+        this.canvas.height = viewport.height * optimizedDPR;
         
         // Set canvas style dimensions
         this.canvas.style.width = viewport.width + 'px';
         this.canvas.style.height = viewport.height + 'px';
+        
+        // Scale canvas context for high DPI displays
+        this.ctx.scale(optimizedDPR, optimizedDPR);
+        
+        // Mobile optimization: Set canvas rendering hints
+        if (isMobile) {
+            this.ctx.imageSmoothingEnabled = false; // Disable for better performance
+            this.ctx.imageSmoothingQuality = 'low';
+        }
+        
+        console.log(`🖥️ Canvas setup: ${viewport.width}x${viewport.height} @ ${optimizedDPR}x DPR (mobile: ${isMobile})`);
     }
 
     /**
@@ -296,7 +315,7 @@ class StaticCloudSystem {
     calculatePositions(viewport) {
         const { width, height, isMobile } = viewport;
         const positions = [];
-        const mainCloudCount = isMobile ? 4 : 3; // More clouds on mobile for better visibility
+        const mainCloudCount = isMobile ? 3 : 3; // Optimized cloud count for performance
         const contentZones = this.getContentZones(viewport);
         
         console.log('🚫 Content avoidance zones defined:', contentZones.length, 'zones');
@@ -309,8 +328,8 @@ class StaticCloudSystem {
             console.log(`🌥️ Cloud ${i + 1} positioned at (${Math.round(position.x)}, ${Math.round(position.y)})`);
         }
         
-        // Add edge clouds with more variety
-        const edgeCount = isMobile ? 2 : 2; // Increase mobile edge clouds
+        // Add edge clouds with mobile-optimized count
+        const edgeCount = isMobile ? 1 : 2; // Reduce mobile edge clouds for performance
         for (let i = 0; i < edgeCount; i++) {
             positions.push(this.generateEdgePosition(width, height));
         }
@@ -991,15 +1010,57 @@ class StaticCloudSystem {
         // The clouds now remain static throughout the user's visit for better UX
         console.log('🌥️ Scroll-based cloud regeneration disabled for static experience');
         
-        // Only regenerate clouds on window resize to maintain proper sizing
-        window.addEventListener('resize', () => {
-            if (this.isInitialized) {
-                console.log('🔄 Window resized - regenerating clouds for new dimensions');
-                this.setupCanvas();
-                this.generateClouds();
-                this.render();
+        // Setup debounced resize handling to prevent mobile jumpiness
+        this.setupDebouncedResize();
+    }
+
+    /**
+     * Setup debounced resize handling to prevent mobile jumpiness
+     */
+    setupDebouncedResize() {
+        let resizeTimeout;
+        let lastWidth = window.innerWidth;
+        let lastHeight = window.innerHeight;
+        
+        const handleResize = () => {
+            // Clear any pending resize handler
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
             }
-        });
+            
+            const currentWidth = window.innerWidth;
+            const currentHeight = window.innerHeight;
+            
+            // Only regenerate if there's a significant dimension change
+            // This prevents regeneration from iOS Safari address bar changes
+            const widthChange = Math.abs(currentWidth - lastWidth);
+            const heightChange = Math.abs(currentHeight - lastHeight);
+            const significantChange = widthChange > 50 || heightChange > 100;
+            
+            if (!significantChange) {
+                console.log('🔇 Ignoring minor resize event (mobile viewport adjustment)');
+                return;
+            }
+            
+            // Debounce regeneration to prevent multiple rapid calls
+            resizeTimeout = setTimeout(() => {
+                if (this.isInitialized) {
+                    console.log('🔄 Significant window resize detected - regenerating clouds');
+                    console.log(`📊 Dimension change: ${widthChange}px width, ${heightChange}px height`);
+                    
+                    this.setupCanvas();
+                    this.generateClouds();
+                    this.render();
+                    
+                    // Update last known dimensions
+                    lastWidth = currentWidth;
+                    lastHeight = currentHeight;
+                }
+            }, 250); // 250ms debounce delay
+        };
+        
+        window.addEventListener('resize', handleResize);
+        console.log('✅ Debounced resize handler setup complete');
     }
 }
 
