@@ -1015,15 +1015,21 @@ class StaticCloudSystem {
     }
 
     /**
-     * Setup debounced resize handling to prevent mobile jumpiness
+     * Setup debounced resize handling - MOBILE FULLY STATIC
      */
     setupDebouncedResize() {
         let resizeTimeout;
         let lastWidth = window.innerWidth;
         let lastHeight = window.innerHeight;
+        const isMobile = window.innerWidth <= CloudConfig.MOBILE_BREAKPOINT;
+        
+        // MOBILE: Completely static experience - no resize handling at all
+        if (isMobile) {
+            console.log('📱 Mobile device detected - skipping resize handler setup for fully static experience');
+            return;
+        }
         
         const handleResize = () => {
-            // Clear any pending resize handler
             if (resizeTimeout) {
                 clearTimeout(resizeTimeout);
             }
@@ -1032,20 +1038,19 @@ class StaticCloudSystem {
             const currentHeight = window.innerHeight;
             
             // Only regenerate if there's a significant dimension change
-            // This prevents regeneration from iOS Safari address bar changes
             const widthChange = Math.abs(currentWidth - lastWidth);
             const heightChange = Math.abs(currentHeight - lastHeight);
             const significantChange = widthChange > 50 || heightChange > 100;
             
             if (!significantChange) {
-                console.log('🔇 Ignoring minor resize event (mobile viewport adjustment)');
+                console.log('🔇 Ignoring minor resize event');
                 return;
             }
             
             // Debounce regeneration to prevent multiple rapid calls
             resizeTimeout = setTimeout(() => {
                 if (this.isInitialized) {
-                    console.log('🔄 Significant window resize detected - regenerating clouds');
+                    console.log('🔄 Significant resize detected - regenerating clouds');
                     console.log(`📊 Dimension change: ${widthChange}px width, ${heightChange}px height`);
                     
                     this.setupCanvas();
@@ -1060,7 +1065,7 @@ class StaticCloudSystem {
         };
         
         window.addEventListener('resize', handleResize);
-        console.log('✅ Debounced resize handler setup complete');
+        console.log('✅ Desktop-only resize handler setup complete');
     }
 }
 
