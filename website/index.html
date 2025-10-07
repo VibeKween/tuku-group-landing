@@ -118,9 +118,6 @@
         <!-- Canvas will be created dynamically by JavaScript -->
     </div>
 
-    <!-- Cloud Refresh Link -->
-    <a href="#" class="cloud-refresh-link" onclick="event.preventDefault(); if(window.StaticCloudSystem) { window.StaticCloudSystem.regenerateClouds(); } else { window.location.reload(true); } return false;">what do you see?</a>
-
     <!-- Static Cloud System - External JS -->
     <script src="cloud-system-static.js"></script>
     
@@ -131,6 +128,9 @@
 
     <!-- Main Content Layer -->
     <main class="page">
+        
+        <!-- Cloud Refresh Link -->
+        <a href="#" class="cloud-refresh-link" onclick="event.preventDefault(); if(window.StaticCloudSystem) { window.StaticCloudSystem.regenerateClouds(); } else { window.location.reload(true); } return false;">what do you see?</a>
         
         <section class="block">
             <h1>TUKU GROUP</h1>
@@ -172,6 +172,10 @@
 
         <section class="block">
             <p>If the fit is right, we scope something small and ship it well.</p>
+        </section>
+
+        <section class="block">
+            <a href="payment/">Work with us</a>
         </section>
 
         <section class="block">
