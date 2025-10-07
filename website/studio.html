@@ -53,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="studio/payment.css">
+  <link rel="stylesheet" href="css/main.css">
   
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
@@ -141,7 +141,7 @@
   </div>
 
   <!-- Static Cloud System - External JS -->
-  <script src="studio/cloud-system-static.js"></script>
+  <script src="cloud-system-static.js"></script>
   
   <main class="container">
     
@@ -176,56 +176,27 @@
       <p>Ongoing guidance remains open -<br>strategic support that adapts as you do.</p>
     </section>
 
-    <!-- Step 1: Service Selection -->
-    <section id="step-select" class="step active">
-      <section class="block services-section">
-        <p><span class="section-label">Engagement options</span></p>
-        <div class="services" id="services-list">
-          <!-- Generated dynamically -->
-        </div>
-      </section>
-
-      <section class="block form-section">
-        <a href="mailto:tukugroupllc@gmail.com?subject=TUKU%20%7C%20Service%20Inquiry" 
-           id="schedule-btn" 
-           class="btn-primary">
-          Schedule your project
-        </a>
-      </section>
+    <section class="block">
+      <p><a href="mailto:tukugroupllc@gmail.com?subject=TUKU%20%7C%20Let's%20start%20a%20conversation" class="inline-link">Start a conversation</a></p>
     </section>
 
 
   </main>
 
-  <script src="studio/payment.js"></script>
-  
-  <!-- Enhanced Analytics Event Tracking for Services Page -->
+  <!-- Clean Analytics for Static Page -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Track service package selection clicks
-      const serviceButtons = document.querySelectorAll('.service-package');
-      serviceButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const serviceName = this.querySelector('h3').textContent;
-          gtag('event', 'service_selection', {
-            'event_category': 'services',
-            'event_label': serviceName.toLowerCase().replace(/\s+/g, '_'),
+      // Track contact link clicks
+      const contactLinks = document.querySelectorAll('a[href^="mailto:"]');
+      contactLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'contact_click', {
+            'event_category': 'engagement',
+            'event_label': 'studio_contact',
             'page_location': window.location.href
           });
         });
       });
-      
-      // Track schedule project button clicks
-      const scheduleBtn = document.getElementById('schedule-btn');
-      if (scheduleBtn) {
-        scheduleBtn.addEventListener('click', function() {
-          gtag('event', 'schedule_project', {
-            'event_category': 'conversion',
-            'event_label': 'schedule_project_email',
-            'page_location': window.location.href
-          });
-        });
-      }
       
       // Track cloud refresh interactions
       const cloudRefresh = document.querySelector('.cloud-refresh-link');
@@ -233,31 +204,11 @@
         cloudRefresh.addEventListener('click', function() {
           gtag('event', 'cloud_interaction', {
             'event_category': 'engagement',
-            'event_label': 'what_do_you_see_services',
+            'event_label': 'what_do_you_see_studio',
             'page_location': window.location.href
           });
         });
       }
-      
-      // Track scroll depth milestones
-      let scrollDepthTracked = [];
-      window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = Math.round((scrollTop / docHeight) * 100);
-        
-        [25, 50, 75, 100].forEach(milestone => {
-          if (scrollPercent >= milestone && !scrollDepthTracked.includes(milestone)) {
-            scrollDepthTracked.push(milestone);
-            gtag('event', 'scroll_depth', {
-              'event_category': 'engagement',
-              'event_label': `${milestone}_percent_services`,
-              'value': milestone,
-              'page_location': window.location.href
-            });
-          }
-        });
-      });
     });
   </script>
 </body>
