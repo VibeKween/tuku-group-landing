@@ -27,6 +27,36 @@ When encountering any issue, always follow this refined process:
 
 **Example:** Font weight inconsistency between accordion headers was solved with `font-synthesis: none` (preventing browser font variations) rather than patching with font-weight overrides.
 
+## CSS Debugging Methodology
+
+**CRITICAL: Reference-First Debugging - Compare Before Attempting Fixes**
+
+**Enhanced Troubleshooting Process:**
+
+### 1. **On-Site Reference Analysis First**
+Before attempting any CSS fixes, always identify and analyze working reference elements:
+- **Same page**: Look for similar styled elements that function correctly
+- **Same site**: Check other pages for identical or similar styling patterns
+- **Same component type**: Compare links, buttons, or layout elements across the site
+
+### 2. **CSS Pattern Comparison**
+```bash
+# Compare working vs broken implementations
+# Example: .cloud-refresh-link (working) vs .inline-link (broken)
+# Working pattern: border: none + text-decoration: underline
+# Broken pattern: border-bottom + text-decoration (double underlines)
+```
+
+### 3. **Apply Reference Patterns**
+Use the exact CSS pattern from working elements rather than guessing at solutions:
+- Copy successful property combinations
+- Override conflicting inherited styles using the same approach
+- Test incremental changes based on reference implementation
+
+**Example:** Double underline issue on `.inline-link` was solved by comparing to `.cloud-refresh-link` (working reference), revealing the need for `border: none` to override base `a` styles rather than attempting text-decoration fixes.
+
+**Root Cause Prevention:** This reference-first approach prevents trial-and-error fixes and immediately identifies proven CSS patterns within the same codebase.
+
 This methodology ensures sustainable code architecture, reduced technical debt, and cleaner, more maintainable solutions.
 
 ## Copy Update Methodology

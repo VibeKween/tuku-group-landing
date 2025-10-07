@@ -201,7 +201,8 @@ body {
   font-weight: 500;
 }
 
-.header h1 {
+/* Match homepage h1 styling exactly */
+h1 {
   font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -667,7 +668,7 @@ input.error {
     margin-bottom: 60px;
   }
   
-  .header h1 {
+  h1 {
     font-size: 2rem;
   }
   
