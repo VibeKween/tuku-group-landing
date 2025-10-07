@@ -1,2 +1,1 @@
-RewriteEngine On
-RewriteRule ^studio/?$ /studio/index.html [L]
+# No redirects needed - studio.html accessible directly
