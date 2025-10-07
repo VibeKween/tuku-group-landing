@@ -117,4 +117,32 @@ Available after completing sprint work together.
 
 **Email**: tukugroupllc@gmail.com  
 **Subject**: TUKU | Service Inquiry  
-**CTA**: Schedule your project  
+**CTA**: Schedule your project
+
+---
+
+## STUDIO PAGE (tukugroup.com/studio.html)
+
+**Page Title**: Work With TUKU GROUP – Building Systems and Stories
+
+**Meta Description**: Fewer, better, slower. Creative services and brand guidance through focused sprints, strategic consultation, and ongoing retainer support. Work with TUKU GROUP.
+
+**Social Sharing Tagline**: Work With TUKU GROUP – Building Systems and Stories
+
+**Main Content**:
+- Fewer. Better. Slower.
+- We approach collaboration with the same restraint we bring to design. Each engagement is focused, deliberate, and made to move.
+- Begin with a call: A conversation to understand your direction and define what matters.
+- Move into discovery: We clarify your stance and map the milestones ahead.
+- Work in focused sprints: Short cycles, clear aims, tangible results.
+- Ongoing guidance remains open - strategic support that adapts as you do.
+
+**CTA**: Start a conversation
+
+**Contact**: tukugroupllc@gmail.com (temporary - update to contact@tukugroup.com when ready)
+
+**Notes**: 
+- Page converted from payment system to email-based contact for GitHub Pages compatibility
+- All Stripe/payment code removed for static hosting
+- Maintains all social media meta tags for iPhone sharing compatibility
+- Uses same CSS structure as approach.html for consistent styling  
