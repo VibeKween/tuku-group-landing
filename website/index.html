@@ -54,6 +54,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5KTM9YBETS');
+    </script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -394,6 +403,67 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             new SplitFlapDisplay('splitFlapDisplay');
+        });
+    </script>
+    
+    <!-- Enhanced Analytics Event Tracking -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track CTA button clicks
+            const ctaButtons = document.querySelectorAll('.connect-cta');
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    gtag('event', 'cta_click', {
+                        'event_category': 'engagement',
+                        'event_label': 'start_conversation',
+                        'page_location': window.location.href
+                    });
+                });
+            });
+            
+            // Track "Learn about our approach" link clicks
+            const approachLinks = document.querySelectorAll('.inline-link');
+            approachLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    gtag('event', 'approach_link_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'learn_approach',
+                        'page_location': window.location.href
+                    });
+                });
+            });
+            
+            // Track cloud refresh interactions
+            const cloudRefresh = document.querySelector('.cloud-refresh-link');
+            if (cloudRefresh) {
+                cloudRefresh.addEventListener('click', function() {
+                    gtag('event', 'cloud_interaction', {
+                        'event_category': 'engagement',
+                        'event_label': 'what_do_you_see',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+            
+            // Track scroll depth milestones
+            let scrollDepthTracked = [];
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+                
+                [25, 50, 75, 100].forEach(milestone => {
+                    if (scrollPercent >= milestone && !scrollDepthTracked.includes(milestone)) {
+                        scrollDepthTracked.push(milestone);
+                        gtag('event', 'scroll_depth', {
+                            'event_category': 'engagement',
+                            'event_label': `${milestone}_percent`,
+                            'value': milestone,
+                            'page_location': window.location.href
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>

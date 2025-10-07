@@ -51,6 +51,15 @@
   <link rel="stylesheet" href="payment.css">
   <script src="https://js.stripe.com/v3/"></script>
   
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5KTM9YBETS');
+  </script>
+  
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -270,5 +279,67 @@
   </main>
 
   <script src="payment.js"></script>
+  
+  <!-- Enhanced Analytics Event Tracking for Services Page -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Track service package selection clicks
+      const serviceButtons = document.querySelectorAll('.service-package');
+      serviceButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const serviceName = this.querySelector('h3').textContent;
+          gtag('event', 'service_selection', {
+            'event_category': 'services',
+            'event_label': serviceName.toLowerCase().replace(/\s+/g, '_'),
+            'page_location': window.location.href
+          });
+        });
+      });
+      
+      // Track payment form interactions
+      const paymentForm = document.getElementById('payment-form');
+      if (paymentForm) {
+        paymentForm.addEventListener('submit', function() {
+          gtag('event', 'payment_initiated', {
+            'event_category': 'conversion',
+            'event_label': 'payment_form_submit',
+            'page_location': window.location.href
+          });
+        });
+      }
+      
+      // Track cloud refresh interactions
+      const cloudRefresh = document.querySelector('.cloud-refresh-link');
+      if (cloudRefresh) {
+        cloudRefresh.addEventListener('click', function() {
+          gtag('event', 'cloud_interaction', {
+            'event_category': 'engagement',
+            'event_label': 'what_do_you_see_services',
+            'page_location': window.location.href
+          });
+        });
+      }
+      
+      // Track scroll depth milestones
+      let scrollDepthTracked = [];
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+        
+        [25, 50, 75, 100].forEach(milestone => {
+          if (scrollPercent >= milestone && !scrollDepthTracked.includes(milestone)) {
+            scrollDepthTracked.push(milestone);
+            gtag('event', 'scroll_depth', {
+              'event_category': 'engagement',
+              'event_label': `${milestone}_percent_services`,
+              'value': milestone,
+              'page_location': window.location.href
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
