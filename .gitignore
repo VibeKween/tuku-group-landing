@@ -12,8 +12,37 @@ Thumbs.db
 
 # Local development
 node_modules/
+
+# Environment variables - CRITICAL SECURITY
 .env
+.env.*
 .env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# API Keys and Secrets - NEVER COMMIT
+**/api-keys.json
+**/secrets.json
+**/*secret*
+**/*key*.json
+**/*password*
+**/*token*
+**/*credential*
+
+# Stripe and Payment Credentials
+stripe_*
+*stripe*.json
+payment_secrets*
+webhook_secrets*
+
+# Database credentials
+database.json
+db_config.*
+config/production.*
 
 # IDE/Editor files
 .vscode/
