@@ -1,0 +1,28 @@
+{
+  "services": {
+    "consultation": {
+      "id": "consultation",
+      "name": "Initial Consultation",
+      "price": 50000,
+      "description": "A conversation, then a plan.",
+      "duration": "1 hour",
+      "deliverables": ["Discovery call", "Strategic recommendations", "Project roadmap"]
+    },
+    "sprint": {
+      "id": "sprint",
+      "name": "Two-Week Sprint",
+      "price": 500000,
+      "description": "Scope something small. Ship it well.",
+      "duration": "2 weeks",
+      "deliverables": ["Complete feature", "Testing", "Documentation", "Deployment"]
+    },
+    "retainer": {
+      "id": "retainer",
+      "name": "Monthly Retainer",
+      "price": 800000,
+      "description": "Ongoing guidance. Thoughtful execution.",
+      "duration": "1 month",
+      "deliverables": ["10 hours monthly", "Strategic guidance", "Implementation support", "Priority access"]
+    }
+  }
+}
