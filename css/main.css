@@ -248,7 +248,7 @@ a:hover {
 }
 
 .footer {
-  margin-top: 60px;
+  margin-top: 120px;
   opacity: 0.6;
 }
 
@@ -271,7 +271,7 @@ a:hover {
   }
   
   .footer {
-    margin-top: 40px;
+    margin-top: 80px;
   }
 }
 
@@ -303,8 +303,179 @@ a:hover {
   font-weight: 500;
 }
 
+/* Connect CTA */
+.connect-cta {
+  display: inline-block;
+  color: #ffffff !important;
+  background-color: #4a7ba7 !important;
+  text-decoration: none;
+  border: 2px solid #4a7ba7;
+  padding: 10px 20px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  text-align: center;
+  border-radius: 0;
+}
+
+/* Dual CTA Section */
+.dual-cta-section {
+  text-align: center;
+}
+
+/* Enhanced version with more spacing */
+.dual-cta-section.enhanced {
+  margin: 100px 0;
+}
+
+.dual-cta-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Base CTA styles */
+.dual-cta-link {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 44px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Primary CTA - Button Style */
+.dual-cta-link.primary {
+  color: #ffffff;
+  background-color: #4a7ba7;
+  border: 2px solid #4a7ba7;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 0;
+}
+
+.dual-cta-link.primary:hover {
+  background-color: transparent;
+  color: #4a7ba7;
+  border-color: #4a7ba7;
+}
+
+/* Secondary CTA - Link Style */
+.dual-cta-link.secondary {
+  color: #4a7ba7;
+  background: none;
+  border: none;
+  padding: 12px 8px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: none;
+}
+
+.dual-cta-link.secondary:hover {
+  opacity: 0.7;
+  text-decoration-thickness: 2px;
+}
+
+/* Fallback for original styles (revert capability) */
+.dual-cta-link:not(.primary):not(.secondary) {
+  color: #4a7ba7;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: none;
+  border: none;
+  padding: 8px;
+  background: none;
+}
+
+.dual-cta-link:not(.primary):not(.secondary):hover {
+  opacity: 0.7;
+  text-decoration-thickness: 2px;
+}
+
+/* Mobile adjustments for dual CTAs */
+@media (max-width: 768px) {
+  .dual-cta-section.enhanced {
+    margin: 60px 0;
+  }
+  
+  .dual-cta-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .dual-cta-link {
+    font-size: 1rem;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .dual-cta-link.primary {
+    padding: 16px 24px;
+  }
+}
+
+/* Add extra spacing before Projects in Progress */
+.split-flap-container {
+  margin-top: 80px;
+}
+
 .signals-link:hover {
   opacity: 0.7;
+}
+
+.connect-cta:hover {
+  background-color: #3a6b97;
+  color: #ffffff;
+  border-color: #3a6b97;
+}
+
+/* Inline link styling */
+.inline-link {
+  color: #4a7ba7;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Ensure no double underlines */
+a.inline-link {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
+}
+
+.inline-link:hover {
+  opacity: 0.7;
+  text-decoration-thickness: 2px;
+}
+
+/* Center the Connect CTA section */
+.cta-section {
+  text-align: center;
+  margin: 80px 0;
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    margin: 60px 0;
+  }
+  
+  .connect-cta {
+    padding: 16px 24px;
+    width: 100%;
+    max-width: 280px;
+  }
 }
 
 /* Selection */

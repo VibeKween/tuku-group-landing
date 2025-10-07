@@ -350,7 +350,7 @@ p {
 }
 
 .service-detail {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.6;
   color: var(--color-black);
@@ -447,6 +447,12 @@ input::placeholder {
 .btn-primary:disabled {
   background: transparent;
   color: var(--color-black);
+}
+
+/* Philosophy headers */
+.philosophy-header {
+  color: var(--color-gold);
+}
   opacity: 0.5;
   cursor: not-allowed;
   border: 1px solid var(--color-black);

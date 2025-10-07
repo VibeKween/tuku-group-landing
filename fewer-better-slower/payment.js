@@ -14,12 +14,10 @@ const SERVICES = {
     details: `
       <h4>INITIAL CONSULTATION</h4>
       <p class="service-detail">Full discovery and strategic scoping.</p>
-      <p class="service-detail">We map your vision, understand what's required, identify 
-      constraints, and create a detailed roadmap. You receive a 
-      complete scope broken into sprints with clear milestones 
-      and timeline.</p>
-      <p class="service-detail">By the end, you know exactly what you're building and what 
-      it takes to complete.</p>
+      <p class="service-detail">We map your vision, identify constraints, and outline what's required.
+      You receive a detailed roadmap - broken into sprints with clear milestones and timeline.</p>
+      <p class="service-detail">By the end, you'll know exactly what's being built
+      and what it takes to complete.</p>
     `
   },
   sprint: {
@@ -30,12 +28,12 @@ const SERVICES = {
     details: `
       <h4>SPRINT BUILD</h4>
       <p class="service-detail">Two weeks of focused execution on a single milestone.</p>
-      <p class="service-detail">A sprint delivers something complete. Brand foundation. Design 
-      system. Platform build. Scoped, executed, delivered.</p>
-      <p class="service-detail">Multi-sprint projects can be scheduled in advance.</p>
-      <p class="service-detail">For work requiring multiple phases, packages are available.
+      <p class="service-detail">Each sprint delivers something complete - brand, design, or platform.
+      Scoped, executed, delivered.</p>
+      <p class="service-detail">Multi-sprint projects can be planned in sequence.
       Pricing scales with scope.</p>
-      <p class="service-detail">One sprint at a time. When yours begins, you have our full attention.</p>
+      <p class="service-detail">One sprint at a time.
+      When yours begins, you have our full attention.</p>
     `
   },
   retainer: {
@@ -45,9 +43,9 @@ const SERVICES = {
     description: 'Strategic support. Thoughtful refinement.',
     details: `
       <h4>RETAINER ENGAGEMENT</h4>
-      <p class="service-detail">Ongoing guidance after project completion.</p>
-      <p class="service-detail">For work that remains live and evolving. Small refinements, 
-      strategic direction, maintenance.</p>
+      <p class="service-detail">Ongoing guidance once the work is live.</p>
+      <p class="service-detail">For projects that continue to evolve - small refinements,
+      strategic direction, ongoing care.</p>
       <p class="service-detail">Available after completing sprint work together.</p>
     `
   }
