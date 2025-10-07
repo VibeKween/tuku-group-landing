@@ -255,6 +255,17 @@ p {
   margin-bottom: 20px;
 }
 
+/* Center the CTA button */
+.form-section {
+  text-align: center;
+}
+
+#schedule-btn {
+  display: inline-block;
+  max-width: 280px;
+  text-decoration: none;
+}
+
 /* Steps - TUKU Block System */
 .step {
   display: none;
@@ -437,12 +448,7 @@ input::placeholder {
 .btn-primary:hover:not(:disabled) {
   background: var(--color-blue-deep);
   border-color: var(--color-blue-deep);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(86, 145, 200, 0.3);
-}
-
-.btn-primary:hover:not(:disabled)::before {
-  left: 100%;
+  opacity: 0.9;
 }
 
 .btn-primary:disabled {

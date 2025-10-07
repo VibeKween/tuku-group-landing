@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^fewer-better-slower/?$ /fewer-better-slower/index.html [L]

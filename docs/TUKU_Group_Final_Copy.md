@@ -19,7 +19,7 @@ Culture as compass.
 Signals for the present tense.  
 
 For brands ready to refine their vision  
-and build with intention.  
+and build deliberately.  
 
 ---
 
@@ -67,7 +67,7 @@ strategic support that adapts as you do.
 
 ---
 
-### Select Engagement
+### Engagement Options
 
 **Initial Consultation — $1,200**  
 *A conversation, then a plan.*  
@@ -109,4 +109,12 @@ Ongoing guidance once the work is live.
 For projects that continue to evolve - small refinements,  
 strategic direction, ongoing care.  
 
-Available after completing sprint work together.  
+Available after completing sprint work together.
+
+---
+
+### Contact
+
+**Email**: tukugroupllc@gmail.com  
+**Subject**: TUKU | Service Inquiry  
+**CTA**: Schedule your project  
