@@ -445,11 +445,15 @@ a:hover {
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   text-decoration-skip-ink: none;
+  border: none;
+  padding-bottom: 0;
   transition: opacity 0.2s ease;
 }
 
-/* Ensure no double underlines */
+/* Ensure no double underlines - override base a styles */
 a.inline-link {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
   text-decoration: underline !important;
   text-decoration-thickness: 1px !important;
   text-underline-offset: 2px !important;

@@ -195,3 +195,68 @@ To make changes to the live site:
 - [x] **Production Deployment**: Live fix deployed to tukugroup.com with immediate improvement
 
 *Mission accomplished: Tuku Group has a professional web presence embodying "craft over noise" with comprehensive SIGNALS cultural intelligence platform, unified design system, mobile-optimized cloud animations, and infrastructure ready for custom domain deployment and continued portfolio growth.*
+
+---
+
+## [October 7, 2025] Session Archive: SEO Enhancement & CTA Redesign
+
+**STATUS**: DEPLOYED TO PRODUCTION - SEO optimizations and CTA improvements live
+
+**SESSION OVERVIEW**:
+- Copy deck validation against live site content
+- Comprehensive SEO enhancement across all pages
+- Homepage CTA redesign with improved hierarchy
+- Local copy deck filing for future reference
+
+**MAJOR ACCOMPLISHMENTS**:
+
+**1. SEO OPTIMIZATION**:
+- Added comprehensive metadata to `/approach.html` (Twitter Cards, structured data, breadcrumbs)
+- Enhanced `/fewer-better-slower/index.html` with complete SEO package (previously missing)
+- Implemented service offers schema and canonical URLs site-wide
+- Added Open Graph tags for social media sharing optimization
+
+**2. HOMEPAGE CTA REDESIGN**:
+- Moved from side-by-side CTAs to integrated inline approach
+- Primary CTA: "Start a conversation" button (solid blue #4a7ba7)
+- Secondary CTA: "Learn about our approach" inline link within sentence flow
+- Enhanced visual hierarchy and improved user experience
+
+**3. COPY MANAGEMENT**:
+- Validated `/Users/falonbahal/Downloads/TUKU_Group_Final_Copy.md` against live site
+- Filed copy deck locally at `/docs/TUKU_Group_Final_Copy.md` for reference
+- Confirmed homepage and approach page copy alignment
+- Verified fewer-better-slower page content structure
+
+**4. FILE STRUCTURE UPDATES**:
+- Updated CSS cache buster to v=1.9 across all pages
+- Maintained dual directory deployment (website/ → root)
+- All changes committed and pushed to production
+
+**UNRESOLVED TECHNICAL ISSUE**:
+
+**Double Underline Problem on Inline Links**:
+- **Issue**: "Learn about our approach" link showing double underlines despite CSS fixes
+- **Location**: Homepage inline link within sentence: "We bring our beliefs to form - working with individuals whose practice reflects care and clarity. Learn about our approach."
+- **CSS Attempts**: 
+  - Added `.inline-link` class with `text-decoration: none` and `border-bottom` approach
+  - Applied `!important` declarations
+  - Updated cache busters
+  - Removed conflicting text-decoration properties
+- **Browser Behavior**: Works correctly on `localhost:9000` but not on `127.0.0.1:9000`
+- **User Note**: SIGNALS hyperlinking worked fine previously; unclear why this implementation differs
+
+**TROUBLESHOOTING CONTEXT FOR NEXT SESSION**:
+The double underline issue persists despite multiple CSS approaches. Key investigation points:
+1. Compare current implementation with working SIGNALS link structure
+2. Investigate CSS inheritance conflicts between `.inline-link` and base `a` styles
+3. Examine why browser caching differs between localhost and 127.0.0.1
+4. Review CSS specificity and cascade order for link styling
+
+**DEPLOYED CHANGES**:
+- All SEO enhancements live in production
+- Homepage CTA redesign deployed and functional
+- Copy deck filed locally for future reference
+- Button styling fixed (solid blue background working correctly)
+
+**PROJECT STATUS**: Production deployment successful with pending CSS troubleshooting for next session
