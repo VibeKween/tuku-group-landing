@@ -14,39 +14,41 @@ const SERVICES = {
     details: `
       <h4>INITIAL CONSULTATION</h4>
       <p class="service-detail">Full discovery and strategic scoping.</p>
-      <p class="service-detail">We map your vision, analyze requirements, identify constraints, and create 
-      a detailed roadmap. You receive a complete scope broken into sprints with 
-      clear milestones and timeline.</p>
-      <p class="service-detail">By the end, you know exactly what you're building and what it takes to complete.</p>
+      <p class="service-detail">We map your vision, understand what's required, identify 
+      constraints, and create a detailed roadmap. You receive a 
+      complete scope broken into sprints with clear milestones 
+      and timeline.</p>
+      <p class="service-detail">By the end, you know exactly what you're building and what 
+      it takes to complete.</p>
     `
   },
   sprint: {
     id: 'sprint',
-    name: 'Two-Week Sprint',
+    name: 'Sprint Build',
     price: 450000,
-    description: 'Scope something small. Ship it well.',
+    description: 'Build with intention. Ship complete.',
     details: `
-      <h4>TWO-WEEK SPRINT</h4>
-      <p class="service-detail">Focused execution on a single milestone.</p>
-      <p class="service-detail">A sprint delivers something complete. Brand foundation. Design system. 
-      Platform build. Scoped, executed, shipped.</p>
-      <p class="service-detail">One sprint at a time. When yours begins, you have our full attention.</p>
+      <h4>SPRINT BUILD</h4>
+      <p class="service-detail">Two weeks of focused execution on a single milestone.</p>
+      <p class="service-detail">A sprint delivers something complete. Brand foundation. Design 
+      system. Platform build. Scoped, executed, delivered.</p>
       <p class="service-detail">Multi-sprint projects can be scheduled in advance.</p>
-      <p class="service-detail">For work requiring multiple phases, packages are available. 
-      Pricing reflects the scope and commitment.</p>
+      <p class="service-detail">For work requiring multiple phases, packages are available.
+      Pricing scales with scope.</p>
+      <p class="service-detail">One sprint at a time. When yours begins, you have our full attention.</p>
     `
   },
   retainer: {
     id: 'retainer',
-    name: 'Monthly Retainer',
+    name: 'Retainer Engagement',
     price: 150000,
-    description: 'Ongoing guidance. Thoughtful execution.',
+    description: 'Strategic support. Thoughtful refinement.',
     details: `
-      <h4>MONTHLY RETAINER</h4>
+      <h4>RETAINER ENGAGEMENT</h4>
       <p class="service-detail">Ongoing guidance after project completion.</p>
-      <p class="service-detail">For clients who need continuity once the work is live. Small refinements, 
+      <p class="service-detail">For work that remains live and evolving. Small refinements, 
       strategic direction, maintenance.</p>
-      <p class="service-detail">Available to those we've completed sprint work with.</p>
+      <p class="service-detail">Available after completing sprint work together.</p>
     `
   }
 };
@@ -132,7 +134,7 @@ function renderServices() {
     card.innerHTML = `
       <div class="service-header">
         <div class="service-name">${service.name}</div>
-        <div class="service-price">$${(service.price / 100).toLocaleString()}</div>
+        <div class="service-price">${service.id === 'retainer' ? '$1,500/mo' : '$' + (service.price / 100).toLocaleString()}</div>
       </div>
       <div class="service-description">${service.description}</div>
       <div class="service-details ${state.selectedService === service.id ? 'expanded' : ''}">
@@ -295,7 +297,7 @@ function updateSummary() {
   const service = SERVICES[state.selectedService];
   document.getElementById('summary-service').textContent = service.name;
   document.getElementById('summary-email').textContent = state.email;
-  document.getElementById('summary-price').textContent = `$${(service.price / 100).toLocaleString()}`;
+  document.getElementById('summary-price').textContent = service.id === 'retainer' ? '$1,500/mo' : `$${(service.price / 100).toLocaleString()}`;
 }
 
 // Handle payment submission

@@ -38,11 +38,11 @@ const SERVICES = {
   },
   retainer: {
     id: 'retainer',
-    name: 'Monthly Retainer',
+    name: 'Sprint Cycle',
     price: 150000,
-    description: 'Ongoing guidance. Thoughtful execution.',
+    description: 'Engagement continuity. Thoughtful refinement.',
     details: `
-      <h4>MONTHLY RETAINER</h4>
+      <h4>SPRINT CYCLE</h4>
       <p class="service-detail">Ongoing guidance after project completion.</p>
       <p class="service-detail">For clients who need continuity once the work is live. Small refinements, 
       strategic direction, maintenance.</p>
