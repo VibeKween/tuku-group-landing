@@ -1,0 +1,693 @@
+/* payment.css - TUKU Design System Aligned */
+
+/* TUKU Brand Colors */
+:root {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gold: #C19A4B;
+  
+  /* TUKU Blue Palette from Cloud System */
+  --color-blue-light: #f0f9ff;
+  --color-blue-medium: #e0f2fe;
+  --color-blue-accent: #5691c8;
+  --color-blue-deep: #4a7ba7;
+}
+
+/* Cloud Background Component */
+.cloud-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, 
+    #f0f9ff 0%, 
+    #e0f2fe 12%, 
+    rgba(240, 249, 255, 0.6) 25%, 
+    rgba(240, 249, 255, 0.3) 40%, 
+    rgba(240, 249, 255, 0.15) 60%, 
+    rgba(240, 249, 255, 0.05) 80%, 
+    transparent 100%);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -10;
+}
+
+.cloud-sketches {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+  opacity: 1;
+  overflow: visible !important;
+}
+
+/* Individual cloud sketch elements with hand-drawn aesthetic */
+.cloud-sketch {
+  filter: blur(0.3px); /* Subtle paper texture effect */
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Vary the sketch qualities for each cloud - like different pencil pressures */
+.cloud-1 {
+  opacity: 0.85;
+  filter: blur(0.25px);
+}
+
+.cloud-2 {
+  opacity: 0.75;
+  filter: blur(0.35px);
+}
+
+.cloud-3 {
+  opacity: 0.65;
+  filter: blur(0.4px);
+}
+
+.cloud-4 {
+  opacity: 0.55;
+  filter: blur(0.45px);
+}
+
+/* Responsive adjustments for cloud visibility */
+@media (max-width: 768px) {
+  .cloud-sketches {
+    opacity: 0.9; /* Slightly more visible on mobile for clarity */
+  }
+  
+  .cloud-sketch {
+    filter: blur(0.2px); /* Less blur on mobile screens */
+  }
+}
+
+/* Reduced motion preference support */
+@media (prefers-reduced-motion: reduce) {
+  .cloud-sketch {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.cloud-refresh-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  font-size: 0.75rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #5691c8;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: none;
+  border: none;
+  padding: 8px;
+  background: none;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+  z-index: 100;
+  cursor: pointer;
+  max-width: calc(50vw - 40px);
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+.cloud-refresh-link:hover {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+  color: #4a7ba7; /* Slightly deeper blue to match sky gradient */
+}
+
+.cloud-refresh-link:active {
+  opacity: 1;
+  transform: none;
+}
+
+.cloud-refresh-link:focus {
+  outline: none;
+}
+
+/* Mobile adjustments for refresh link */
+@media (max-width: 768px) {
+  .cloud-refresh-link {
+    top: 16px;
+    right: 16px;
+    font-size: 0.7rem;
+    max-width: calc(50vw - 32px);
+    transition: opacity 0.2s ease;
+  }
+  
+  .cloud-refresh-link:hover {
+    transform: none;
+  }
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container - TUKU Page Layout */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 1;
+  will-change: auto;
+}
+
+/* Header - TUKU Block System */
+.header {
+  margin-bottom: 80px;
+}
+
+.label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Match homepage h1 styling exactly */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.homepage-link {
+  color: var(--color-black);
+  text-decoration: none;
+  border: none;
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.homepage-link:hover {
+  opacity: 0.7;
+}
+
+.subhead {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--color-black);
+}
+
+/* Base Typography - Match Homepage */
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+/* Section Labels - TUKU Philosophy Headers */
+.section-label {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--color-gold);
+  margin-bottom: 40px;
+  display: block;
+}
+
+/* Tighter spacing for all form sections */
+.services-section .section-label,
+.form-section .section-label {
+  margin-bottom: 20px;
+}
+
+/* Center the CTA button */
+.form-section {
+  text-align: center;
+}
+
+#schedule-btn {
+  display: inline-block;
+  max-width: 280px;
+  text-decoration: none;
+}
+
+/* Steps - TUKU Block System */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+.block {
+  margin-bottom: 80px;
+}
+
+.block:last-child {
+  margin-bottom: 40px;
+}
+
+/* Service Cards - TUKU Block Style with Blue Accents */
+.services {
+  margin-bottom: 0px; /* Remove extra margin since this is within a block */
+}
+
+.service-card {
+  border: 1px solid var(--color-black);
+  padding: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.service-card:hover {
+  border-color: var(--color-blue-accent);
+  background: rgba(240, 249, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.service-card.selected {
+  background: var(--color-blue-medium);
+  color: var(--color-black);
+  border-color: var(--color-blue-accent);
+  box-shadow: inset 0 0 20px rgba(86, 145, 200, 0.1);
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.service-name {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.service-price {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.service-description {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-black);
+  opacity: 0.8;
+}
+
+/* Service Details - Accordion Style */
+.service-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+}
+
+.service-details.expanded {
+  max-height: 400px;
+  padding: 20px;
+  border-top: 1px solid var(--color-black);
+  margin-top: 20px;
+}
+
+.service-details h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-black);
+  margin-bottom: 15px;
+  letter-spacing: 0.05em;
+}
+
+.service-detail {
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-black);
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.service-detail:last-child {
+  margin-bottom: 0;
+}
+
+/* Form Inputs - TUKU Style with Blue Focus */
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 4px; /* Reduced to bring error messages closer */
+  background: transparent;
+  border: 1px solid var(--color-black);
+  color: var(--color-black);
+  font-size: 1rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--color-blue-accent);
+  background: var(--color-blue-light);
+}
+
+/* Error state overrides focus state */
+input.error:focus {
+  border-color: var(--color-gold);
+  background: rgba(193, 154, 75, 0.05);
+}
+
+input::placeholder {
+  color: var(--color-black);
+  opacity: 0.6;
+}
+
+/* Buttons - TUKU Link Style */
+.btn-primary,
+.btn-secondary {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-black);
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  text-decoration: none;
+  background: transparent;
+  margin-bottom: 2px;
+}
+
+.btn-primary {
+  background: var(--color-blue-accent);
+  color: var(--color-white);
+  border: 1px solid var(--color-blue-accent);
+  padding: 12px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-blue-deep);
+  border-color: var(--color-blue-deep);
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  background: transparent;
+  color: var(--color-black);
+}
+
+/* Philosophy headers */
+.philosophy-header {
+  color: var(--color-gold);
+}
+  opacity: 0.5;
+  cursor: not-allowed;
+  border: 1px solid var(--color-black);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-black);
+  border: 1px solid var(--color-black);
+}
+
+.btn-secondary:hover {
+  opacity: 0.7;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:last-child {
+  margin-bottom: 0;
+}
+
+/* Summary - TUKU Block Style */
+.summary {
+  padding: 20px;
+  margin-bottom: 80px;
+  border: 1px solid var(--color-black);
+  background: transparent;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.summary-row .label {
+  color: var(--color-black);
+  opacity: 0.8;
+  text-transform: none;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.summary-row.total {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid var(--color-black);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Stripe Element - TUKU Style */
+.stripe-element {
+  padding: 12px;
+  border: 1px solid var(--color-black);
+  background: transparent;
+  margin-bottom: 4px; /* Consistent with form inputs */
+}
+
+/* Error Message - TUKU Style (for Stripe errors) */
+.error-message {
+  padding: 4px 0 8px 0;
+  margin-bottom: 16px;
+  background: none;
+  border: none;
+  color: var(--color-gold);
+  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: 0;
+  display: none;
+}
+
+.error-message.visible {
+  display: block;
+}
+
+/* Input Error State */
+input.error {
+  border-color: var(--color-gold);
+  background: rgba(193, 154, 75, 0.05);
+}
+
+/* Validation Error for specific fields */
+.field-error {
+  padding: 4px 0 8px 0;
+  margin-bottom: 16px;
+  color: var(--color-gold);
+  font-size: 0.85rem;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  line-height: 1.5;
+  display: none;
+}
+
+.field-error.visible {
+  display: block;
+}
+
+/* Note */
+.note {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Success */
+.success {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: var(--color-blue-accent);
+  margin-bottom: 1.5rem;
+}
+
+.success h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+}
+
+/* Success service headers */
+.success h3 {
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--color-black);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.success-body {
+  font-size: 1rem;
+  color: var(--color-black);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.success-body:last-of-type {
+  margin-bottom: 3rem;
+}
+
+.next-step {
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid var(--color-black);
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: var(--color-black);
+}
+
+.receipt {
+  font-size: 0.8rem;
+  color: var(--color-black);
+  opacity: 0.6;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Footer - TUKU Style with Blue Accent */
+.footer {
+  margin-top: 60px;
+  opacity: 0.6;
+  line-height: 1.8;
+}
+
+.footer p {
+  font-size: 0.75rem;
+}
+
+.footer a {
+  color: var(--color-black);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-black);
+  padding-bottom: 1px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
+
+/* Selection - TUKU Brand */
+::selection {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+::-moz-selection {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Mobile adjustments - TUKU Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 16px;
+  }
+  
+  .block {
+    margin-bottom: 60px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .footer {
+    margin-top: 40px;
+  }
+  
+  .service-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .service-price {
+    margin-top: 0.5rem;
+  }
+}

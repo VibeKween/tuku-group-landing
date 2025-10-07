@@ -22,7 +22,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tukugroup.com/studio.html">
   <meta property="og:title" content="Work With TUKU GROUP – Building Systems and Stories">
-  <meta property="og:description" content="Fewer, better, slower. Creative services through focused sprints, consultation, and ongoing support.">
+  <meta property="og:description" content="Fewer, better, slower. Creative services through focused sprints, consultation, and ongoing support."
   <meta property="og:image" content="https://tukugroup.com/images/tuku-group-og.png">
   <meta property="og:image:secure_url" content="https://tukugroup.com/images/tuku-group-og.png">
   <meta property="og:image:type" content="image/png">
@@ -53,7 +53,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.9">
+  <link rel="stylesheet" href="payment.css">
   
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
@@ -69,8 +69,8 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://tukugroup.com/studio.html#webpage",
-    "url": "https://tukugroup.com/studio.html",
+    "@id": "https://tukugroup.com/fewer-better-slower/#webpage",
+    "url": "https://tukugroup.com/fewer-better-slower/",
     "name": "Work with TUKU GROUP - Creative Services",
     "description": "Fewer, better, slower. Creative services and brand guidance through focused sprints, strategic consultation, and ongoing retainer support.",
     "isPartOf": {
@@ -140,6 +140,8 @@
     <!-- Canvas will be created dynamically by JavaScript -->
   </div>
 
+  <!-- Static Cloud System - External JS -->
+  <script src="cloud-system-static.js"></script>
   
   <main class="container">
     
@@ -174,27 +176,57 @@
       <p>Ongoing guidance remains open -<br>strategic support that adapts as you do.</p>
     </section>
 
-    <section class="block">
-      <p><a href="mailto:tukugroupllc@gmail.com?subject=TUKU%20%7C%20Let's%20start%20a%20conversation" class="inline-link">Start a conversation</a></p>
+    <!-- Step 1: Service Selection -->
+    <section id="step-select" class="step active">
+      <section class="block services-section">
+        <p><span class="section-label">Engagement options</span></p>
+        <div class="services" id="services-list">
+          <!-- Generated dynamically -->
+        </div>
+      </section>
+
+      <section class="block form-section">
+        <a href="mailto:tukugroupllc@gmail.com?subject=TUKU%20%7C%20Let's%20start%20a%20conversation" 
+           id="schedule-btn" 
+           class="btn-primary">
+          Start a conversation
+        </a>
+      </section>
     </section>
 
 
   </main>
 
-  <!-- Clean Analytics for Static Page -->
+  <!-- No payment functionality for static studio page -->
+  <script src="payment.js"></script>
+  
+  <!-- Enhanced Analytics Event Tracking for Services Page -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Track contact link clicks
-      const contactLinks = document.querySelectorAll('a[href^="mailto:"]');
-      contactLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          gtag('event', 'contact_click', {
-            'event_category': 'engagement',
-            'event_label': 'studio_contact',
+      // Track service package selection clicks
+      const serviceButtons = document.querySelectorAll('.service-package');
+      serviceButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const serviceName = this.querySelector('h3').textContent;
+          gtag('event', 'service_selection', {
+            'event_category': 'services',
+            'event_label': serviceName.toLowerCase().replace(/\s+/g, '_'),
             'page_location': window.location.href
           });
         });
       });
+      
+      // Track schedule project button clicks
+      const scheduleBtn = document.getElementById('schedule-btn');
+      if (scheduleBtn) {
+        scheduleBtn.addEventListener('click', function() {
+          gtag('event', 'schedule_project', {
+            'event_category': 'conversion',
+            'event_label': 'schedule_project_email',
+            'page_location': window.location.href
+          });
+        });
+      }
       
       // Track cloud refresh interactions
       const cloudRefresh = document.querySelector('.cloud-refresh-link');
@@ -202,11 +234,31 @@
         cloudRefresh.addEventListener('click', function() {
           gtag('event', 'cloud_interaction', {
             'event_category': 'engagement',
-            'event_label': 'what_do_you_see_studio',
+            'event_label': 'what_do_you_see_services',
             'page_location': window.location.href
           });
         });
       }
+      
+      // Track scroll depth milestones
+      let scrollDepthTracked = [];
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+        
+        [25, 50, 75, 100].forEach(milestone => {
+          if (scrollPercent >= milestone && !scrollDepthTracked.includes(milestone)) {
+            scrollDepthTracked.push(milestone);
+            gtag('event', 'scroll_depth', {
+              'event_category': 'engagement',
+              'event_label': `${milestone}_percent_services`,
+              'value': milestone,
+              'page_location': window.location.href
+            });
+          }
+        });
+      });
     });
   </script>
 </body>
