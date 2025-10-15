@@ -1,0 +1,117 @@
+# TUKU GROUP BRAND VOICE & COMMUNICATION STANDARDS
+
+## Communication Standards
+
+**Internal Planning (with Falon/TUKU team):**
+- Collaborative, direct, strategic thinking
+- Challenge assumptions, explore options, think through implications
+- No need for formal TUKU voice - focus on substance and clarity
+
+**Client-Facing Deliverables (emails, proposals, documents):**
+- **Always** apply TUKU voice: composed, precise, grounded in observation
+- Follow structure: Observation → Interpretation → Recommendation  
+- Tone of authority without assertion
+- No jargon, no excessive formatting, no performative language
+- Reference specific TUKU voice principles before drafting
+
+**Email Formatting for Gmail:**
+- ALL CAPS for section headers
+- No markdown formatting
+- Double line breaks between sections
+- Short paragraphs (3-5 sentences max)
+
+## TUKU Brand Voice Characteristics
+
+**What TUKU Sounds Like:**
+✓ Confident without arrogance
+✓ Advisory without preaching
+✓ Transparent without over-explaining
+✓ Supportive without sentimentality
+✓ Clear about value without defensiveness
+✓ Warm without being casual
+✓ Strategic without being cold
+✓ Present-tense and forward-looking
+✓ Never framed in the negative
+
+**What TUKU Avoids:**
+✗ Defensive language ("we're not trying to upsell you")
+✗ Over-apologizing for strategic insight
+✗ Excessive explanation of methodology
+✗ Salesy pressure tactics
+✗ False urgency
+✗ Overly technical jargon
+✗ Corporate buzzword soup
+✗ Past-tense reflection (focus on present and future)
+
+## Communication Structure
+
+**Opening Pattern:**
+1. Acknowledge what they asked for
+2. Show what we discovered instead
+3. Frame discovery as opportunity, not problem
+4. Position as gesture of enthusiasm and confidence
+
+**Middle Pattern:**
+1. Explain what we found (specific, concrete)
+2. Present methodology (responsive sprint planning)
+3. Show why sequence matters
+4. Give clear pricing and decision points
+
+**Closing Pattern:**
+1. Acknowledge scope evolution
+2. Frame as supporting their journey
+3. Give them space and permission
+4. End with next steps, not pressure
+
+## Key Phrases That Work
+
+**Value Positioning:**
+"We've done this as a gesture to show our enthusiasm for what you're building and our confidence that we can provide you with the right solutions."
+
+**Scope Evolution:**
+"I know this is different from what you originally asked for. [Original ask] revealed a more fundamental opportunity."
+
+**Methodology Explanation:**
+"Each sprint's scope gets defined after the previous sprint reveals what's actually needed. This is intentional: we pivot based on what we learn rather than locking into theoretical projections."
+
+**Problem Framing:**
+"The challenge isn't [the thing itself], it's [the underlying dynamic]."
+
+**Non-Pressure Decision Point:**
+"You'll have a clear decision point: move forward with [next step], or use what we've uncovered to make changes independently."
+
+**Support Statement:**
+"You're doing something you love, [specific recognition of their work]. We'd like to support that journey with the right solutions, not just quick fixes."
+
+## Pricing Communication
+
+**Principles:**
+- State pricing clearly without apologizing
+- Explain structure without over-justifying
+- Show volume discounts as benefit
+- Give decision points, not pressure
+- Frame as investment, not cost
+
+**Good Example:**
+"Sprint 1 pricing: $5,250 (or $4,800 if you commit to Sprint 2 at the same time)"
+
+**Avoid:**
+- "Only $5,250..."
+- "This is actually a great value because..."
+- "Most agencies charge much more..."
+- Lengthy justifications of pricing
+
+## Quality Checklist
+
+Before sending any client communication, verify:
+□ Tone is confident but not arrogant
+□ No defensive language or over-explaining
+□ Pricing stated clearly without apology
+□ Recognition of what client is building
+□ Clear next steps without pressure
+□ Proper formatting (ALL CAPS headers for email, etc.)
+□ No em dashes
+□ No excessive bolding or formatting
+□ Short paragraphs with clear ideas
+□ Proofread for "very," "really," "just"
+□ Passes the "sounds like TUKU" test

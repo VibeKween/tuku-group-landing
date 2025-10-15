@@ -13,7 +13,7 @@ This is the main TUKU GROUP landing page with an integrated private payment port
 This project has a dual directory structure that requires special deployment handling:
 
 - **Development:** Work in `/website/` directory
-- **Production:** GitHub Pages deploys from **root directory**
+- **Production:** Cloudflare Pages deploys from **root directory**
 
 **EVERY FILE CHANGE REQUIRES:**
 1. Modify files in `/website/` directory
@@ -105,7 +105,14 @@ cp -r website/fewer-better-slower .
 1. **Make changes** in `/website/` directory
 2. **Copy to root** using deployment commands above  
 3. **Commit both** locations to git
-4. **Push to main** branch for automatic GitHub Pages deployment
+4. **Push to main** branch for automatic Cloudflare Pages deployment
+
+**Hosting Details:**
+- **Production URL**: https://tukugroup.com
+- **Preview URL**: https://tuku-group-landing.pages.dev
+- **Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)
+- **Platform**: Cloudflare Pages (migrated from GitHub Pages)
+- **DNS**: Managed through Cloudflare with nameservers at GoDaddy
 
 ### Security Guidelines
 - **NEVER commit** real Stripe API keys

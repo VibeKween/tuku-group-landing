@@ -205,8 +205,10 @@ contact@tukugroup.com
 
 ## Live Site
 
-**Homepage**: https://vibekween.github.io/tuku-group-landing/  
-**SIGNALS Blog**: https://vibekween.github.io/tuku-group-landing/signals/  
+**Production URL**: https://tukugroup.com  
+**Preview URL**: https://tuku-group-landing.pages.dev  
+**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)  
+**SIGNALS Blog**: https://tukugroup.com/signals/  
 **Repository**: https://github.com/VibeKween/tuku-group-landing
 
 ## SIGNALS Cultural Intelligence Blog
@@ -232,7 +234,7 @@ contact@tukugroup.com
 
 ## Deployment
 
-The site automatically deploys via GitHub Pages when changes are pushed to the main branch.
+The site automatically deploys via Cloudflare Pages when changes are pushed to the main branch. Migrated from GitHub Pages with legacy URL deprecated.
 
 ---
 

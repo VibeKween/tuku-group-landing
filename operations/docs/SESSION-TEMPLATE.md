@@ -121,7 +121,9 @@
 ## Session Impact
 
 ### Live Site Status
-- **URL**: https://vibekween.github.io/tuku-group-landing
+- **Production URL**: https://tukugroup.com  
+- **Preview URL**: https://tuku-group-landing.pages.dev  
+- **Legacy URL**: https://vibekween.github.io/tuku-group-landing (deprecated)
 - **Functionality**: [Working/Issues]
 - **Performance**: [Good/Needs attention]
 

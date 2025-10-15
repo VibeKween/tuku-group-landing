@@ -1,0 +1,130 @@
+# TUKU GROUP Brand Guidelines
+
+## Core Philosophy
+
+**"Craft over noise. Fewer, better, slower."**
+
+- **Independent by choice** - Privately held creative house
+- **Culture as compass** - Signals for the present tense
+- **Intentional craft** - Working with precision and depth
+- **Meaningful ventures** - For brands ready to refine their vision
+
+## Brand Identity
+
+### Company Name
+- **Legal**: Tuku Group, LLC
+- **Brand**: TUKU GROUP (all caps)
+- **Founded**: 2025
+- **Structure**: Independent and privately held
+
+### Tagline & Positioning
+- **Primary**: "Independent Creative House"
+- **Mission**: "Independent ideas. Thoughtful brands. Assembled with intention."
+- **Purpose**: "A creative house for ventures that hold meaning."
+
+## Visual Identity
+
+### Typography
+- **Primary Font**: JetBrains Mono (all weights: 300, 400, 500, 600)
+- **Fallback**: Courier New, monospace
+- **Style**: Monospace aesthetic throughout all brand touchpoints
+
+### Color Palette
+
+**Core Colors:**
+--color-black: #000000    /* Primary text and backgrounds */
+--color-white: #FFFFFF    /* Background and inverted text */
+--color-gold: #C19A4B     /* Philosophy headers and accents */
+
+**Extended Palette (Payment/TUKU Blue):**
+--color-blue-light: #f0f9ff    /* Light backgrounds */
+--color-blue-medium: #e0f2fe   /* Medium selections */
+--color-blue-accent: #5691c8   /* Links and buttons */
+--color-blue-deep: #4a7ba7     /* Hover states */
+
+### Logo & Favicon
+- **Favicon**: Simple cloud icon in light blue (#5691c8)
+- **Logo**: Text-based "TUKU GROUP" in JetBrains Mono
+- **Social Image**: Custom OG image at 1200x630px
+
+## Design Principles
+
+### Layout Standards
+- **Max Width**: 600px centered content container
+- **Vertical Spacing**: 80px between content blocks (60px mobile)
+- **Section Structure**: Sequential <section class="block"> elements
+- **Whitespace**: Massive intentional spacing emphasizes minimal aesthetic
+
+### Content Philosophy
+- **Manifesto-driven**: Each section communicates single concept
+- **Declarative tone**: Direct statements without explanation  
+- **Intentional brevity**: Every word serves purpose
+- **Professional voice**: Without corporate jargon
+
+### Typography Hierarchy
+h1: Main brand name (TUKU GROUP)
+h2: Section headers (visually hidden for accessibility)
+.philosophy-header: Gold accent spans for key concepts
+p: Body text with 1.8 line height
+
+## Brand Voice & Messaging
+
+### Key Messages
+- **"We bring our beliefs to form"** - Action-oriented philosophy
+- **"Selective collaborations"** - Quality over quantity
+- **"Clarity first"** - Process starts with listening
+- **"Considered execution"** - Balance creativity with purpose
+
+### Content Patterns
+- **Philosophy Headers**: Key concepts in gold .philosophy-header spans
+- **Line Breaks**: Strategic <br> for emphasis and rhythm
+- **Contact Approach**: "Start a conversation" (not "Get a quote")
+
+## Digital Standards
+
+### Website Architecture
+- **Homepage**: Manifesto-style single page
+- **Approach**: Methodology and philosophy
+- **Studio/Payment**: Private portal for qualified leads only
+- **Cloud Background**: Subtle animated elements
+
+### SEO & Meta Data
+- **Structured Data**: Organization schema with full business details
+- **Social Media**: Optimized Open Graph and Twitter Card meta tags
+- **Analytics**: Google Analytics 4 (G-5KTM9YBETS)
+
+### Technical Requirements
+- **Mobile-first**: Single breakpoint at 768px
+- **Performance**: Sub-2 second load times
+- **Accessibility**: Semantic HTML with screen reader support
+- **Pure Code**: No frameworks, libraries, or build tools
+
+## Contact & Legal
+
+### Business Information
+- **Email**: contact@tukugroup.com
+- **Legal Structure**: Tuku Group, LLC
+- **Twitter**: @tukugroup
+- **Domain**: tukugroup.com (canonical)
+
+### Portfolio Companies
+- **OF THE CULTURE**: Small-batch clothing studio
+- **Additional ventures**: Listed in split-flap display component
+
+## Usage Guidelines
+
+### Do's
+- ✅ Maintain ultra-minimal aesthetic aligned with "craft over noise"
+- ✅ Use JetBrains Mono consistently across all touchpoints
+- ✅ Emphasize whitespace and intentional spacing
+- ✅ Keep messaging concise and declarative
+- ✅ Lead with philosophy before process
+
+### Don'ts
+- ❌ Add unnecessary visual elements or decorations
+- ❌ Use multiple fonts or mix typography systems
+- ❌ Create cluttered layouts or dense information blocks
+- ❌ Use corporate jargon or sales-heavy language
+- ❌ Display pricing publicly (private portal only)
+
+This brand system supports TUKU's core philosophy of intentional craft while maintaining professional credibility and visual consistency across all touchpoints.

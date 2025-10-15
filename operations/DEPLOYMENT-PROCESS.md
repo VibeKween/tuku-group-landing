@@ -13,7 +13,7 @@ This repository has a **dual directory structure** that can cause deployment dis
 │   ├── favicon.ico
 │   ├── images/favicon.png
 │   └── CNAME
-└── [ROOT]/            # Deployment files (what GitHub Pages serves)
+└── [ROOT]/            # Deployment files (what Cloudflare Pages serves)
     ├── index.html     # Must match website/index.html
     ├── css/main.css   # Must match website/css/main.css
     ├── cloud-system-static.js
@@ -26,7 +26,7 @@ This repository has a **dual directory structure** that can cause deployment dis
 
 **Every change to `/website/` files must be copied to root level for deployment.**
 
-GitHub Pages deploys from the **root directory**, not the `/website/` directory.
+Cloudflare Pages deploys from the **root directory**, not the `/website/` directory.
 
 ## Mandatory Deployment Checklist
 
@@ -102,8 +102,10 @@ GitHub Pages deploys from the **root directory**, not the `/website/` directory.
 - Files: Uses `/website/` directory
 
 ### Production Deployment:
-- Platform: GitHub Pages
-- URL: `https://tukugroup.com`
+- Platform: Cloudflare Pages (migrated from GitHub Pages)
+- Production URL: `https://tukugroup.com`
+- Preview URL: `https://tuku-group-landing.pages.dev`
+- Legacy URL: `https://vibekween.github.io/tuku-group-landing/` (deprecated)
 - Files: Uses **root directory only**
 
 ## File Synchronization Commands
@@ -141,7 +143,7 @@ git push origin main --force-with-lease
 
 Consider consolidating to single directory structure:
 - Move all development to root level, OR
-- Configure GitHub Pages to deploy from `/website/` directory
+- Configure Cloudflare Pages to deploy from `/website/` directory
 - Update local development server accordingly
 
 ---

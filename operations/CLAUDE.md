@@ -148,7 +148,8 @@ Original Tuku Group landing page - the foundation manifesto site that establishe
 - Mobile-responsive single-column layout
 
 **Live Deployment:** https://tukugroup.com
-**Previous URL:** https://vibekween.github.io/tuku-group-landing (GitHub Pages - kept as backup)
+**Preview URL:** https://tuku-group-landing.pages.dev (Cloudflare Pages)  
+**Legacy URL:** https://vibekween.github.io/tuku-group-landing (deprecated GitHub Pages)
 
 **Status:** Production ready with split-flap component integrated
 

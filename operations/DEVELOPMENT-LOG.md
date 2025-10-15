@@ -1,13 +1,15 @@
 # Tuku Group Landing Page - Development Log
 
-## Project Status: Live on GitHub Pages ✅
+## Project Status: Live on Cloudflare Pages ✅
 
 **Started**: August 21, 2025  
 **Enhanced**: August 24, 2025  
 **Current Phase**: Production Ready + Split-Flap Component
 
-**Live Site**: [GitHub Pages URL]  
-**Repository**: [GitHub Repository URL]  
+**Live Site**: https://tukugroup.com (Cloudflare Pages)  
+**Preview URL**: https://tuku-group-landing.pages.dev  
+**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)  
+**Repository**: https://github.com/VibeKween/tuku-group-landing  
 
 ---
 
@@ -48,7 +50,7 @@
 - [x] Set up SSH authentication with project email
 - [x] Created first GitHub repository
 - [x] Pushed code to GitHub repository
-- [x] Enabled GitHub Pages hosting
+- [x] Migrated to Cloudflare Pages hosting (from GitHub Pages)
 - [x] Site deployed and live
 
 ### ✅ Phase 5: Design Enhancement & Clean Repository
@@ -172,7 +174,9 @@ To make changes to the live site:
 
 🎉 **First GitHub Repository Created**  
 ✅ **Ultra-minimal landing page deployed**  
-🚀 **Live at**: https://vibekween.github.io/tuku-group-landing  
+🚀 **Live at**: https://tukugroup.com  
+🔄 **Preview**: https://tuku-group-landing.pages.dev  
+📜 **Legacy**: https://vibekween.github.io/tuku-group-landing (deprecated)  
 📚 **Complete documentation updated**  
 🔐 **SSH authentication configured**  
 ✨ **Split-flap component integrated** (August 24, 2025)
