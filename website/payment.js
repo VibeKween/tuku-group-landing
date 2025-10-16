@@ -6,24 +6,24 @@ const API_URL = '/api'; // Your API endpoint
 
 // Services configuration (could also fetch from API)
 const SERVICES = {
-  consultation: {
-    id: 'consultation',
-    name: 'Initial Consultation',
-    price: 120000, // cents
-    description: 'A conversation, then a plan.',
+  discovery: {
+    id: 'discovery',
+    name: 'New Client Discovery',
+    price: 500000, // cents
+    description: 'Clarity before execution.',
     details: `
-      <h4>INITIAL CONSULTATION</h4>
-      <p class="service-detail">Full discovery and strategic scoping.</p>
-      <p class="service-detail">We map your vision, identify constraints, and outline what's required.
-      You receive a detailed roadmap - broken into sprints with clear milestones and timeline.</p>
-      <p class="service-detail">By the end, you'll know exactly what's being built
-      and what it takes to complete.</p>
+      <h4>NEW CLIENT DISCOVERY</h4>
+      <p class="service-detail">Discovery is where we determine what you're actually building.</p>
+      <p class="service-detail">We map the vision, identify what matters, and define the thing itself.
+      By the end, the idea has shape and direction.</p>
+      <p class="service-detail">This clarity gives purpose to everything that follows.
+      Sprints can work with focus because discovery established where we're going.</p>
     `
   },
   sprint: {
     id: 'sprint',
     name: 'Sprint Build',
-    price: 450000,
+    price: 525000,
     description: 'Build with intention. Ship complete.',
     details: `
       <h4>SPRINT BUILD</h4>
@@ -51,10 +51,66 @@ const SERVICES = {
   }
 };
 
+// FAQ Configuration
+const FAQ_DATA = [
+  {
+    id: 'entry-point',
+    question: 'What\'s the best way to start?',
+    answer: `
+      <p>For new clients, we recommend starting with Discovery + First Sprint ($10,250 total).</p>
+      <p>This gives you complete clarity on what you're building plus immediate execution on the first milestone.</p>
+    `
+  },
+  {
+    id: 'multi-sprint',
+    question: 'How does pricing work for larger projects?',
+    answer: `
+      <p>Multi-sprint projects offer volume pricing:</p>
+      <ul>
+        <li>Additional sprints (when booked together): $4,800 each</li>
+        <li>Three or more sprints: $4,500 per sprint</li>
+      </ul>
+      <p>Example: Three-sprint project = $5,000 (Discovery) + $13,500 (3 sprints) = $18,500 total</p>
+    `
+  },
+  {
+    id: 'payment-terms',
+    question: 'What are the payment terms?',
+    answer: `
+      <p><strong>Discovery:</strong> Full payment due before work begins.</p>
+      <p><strong>Single Sprint:</strong> 50% to begin, 50% upon completion.</p>
+      <p><strong>Multi-Sprint:</strong> 50% deposit before first sprint, 25% at midpoint, 25% upon final completion.</p>
+      <p><strong>Retainer:</strong> Billed monthly in advance on the 1st. Auto-payment preferred.</p>
+    `
+  },
+  {
+    id: 'scope-changes',
+    question: 'What if the scope changes mid-sprint?',
+    answer: `
+      <p>Each sprint is scoped before it begins. Once started, the scope is locked.</p>
+      <p>Significant changes require either:</p>
+      <ul>
+        <li><strong>Sprint extension:</strong> $200/hour for additional time</li>
+        <li><strong>New sprint:</strong> Added to the project roadmap</li>
+      </ul>
+      <p>The premium hourly rate ensures we maintain focus on delivering what was scoped.</p>
+    `
+  },
+  {
+    id: 'cancellation',
+    question: 'What\'s the cancellation policy?',
+    answer: `
+      <p>Discovery is non-refundable once work begins.</p>
+      <p>Sprint work can be paused or rescheduled with 10 business days notice.</p>
+      <p>Retainers require 30 days written notice for cancellation.</p>
+    `
+  }
+];
+
 // State
 let state = {
   currentStep: 'select',
-  selectedService: 'consultation',
+  selectedService: 'discovery',
   name: '',
   email: '',
   stripe: null,
@@ -366,6 +422,49 @@ function showSuccess(paymentIntent) {
   showStep('success');
 }
 
+// Render FAQ
+function renderFAQ() {
+  const container = document.getElementById('faq-accordion');
+  if (!container) return; // Skip if FAQ container doesn't exist
+  
+  container.innerHTML = '';
+
+  FAQ_DATA.forEach(faq => {
+    const faqItem = document.createElement('div');
+    faqItem.className = 'faq-item';
+    
+    faqItem.innerHTML = `
+      <div class="faq-question" onclick="toggleFAQ('${faq.id}')">
+        <span>${faq.question}</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer" id="faq-${faq.id}">
+        ${faq.answer}
+      </div>
+    `;
+    
+    container.appendChild(faqItem);
+  });
+}
+
+// Toggle FAQ
+function toggleFAQ(faqId) {
+  const answer = document.getElementById(`faq-${faqId}`);
+  const toggle = answer.previousElementSibling.querySelector('.faq-toggle');
+  
+  // Close all other FAQs
+  document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+    if (otherAnswer.id !== `faq-${faqId}`) {
+      otherAnswer.classList.remove('expanded');
+      otherAnswer.previousElementSibling.querySelector('.faq-toggle').textContent = '+';
+    }
+  });
+  
+  // Toggle current FAQ
+  answer.classList.toggle('expanded');
+  toggle.textContent = answer.classList.contains('expanded') ? '−' : '+';
+}
+
 // Event listeners
 function setupEventListeners() {
   // Contact form validation
@@ -391,6 +490,7 @@ function setupEventListeners() {
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
   renderServices();
+  renderFAQ();
   setupEventListeners();
   await initStripe();
 });

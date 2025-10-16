@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Work With TUKU GROUP – Building Systems and Stories</title>
-  <meta name="description" content="Fewer, better, slower. Creative services and brand guidance through focused sprints, strategic consultation, and ongoing retainer support. Work with TUKU GROUP.">
+  <meta name="description" content="Creative services and brand guidance through focused discovery, strategic sprints, and ongoing retainer support. Work with TUKU GROUP to build systems and stories.">
   <meta name="keywords" content="creative services, brand guidance, design sprints, creative consultation, brand strategy, thoughtful brands, intentional design">
   <meta name="author" content="Tuku Group">
   
@@ -22,7 +22,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tukugroup.com/studio.html">
   <meta property="og:title" content="Work With TUKU GROUP – Building Systems and Stories">
-  <meta property="og:description" content="Fewer, better, slower. Creative services through focused sprints, consultation, and ongoing support."
+  <meta property="og:description" content="Creative services through focused discovery, strategic sprints, and ongoing support. Work with TUKU GROUP to build systems and stories."
   <meta property="og:image" content="https://tukugroup.com/images/tuku-group-og.png">
   <meta property="og:image:secure_url" content="https://tukugroup.com/images/tuku-group-og.png">
   <meta property="og:image:type" content="image/png">
@@ -37,7 +37,7 @@
   <meta name="twitter:site" content="@tukugroup">
   <meta name="twitter:creator" content="@tukugroup">
   <meta name="twitter:title" content="Work With TUKU GROUP – Building Systems and Stories">
-  <meta name="twitter:description" content="Fewer, better, slower. Creative services through focused sprints, consultation, and ongoing support.">
+  <meta name="twitter:description" content="Creative services through focused discovery, strategic sprints, and ongoing support. Work with TUKU GROUP to build systems and stories.">
   <meta name="twitter:image" content="https://tukugroup.com/images/tuku-group-og.png">
   <meta name="twitter:image:alt" content="Work with TUKU GROUP">
   
@@ -105,16 +105,16 @@
     "offers": [
       {
         "@type": "Offer",
-        "name": "Initial Consultation",
-        "description": "Full discovery and strategic scoping. A conversation, then a plan.",
-        "price": "1200",
+        "name": "New Client Discovery",
+        "description": "Clarity before execution. Discovery to determine what you're actually building.",
+        "price": "5000",
         "priceCurrency": "USD"
       },
       {
         "@type": "Offer",
         "name": "Sprint Build",
         "description": "Two weeks of focused execution on a single milestone. Build with intention. Ship complete.",
-        "price": "4500",
+        "price": "5250",
         "priceCurrency": "USD"
       },
       {
@@ -150,10 +150,6 @@
     
     <section class="block">
       <h1><a href="index.html" style="text-decoration: none; color: inherit; border-bottom: none; font-size: inherit; font-weight: inherit; font-family: inherit;">TUKU GROUP</a></h1>
-    </section>
-
-    <section class="block">
-      <p><span class="philosophy-header">Fewer. Better. Slower.</span></p>
     </section>
 
     <section class="block">
@@ -194,6 +190,18 @@
       </section>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="block faq-section">
+      <p><span class="section-label">Frequently asked questions</span></p>
+      <div class="faq-accordion" id="faq-accordion">
+        <!-- Generated dynamically -->
+      </div>
+    </section>
+
+    <section class="block footer">
+      <p>© 2025 Tuku Group, LLC.<br>Independent and privately held.</p>
+      <p style="margin-top: 40px; font-size: 0.85rem; color: #666;">Updated October 2025</p>
+    </section>
 
   </main>
 
@@ -239,6 +247,17 @@
           });
         });
       }
+      
+      // Track FAQ interactions
+      const originalToggleFAQ = window.toggleFAQ;
+      window.toggleFAQ = function(faqId) {
+        gtag('event', 'faq_interaction', {
+          'event_category': 'engagement',
+          'event_label': `faq_${faqId}`,
+          'page_location': window.location.href
+        });
+        if (originalToggleFAQ) originalToggleFAQ(faqId);
+      };
       
       // Track scroll depth milestones
       let scrollDepthTracked = [];
