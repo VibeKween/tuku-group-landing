@@ -88,3 +88,24 @@ cp website/cloud-system-static.js .
 - **Private Pricing**: Payment portal only accessible via direct link
 - **Mobile-First**: Responsive design with single breakpoint at 768px
 - **Pure Implementation**: No frameworks, optimal for performance
+- **Optimized Social Sharing**: Compact OG card design matching OF THE CULTURE aesthetic
+
+## Social Sharing (Open Graph)
+
+**OG Image**: `images/tuku-group-og-compact.png` (1200x630px)
+- Uses favicon cloud scaled appropriately for compact share cards
+- Aligned design without visible tail for clean iMessage/Slack presentation
+- Consistent with OF THE CULTURE's compact share card aesthetic
+- File size: ~1.3MB (optimized for social platforms)
+
+**Share Card Preview**:
+When shared on iMessage, Slack, or social media, displays:
+- Compact cloud image (top)
+- "Independent Creative House" (auto-added title)
+- "tukugroup.com" (auto-added URL)
+
+**Technical Details**:
+- Proper 1200x630px OG dimensions (not square like original)
+- Cloud positioned to hide left tail for alignment with text overlay
+- Light gradient background (#e8eef5 to #d8e4f0)
+- Meta tags include both OG and Twitter card support
