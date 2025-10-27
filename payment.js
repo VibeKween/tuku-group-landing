@@ -24,8 +24,8 @@ const SERVICES = {
     price: 1250000,
     description: 'Discovery through delivery. Complete and operational.',
     details: `
-      <p class="service-detail">A complete technical build from discovery through operational handoff. This includes everything needed to go from concept to functioning system: copywriting, UI/UX, technical implementation, QA testing, user flows, documentation, and training.</p>
-      <p class="service-detail">You get a fully operational deliverable with everything documented and ready to use. The specifics depend on what we're building, but you're getting end-to-end execution and handoff.</p>
+      <p class="service-detail">We identify the complete framework and moving pieces required to build a working product or system. This could include copywriting, journey mapping, technical implementation, site architecture, user flows, brand systems, or operational processes — whatever components are essential for your specific build.</p>
+      <p class="service-detail">You get a fully operational deliverable with every component strategically integrated. We map what's actually needed, build each piece with intention, and hand off a complete, functioning solution ready for use.</p>
       <p class="service-detail"><strong>Timeline:</strong> 4 to 6 weeks</p>
       <p class="service-detail"><strong>Payment:</strong> 50% upfront, 50% at completion before final handoff</p>
     `
