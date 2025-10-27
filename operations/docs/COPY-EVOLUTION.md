@@ -113,6 +113,32 @@ mailto:contact@tukugroup.com?subject=Start%20a%20conversation%20—%20Tuku%20Gro
 
 ---
 
+### Payment Portal Service Naming Evolution (November 2025)
+
+**Service Model Update:**
+```
+OLD: Discovery ($1,200) → Sprint ($4,500) → Retainer ($1,500)
+NEW: Clarity Sprint ($5,250) → Technical Build ($12,500) → Multi-Phase Build (Scoped)
+```
+
+**Key Service Name Change:**
+```
+"Light Package" → "CLARITY SPRINT"
+```
+
+**Rationale**: 
+- "Light Package" unintentionally suggested less value/importance
+- "CLARITY SPRINT" emphasizes valuable outcome (clarity) and action-oriented approach
+- Aligns with TUKU's strategic, focused brand voice
+- Better communicates the engagement's purpose as strategic exploration
+
+**Additional Updates:**
+- All service names made slightly bolder (font-weight: 500)
+- Service descriptions refined for better hierarchy
+- Structured data updated to reflect new naming
+
+---
+
 ## Copy Principles Applied
 
 ### 1. Redundancy Elimination

@@ -319,7 +319,7 @@ p {
 
 .service-name {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -330,7 +330,7 @@ p {
 }
 
 .service-description {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 400;
   font-style: italic;
   line-height: 1.5;

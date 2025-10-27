@@ -6,47 +6,40 @@ const API_URL = '/api'; // Your API endpoint
 
 // Services configuration (could also fetch from API)
 const SERVICES = {
-  discovery: {
-    id: 'discovery',
-    name: 'New Client Discovery',
-    price: 500000, // cents
-    description: 'Clarity before execution.',
+  light: {
+    id: 'light',
+    name: 'CLARITY SPRINT',
+    price: 525000, // cents
+    description: 'Strategic exploration. Custom direction.',
     details: `
-      <h4>NEW CLIENT DISCOVERY</h4>
-      <p class="service-detail">Discovery is where we determine what you're actually building.</p>
-      <p class="service-detail">We map the vision, identify what matters, and define the thing itself.
-      By the end, the idea has shape and direction.</p>
-      <p class="service-detail">This clarity gives purpose to everything that follows.
-      Sprints can work with focus because discovery established where we're going.</p>
+      <p class="service-detail">An entry point for strategic exploration. We'll think through what you're building, assess what's needed, and you'll walk away with a custom artifact that gives you clarity and direction.</p>
+      <p class="service-detail">A deliverable tailored to our conversation — whether that's a strategic assessment, a recommendation report, a planning framework, or something else that helps you take action. This is about getting unstuck and knowing what comes next.</p>
+      <p class="service-detail"><strong>Timeline:</strong> 2 to 4 weeks</p>
+      <p class="service-detail"><strong>Payment:</strong> 100% upfront</p>
     `
   },
-  sprint: {
-    id: 'sprint',
-    name: 'Sprint Build',
-    price: 525000,
-    description: 'Build with intention. Ship complete.',
+  technical: {
+    id: 'technical',
+    name: 'TECHNICAL BUILD',
+    price: 1250000,
+    description: 'Discovery through delivery. Complete and operational.',
     details: `
-      <h4>SPRINT BUILD</h4>
-      <p class="service-detail">Two weeks of focused execution on a single milestone.</p>
-      <p class="service-detail">Each sprint delivers something complete - brand, design, or platform.
-      Scoped, executed, delivered.</p>
-      <p class="service-detail">Multi-sprint projects can be planned in sequence.
-      Pricing scales with scope.</p>
-      <p class="service-detail">One sprint at a time.
-      When yours begins, you have our full attention.</p>
+      <p class="service-detail">A complete technical build from discovery through operational handoff. This includes everything needed to go from concept to functioning system: copywriting, UI/UX, technical implementation, QA testing, user flows, documentation, and training.</p>
+      <p class="service-detail">You get a fully operational deliverable with everything documented and ready to use. The specifics depend on what we're building, but you're getting end-to-end execution and handoff.</p>
+      <p class="service-detail"><strong>Timeline:</strong> 4 to 6 weeks</p>
+      <p class="service-detail"><strong>Payment:</strong> 50% upfront, 50% at completion before final handoff</p>
     `
   },
-  retainer: {
-    id: 'retainer',
-    name: 'Retainer Engagement',
-    price: 150000,
-    description: 'Strategic support. Thoughtful refinement.',
+  multiphase: {
+    id: 'multiphase',
+    name: 'MULTI-PHASE BUILD',
+    price: 0, // Will show "Scoped to conversation"
+    description: 'Layered complexity. Built in sequence.',
     details: `
-      <h4>RETAINER ENGAGEMENT</h4>
-      <p class="service-detail">Ongoing guidance once the work is live.</p>
-      <p class="service-detail">For projects that continue to evolve - small refinements,
-      strategic direction, ongoing care.</p>
-      <p class="service-detail">Available after completing sprint work together.</p>
+      <p class="service-detail">Multi-phase engagements that require discovery and multiple build sprints. These projects involve layers of complexity — whether that's integrated systems, phased rollouts, or builds that need to evolve over time.</p>
+      <p class="service-detail">Scope is determined after discovery based on what you're actually building and what it requires to do it right.</p>
+      <p class="service-detail"><strong>Timeline:</strong> 6 to 8+ weeks minimum</p>
+      <p class="service-detail"><strong>Payment:</strong> 50% upfront, 25% at major milestone, 25% at completion before final handoff</p>
     `
   }
 };
@@ -54,55 +47,41 @@ const SERVICES = {
 // FAQ Configuration
 const FAQ_DATA = [
   {
-    id: 'entry-point',
-    question: 'What\'s the best way to start?',
+    id: 'payment-structure',
+    question: 'Why do you structure payment this way?',
     answer: `
-      <p>For new clients, we recommend starting with Discovery + First Sprint ($10,250 total).</p>
-      <p>This gives you complete clarity on what you're building plus immediate execution on the first milestone.</p>
-    `
-  },
-  {
-    id: 'multi-sprint',
-    question: 'How does pricing work for larger projects?',
-    answer: `
-      <p>Multi-sprint projects offer volume pricing:</p>
-      <ul>
-        <li>Additional sprints (when booked together): $4,800 each</li>
-        <li>Three or more sprints: $4,500 per sprint</li>
-      </ul>
-      <p>Example: Three-sprint project = $5,000 (Discovery) + $13,500 (3 sprints) = $18,500 total</p>
-    `
-  },
-  {
-    id: 'payment-terms',
-    question: 'What are the payment terms?',
-    answer: `
-      <p><strong>Discovery:</strong> Full payment due before work begins.</p>
-      <p><strong>Single Sprint:</strong> 50% to begin, 50% upon completion.</p>
-      <p><strong>Multi-Sprint:</strong> 50% deposit before first sprint, 25% at midpoint, 25% upon final completion.</p>
-      <p><strong>Retainer:</strong> Billed monthly in advance on the 1st. Auto-payment preferred.</p>
+      <p>The work requires focus. Payment timing ensures we can dedicate attention without distraction while creating natural milestones that confirm value as the project progresses.</p>
+      <p>The final payment arrives when the work is complete and operational. This moment confirms what was built and often becomes the conversation about what's next.</p>
+      <p><strong>Light Package:</strong> Full payment due before work begins.</p>
+      <p><strong>Technical Build:</strong> 50% to begin, 50% upon completion before final handoff.</p>
+      <p><strong>Multi-Phase Build:</strong> 50% upfront, 25% at major milestone, 25% upon completion before final handoff.</p>
     `
   },
   {
     id: 'scope-changes',
-    question: 'What if the scope changes mid-sprint?',
+    question: 'What about scope changes and post-delivery updates?',
     answer: `
-      <p>Each sprint is scoped before it begins. Once started, the scope is locked.</p>
-      <p>Significant changes require either:</p>
-      <ul>
-        <li><strong>Sprint extension:</strong> $200/hour for additional time</li>
-        <li><strong>New sprint:</strong> Added to the project roadmap</li>
-      </ul>
-      <p>The premium hourly rate ensures we maintain focus on delivering what was scoped.</p>
+      <p><strong>Scope Changes:</strong> Work outside defined scope is billed at $200/hour. Invoiced upon completion, due within 7 days.</p>
+      <p><strong>Post-Delivery Updates:</strong> Minor updates or edits after delivery are billed at $200/hour. Larger updates will be scoped and priced based on complexity, with payment due 100% upfront before work begins.</p>
+      <p><strong>Cancellation Policy:</strong> Light Package is non-refundable once work begins. Technical and Multi-Phase builds can be paused or rescheduled with 10 business days notice.</p>
     `
   },
   {
-    id: 'cancellation',
-    question: 'What\'s the cancellation policy?',
+    id: 'project-scope',
+    question: 'How do you handle project scope?',
     answer: `
-      <p>Discovery is non-refundable once work begins.</p>
-      <p>Sprint work can be paused or rescheduled with 10 business days notice.</p>
-      <p>Retainers require 30 days written notice for cancellation.</p>
+      <p>Each engagement is scoped before it begins. Once work starts, the scope is locked. Minor refinements within the project's intent are included.</p>
+      <p>Significant additions or changes are billed at $200/hour for additional time required.</p>
+      <p>The premium hourly rate for mid-project changes ensures we maintain focus on delivering what was scoped. When work is planned as part of the initial scope, you benefit from project pricing. When it's added mid-stream, the higher rate reflects the disruption to planned execution.</p>
+    `
+  },
+  {
+    id: 'getting-started',
+    question: 'What\'s the best way to start?',
+    answer: `
+      <p>Begin with a call — a conversation to understand your direction and define what matters.</p>
+      <p>From there, we'll clarify your stance and map the milestones ahead. The Light Package is often the best entry point for strategic exploration, while Technical Build is ideal when you know what needs to be built.</p>
+      <p>Multi-Phase Build is for projects requiring layered complexity and multiple sprints in sequence.</p>
     `
   }
 ];
@@ -110,7 +89,7 @@ const FAQ_DATA = [
 // State
 let state = {
   currentStep: 'select',
-  selectedService: 'discovery',
+  selectedService: 'light',
   name: '',
   email: '',
   stripe: null,
@@ -188,7 +167,11 @@ function renderServices() {
     card.innerHTML = `
       <div class="service-header">
         <div class="service-name">${service.name}</div>
-        <div class="service-price">${service.id === 'retainer' ? '$1,500/mo' : '$' + (service.price / 100).toLocaleString()}</div>
+        <div class="service-price">${
+          service.id === 'multiphase' ? 'Scoped to conversation' :
+          service.id === 'technical' ? 'Starting at $' + (service.price / 100).toLocaleString() :
+          '$' + (service.price / 100).toLocaleString()
+        }</div>
       </div>
       <div class="service-description">${service.description}</div>
       <div class="service-details ${state.selectedService === service.id ? 'expanded' : ''}">
