@@ -447,6 +447,7 @@ a:hover {
   text-decoration-skip-ink: none;
   border: none;
   padding-bottom: 0;
+  font-weight: 600;
   transition: opacity 0.2s ease;
 }
 
