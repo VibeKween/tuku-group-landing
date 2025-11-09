@@ -43,6 +43,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    
+    <!-- OF THE CULTURE Brand Font -->
+    <style>
+        @font-face {
+            font-family: 'ITC Avant Garde Gothic Pro';
+            src: url('../fonts/ITCAvantGardePro-Bk.otf') format('opentype');
+            font-weight: 400;
+            font-display: swap;
+        }
+    </style>
     <style>
         :root {
             --color-black: #000000;
@@ -203,6 +213,28 @@
 
         .case-study-item {
             padding: 40px 0;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .case-art {
+            background: var(--color-blue-light);
+            border-radius: 4px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        .case-art canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        .case-content {
+            /* Container for text content */
         }
 
         .case-meta {
@@ -219,6 +251,13 @@
             font-weight: 600;
             margin-bottom: 16px;
             color: var(--color-black);
+        }
+        
+        /* OF THE CULTURE uses brand font */
+        .of-the-culture-title {
+            font-family: 'ITC Avant Garde Gothic Pro', 'JetBrains Mono', monospace !important;
+            font-weight: 400;
+            letter-spacing: 0.15em;
         }
 
         .case-description {
@@ -267,6 +306,102 @@
             border-bottom-color: var(--color-blue-accent);
         }
 
+        /* Split-flap component styles */
+        .split-flap-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .split-flap-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--color-grey);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .status-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #00ff00;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        .split-flap-display {
+            display: flex;
+            gap: 2px;
+            padding: 12px;
+            background: #000;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .flap-char-slot {
+            width: 11px;
+            height: 18px;
+            background: #000;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+        }
+        
+        .flap-char-inner {
+            color: #00ff00;
+            font-size: 7px;
+            font-weight: 400;
+            line-height: 1;
+        }
+        
+        /* Responsive scaling for split-flap */
+        @media (min-width: 480px) {
+            .flap-char-slot {
+                width: 13px;
+                height: 22px;
+            }
+            .flap-char-inner {
+                font-size: 9px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .flap-char-slot {
+                width: 16px;
+                height: 25px;
+            }
+            .flap-char-inner {
+                font-size: 10px;
+            }
+            .split-flap-status {
+                font-size: 10px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .flap-char-slot {
+                width: 18px;
+                height: 27px;
+            }
+            .flap-char-inner {
+                font-size: 12px;
+            }
+        }
+
         /* Footer */
         .footer {
             max-width: 600px;
@@ -280,6 +415,15 @@
             font-size: 0.75rem;
             color: var(--color-black);
             line-height: 1.8;
+        }
+
+        .footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            opacity: 0.7;
         }
 
         /* Responsive */
@@ -335,6 +479,12 @@
 
             .case-study-item {
                 padding: 32px 0;
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .case-art {
+                height: 200px;
             }
             
             .case-link {
@@ -405,74 +555,83 @@
         
         <!-- OF THE CULTURE -->
         <article class="case-study-item">
-            <div class="case-meta">[ house brand development ]</div>
-            <h3>OF THE CULTURE</h3>
-            <p class="case-description">TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.</p>
-            <div class="case-stats">
-                <div class="stat">
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">week sprint</div>
+            <div class="case-art" id="ofTheCultureArt"></div>
+            <div class="case-content">
+                <div class="case-meta">[ house brand development ]</div>
+                <h3 class="of-the-culture-title">OF THE CULTURE</h3>
+                <p class="case-description">TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.</p>
+                <div class="case-stats">
+                    <div class="stat">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">week sprint</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">internal build</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">cultural venture</div>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">internal build</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">1</div>
-                    <div class="stat-label">cultural venture</div>
-                </div>
+                <a href="/ideas/of-the-culture" class="case-link">view case study →</a>
             </div>
-            <a href="/ideas/of-the-culture" class="case-link">view case study →</a>
         </article>
 
         <!-- CRYPTOGAINS Documentation -->
         <article class="case-study-item">
-            <div class="case-meta">[ strategic documentation ]</div>
-            <h3>[REDACTED]</h3>
-            <p class="case-description">Complete business architecture. 400 pages enabling one-and-done implementation. Documentation that functions as invisible scaffolding for portfolio management transformation.</p>
-            <div class="case-stats">
-                <div class="stat">
-                    <div class="stat-value">400</div>
-                    <div class="stat-label">pages produced</div>
+            <div class="case-art" id="cryptogainsArt"></div>
+            <div class="case-content">
+                <div class="case-meta">[ strategic documentation ]</div>
+                <h3>[REDACTED]</h3>
+                <p class="case-description">Complete business architecture. 400 pages enabling one-and-done implementation. Documentation that functions as invisible scaffolding for portfolio management transformation.</p>
+                <div class="case-stats">
+                    <div class="stat">
+                        <div class="stat-value">400</div>
+                        <div class="stat-label">pages produced</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">20,088</div>
+                        <div class="stat-label">lines of code</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">5:1</div>
+                        <div class="stat-label">spec to code ratio</div>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-value">20,088</div>
-                    <div class="stat-label">lines of code</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">5:1</div>
-                    <div class="stat-label">spec to code ratio</div>
-                </div>
+                <a href="/ideas/redacted" class="case-link">view case study →</a>
             </div>
-            <a href="/ideas/redacted" class="case-link">view case study →</a>
         </article>
 
         <!-- Invisible Scaffolding Exploration -->
         <article class="case-study-item">
-            <div class="case-meta">[ philosophical exploration ]</div>
-            <h3>INVISIBLE SCAFFOLDING</h3>
-            <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving AI-human collaboration through algorithmic sophistication.</p>
-            <div class="case-stats">
-                <div class="stat">
-                    <div class="stat-value">1,800</div>
-                    <div class="stat-label">particles simulated</div>
+            <div class="case-art" id="invisibleScaffoldingArt"></div>
+            <div class="case-content">
+                <div class="case-meta">[ philosophical exploration ]</div>
+                <h3>INVISIBLE SCAFFOLDING</h3>
+                <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving AI-human collaboration through algorithmic sophistication.</p>
+                <div class="case-stats">
+                    <div class="stat">
+                        <div class="stat-value">1,800</div>
+                        <div class="stat-label">particles simulated</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">180</div>
+                        <div class="stat-label">evolution steps</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">visual explorations</div>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-value">180</div>
-                    <div class="stat-label">evolution steps</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">7</div>
-                    <div class="stat-label">visual explorations</div>
-                </div>
+                <a href="/ideas/invisible-scaffolding" class="case-link">view case study →</a>
             </div>
-            <a href="/ideas/invisible-scaffolding" class="case-link">view case study →</a>
         </article>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2025 Tuku Group, LLC.<br>Independent and privately held.</p>
+        <p>© 2025 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
     </footer>
 
     <script>
@@ -637,6 +796,289 @@
                 return false;
             }
         }, { passive: false });
+
+        // Case Study Art Sketches - Mobile optimized
+        
+        // OF THE CULTURE - Organic brush strokes with cultural essence
+        const ofTheCultureSketch = (p) => {
+            let brushes = [];
+            let colorPalette = [
+                [193, 154, 75],   // TUKU gold
+                [165, 101, 73],   // Earth clay  
+                [218, 165, 32],   // Golden rod
+                [139, 69, 19],    // Saddle brown
+                [160, 82, 45],    // Sienna
+                [210, 180, 140]   // Tan
+            ];
+            
+            p.setup = () => {
+                const container = document.getElementById('ofTheCultureArt');
+                const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+                canvas.parent('ofTheCultureArt');
+                
+                // Cultural brush strokes - fewer, more intentional
+                let brushCount = window.innerWidth <= 768 ? 12 : 20;
+                for (let i = 0; i < brushCount; i++) {
+                    brushes.push({
+                        x: p.random(p.width * 0.1, p.width * 0.9),
+                        y: p.random(p.height * 0.2, p.height * 0.8),
+                        targetX: p.random(p.width * 0.1, p.width * 0.9),
+                        targetY: p.random(p.height * 0.2, p.height * 0.8),
+                        color: p.random(colorPalette),
+                        weight: p.random(2, 6),
+                        speed: p.random(0.005, 0.02),
+                        trail: [],
+                        maxTrailLength: p.random(15, 30),
+                        changeTarget: p.random(200, 400),
+                        counter: 0
+                    });
+                }
+                
+                p.background(250, 248, 240);
+            };
+            
+            p.draw = () => {
+                // Subtle fade for organic feel
+                p.fill(250, 248, 240, 12);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+                
+                for (let brush of brushes) {
+                    brush.counter++;
+                    
+                    // Move toward target with organic easing
+                    let dx = brush.targetX - brush.x;
+                    let dy = brush.targetY - brush.y;
+                    brush.x += dx * brush.speed;
+                    brush.y += dy * brush.speed;
+                    
+                    // Add slight noise for organic movement
+                    brush.x += p.noise(brush.x * 0.01, brush.y * 0.01, p.frameCount * 0.01) * 0.8 - 0.4;
+                    brush.y += p.noise(brush.x * 0.01, brush.y * 0.01, p.frameCount * 0.01 + 100) * 0.8 - 0.4;
+                    
+                    // Store trail
+                    brush.trail.push({ x: brush.x, y: brush.y });
+                    if (brush.trail.length > brush.maxTrailLength) {
+                        brush.trail.shift();
+                    }
+                    
+                    // Draw brush stroke trail with fading opacity
+                    for (let i = 1; i < brush.trail.length; i++) {
+                        let opacity = p.map(i, 0, brush.trail.length - 1, 20, 180);
+                        let weight = p.map(i, 0, brush.trail.length - 1, brush.weight * 0.3, brush.weight);
+                        
+                        p.stroke(brush.color[0], brush.color[1], brush.color[2], opacity);
+                        p.strokeWeight(weight);
+                        p.strokeCap(p.ROUND);
+                        
+                        let prev = brush.trail[i - 1];
+                        let curr = brush.trail[i];
+                        p.line(prev.x, prev.y, curr.x, curr.y);
+                    }
+                    
+                    // Change target periodically for cultural meandering
+                    if (brush.counter > brush.changeTarget) {
+                        brush.targetX = p.random(p.width * 0.1, p.width * 0.9);
+                        brush.targetY = p.random(p.height * 0.2, p.height * 0.8);
+                        brush.counter = 0;
+                        brush.changeTarget = p.random(150, 300);
+                    }
+                    
+                    // Keep within bounds
+                    brush.x = p.constrain(brush.x, 0, p.width);
+                    brush.y = p.constrain(brush.y, 0, p.height);
+                }
+            };
+            
+            p.windowResized = () => {
+                const container = document.getElementById('ofTheCultureArt');
+                if (container) {
+                    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+                }
+            };
+        };
+        
+        // CRYPTOGAINS - Geometric patterns
+        const cryptogainsSketch = (p) => {
+            let grid = [];
+            let step = 0;
+            
+            p.setup = () => {
+                const container = document.getElementById('cryptogainsArt');
+                const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+                canvas.parent('cryptogainsArt');
+                
+                let gridSize = window.innerWidth <= 768 ? 20 : 15;
+                for (let x = 0; x < p.width; x += gridSize) {
+                    for (let y = 0; y < p.height; y += gridSize) {
+                        grid.push({
+                            x: x,
+                            y: y,
+                            active: p.random() > 0.7,
+                            pulse: p.random(p.TWO_PI)
+                        });
+                    }
+                }
+            };
+            
+            p.draw = () => {
+                p.background(240, 249, 255);
+                
+                for (let point of grid) {
+                    if (point.active) {
+                        let pulse = p.sin(step + point.pulse) * 0.5 + 0.5;
+                        let size = pulse * 6 + 2;
+                        
+                        // Vibrant crypto-inspired colors
+                        let colorType = Math.floor(p.frameCount / 60) % 3;
+                        if (colorType === 0) {
+                            p.fill(0, 255, 127, 150 * pulse); // Spring green
+                        } else if (colorType === 1) {
+                            p.fill(255, 20, 147, 150 * pulse); // Deep pink
+                        } else {
+                            p.fill(0, 191, 255, 150 * pulse); // Deep sky blue
+                        }
+                        p.noStroke();
+                        p.circle(point.x, point.y, size);
+                    }
+                    
+                    // Random activation changes
+                    if (p.random() > 0.995) {
+                        point.active = !point.active;
+                    }
+                }
+                
+                step += 0.01;
+            };
+            
+            p.windowResized = () => {
+                const container = document.getElementById('cryptogainsArt');
+                if (container) {
+                    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+                }
+            };
+        };
+        
+        // INVISIBLE SCAFFOLDING - Network visualization
+        const invisibleScaffoldingSketch = (p) => {
+            let agents = [];
+            
+            p.setup = () => {
+                const container = document.getElementById('invisibleScaffoldingArt');
+                const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+                canvas.parent('invisibleScaffoldingArt');
+                
+                let agentCount = window.innerWidth <= 768 ? 30 : 60;
+                for (let i = 0; i < agentCount; i++) {
+                    agents.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        vx: p.random(-1, 1),
+                        vy: p.random(-1, 1),
+                        connections: 0
+                    });
+                }
+            };
+            
+            p.draw = () => {
+                p.background(240, 249, 255, 20);
+                
+                // Update agents
+                for (let agent of agents) {
+                    agent.vx += p.noise(agent.x * 0.01, agent.y * 0.01, p.frameCount * 0.005) * 0.05 - 0.025;
+                    agent.vy += p.noise(agent.x * 0.01, agent.y * 0.01, p.frameCount * 0.005 + 1000) * 0.05 - 0.025;
+                    
+                    agent.vx = p.constrain(agent.vx, -1, 1);
+                    agent.vy = p.constrain(agent.vy, -1, 1);
+                    
+                    agent.x += agent.vx;
+                    agent.y += agent.vy;
+                    
+                    // Wrap edges
+                    if (agent.x < 0) agent.x = p.width;
+                    if (agent.x > p.width) agent.x = 0;
+                    if (agent.y < 0) agent.y = p.height;
+                    if (agent.y > p.height) agent.y = 0;
+                    
+                    agent.connections = 0;
+                }
+                
+                // Draw connections and agents
+                for (let i = 0; i < agents.length; i++) {
+                    for (let j = i + 1; j < agents.length; j++) {
+                        let dist = p.dist(agents[i].x, agents[i].y, agents[j].x, agents[j].y);
+                        if (dist < 80) {
+                            let alpha = p.map(dist, 0, 80, 100, 0);
+                            // Network connections in purple/magenta spectrum
+                            p.stroke(138, 43, 226, alpha); // Blue violet
+                            p.strokeWeight(0.5);
+                            p.line(agents[i].x, agents[i].y, agents[j].x, agents[j].y);
+                            agents[i].connections++;
+                            agents[j].connections++;
+                        }
+                    }
+                    
+                    // Draw agent nodes with connection-based coloring
+                    let size = p.map(agents[i].connections, 0, 5, 2, 8);
+                    if (agents[i].connections > 3) {
+                        p.fill(255, 0, 255, 180); // Bright magenta for highly connected
+                    } else if (agents[i].connections > 1) {
+                        p.fill(138, 43, 226, 150); // Blue violet for medium
+                    } else {
+                        p.fill(75, 0, 130, 120); // Indigo for isolated
+                    }
+                    p.noStroke();
+                    p.circle(agents[i].x, agents[i].y, size);
+                }
+            };
+            
+            p.windowResized = () => {
+                const container = document.getElementById('invisibleScaffoldingArt');
+                if (container) {
+                    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+                }
+            };
+        };
+        
+        // Initialize case study sketches with delay
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait a bit for DOM to be fully ready
+            setTimeout(() => {
+                console.log('Initializing case study art...');
+                
+                // Check if containers exist
+                const containers = ['ofTheCultureArt', 'cryptogainsArt', 'invisibleScaffoldingArt'];
+                containers.forEach(id => {
+                    const element = document.getElementById(id);
+                    console.log(`Container ${id}:`, element ? 'found' : 'NOT FOUND');
+                    if (element) {
+                        console.log(`${id} dimensions:`, element.offsetWidth, 'x', element.offsetHeight);
+                    }
+                });
+                
+                // Initialize sketches
+                try {
+                    new p5(ofTheCultureSketch);
+                    console.log('OF THE CULTURE sketch initialized');
+                } catch (e) {
+                    console.error('OF THE CULTURE sketch failed:', e);
+                }
+                
+                try {
+                    new p5(cryptogainsSketch);
+                    console.log('CRYPTOGAINS sketch initialized');
+                } catch (e) {
+                    console.error('CRYPTOGAINS sketch failed:', e);
+                }
+                
+                try {
+                    new p5(invisibleScaffoldingSketch);
+                    console.log('INVISIBLE SCAFFOLDING sketch initialized');
+                } catch (e) {
+                    console.error('INVISIBLE SCAFFOLDING sketch failed:', e);
+                }
+            }, 100);
+        });
 
     </script>
 

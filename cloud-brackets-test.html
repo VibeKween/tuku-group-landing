@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ cloud ] - Social Share Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f8f8f8;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .info {
+            max-width: 600px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .canvas-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        button {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>[ cloud ] Social Share Test</h2>
+        <p>Cloud system contained within TUKU GROUP bracket notation<br>
+        Dimensions: 1200x630 (ideal for og:image social sharing)</p>
+    </div>
+    
+    <div class="canvas-container" id="canvas-container"></div>
+    
+    <button onclick="saveImage()">Save as PNG</button>
+    
+    <script>
+        let particles = [];
+        let flowField = [];
+        let cols, rows;
+        let scl = 8;
+        let zoff = 0;
+        let brackets = { left: '[ ', right: ' ]' };
+        
+        function setup() {
+            const canvas = createCanvas(1200, 630);
+            canvas.parent('canvas-container');
+            
+            cols = Math.floor(width / scl);
+            rows = Math.floor(height / scl);
+            flowField = new Array(cols * rows);
+            
+            // Create particles within bracket bounds
+            for (let i = 0; i < 300; i++) {
+                particles.push({
+                    pos: createVector(random(80, width - 80), random(50, height - 50)),
+                    vel: createVector(0, 0),
+                    acc: createVector(0, 0),
+                    maxSpeed: 1.5,
+                    prevPos: createVector(random(80, width - 80), random(50, height - 50)),
+                    alpha: random(0.1, 0.4)
+                });
+            }
+            
+            background(250, 249, 245);
+        }
+        
+        function draw() {
+            // Subtle background fade
+            fill(250, 249, 245, 8);
+            noStroke();
+            rect(0, 0, width, height);
+            
+            // Update flow field
+            let yoff = 0;
+            for (let y = 0; y < rows; y++) {
+                let xoff = 0;
+                for (let x = 0; x < cols; x++) {
+                    let index = x + y * cols;
+                    let angle = noise(xoff, yoff, zoff) * TWO_PI * 2;
+                    let v = p5.Vector.fromAngle(angle);
+                    v.setMag(0.8);
+                    flowField[index] = v;
+                    xoff += 0.01;
+                }
+                yoff += 0.01;
+            }
+            zoff += 0.003;
+            
+            // Update and draw particles
+            for (let particle of particles) {
+                // Follow flow field
+                let x = Math.floor(particle.pos.x / scl);
+                let y = Math.floor(particle.pos.y / scl);
+                let index = x + y * cols;
+                if (flowField[index]) {
+                    let force = flowField[index];
+                    particle.acc.add(force);
+                }
+                
+                // Update physics
+                particle.vel.add(particle.acc);
+                particle.vel.limit(particle.maxSpeed);
+                particle.pos.add(particle.vel);
+                particle.acc.mult(0);
+                
+                // Constrain within bracket bounds
+                if (particle.pos.x > width - 80 || particle.pos.x < 80) {
+                    particle.vel.x *= -0.5;
+                    particle.pos.x = constrain(particle.pos.x, 80, width - 80);
+                }
+                if (particle.pos.y > height - 50 || particle.pos.y < 50) {
+                    particle.vel.y *= -0.5;
+                    particle.pos.y = constrain(particle.pos.y, 50, height - 50);
+                }
+                
+                // Draw particle trail
+                stroke(180, 180, 180, particle.alpha * 255);
+                strokeWeight(0.8);
+                line(particle.pos.x, particle.pos.y, particle.prevPos.x, particle.prevPos.y);
+                
+                // Update previous position
+                particle.prevPos.x = particle.pos.x;
+                particle.prevPos.y = particle.pos.y;
+            }
+            
+            // Draw brackets
+            fill(0, 0, 0);
+            noStroke();
+            textFont('JetBrains Mono');
+            textSize(180);
+            textAlign(LEFT, CENTER);
+            
+            // Left bracket
+            text('[', 20, height/2);
+            
+            // Right bracket
+            textAlign(RIGHT, CENTER);
+            text(']', width - 20, height/2);
+            
+            // Optional: Add subtle text
+            fill(0, 0, 0, 60);
+            textSize(14);
+            textAlign(CENTER, BOTTOM);
+            text('cloud system | tuku group', width/2, height - 20);
+        }
+        
+        function saveImage() {
+            save('cloud-brackets-social.png');
+        }
+    </script>
+</body>
+</html>

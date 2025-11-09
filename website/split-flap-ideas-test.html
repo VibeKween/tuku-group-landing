@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split-flap Component Test - Ideas Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #C19A4B;
+            --color-grey: #666666;
+            --color-grey-light: #999999;
+            --color-blue-light: #f0f9ff;
+            --color-blue-accent: #5691c8;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.6;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .content-section {
+            margin-bottom: 80px;
+        }
+
+        .content-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: var(--color-black);
+        }
+
+        .content-section p {
+            font-size: 15px;
+            color: var(--color-grey);
+            margin-bottom: 24px;
+        }
+
+        .insight {
+            font-size: 14px;
+            font-style: italic;
+            font-weight: 500;
+            color: var(--color-grey-light);
+            margin-top: 40px;
+            padding: 24px;
+            background: var(--color-blue-light);
+            border-left: 2px solid var(--color-blue-accent);
+        }
+
+        /* Split-flap component styles */
+        .split-flap-container {
+            margin: 80px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .split-flap-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--color-grey);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .status-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #00ff00;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        
+        .split-flap-display {
+            display: flex;
+            gap: 2px;
+            padding: 12px;
+            background: #000;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .flap-char-slot {
+            width: 11px;
+            height: 18px;
+            background: #000;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+        }
+        
+        .flap-char-inner {
+            color: #00ff00;
+            font-size: 7px;
+            font-weight: 400;
+            line-height: 1;
+        }
+        
+        /* Responsive scaling for split-flap */
+        @media (min-width: 480px) {
+            .flap-char-slot {
+                width: 13px;
+                height: 22px;
+            }
+            .flap-char-inner {
+                font-size: 9px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .flap-char-slot {
+                width: 16px;
+                height: 25px;
+            }
+            .flap-char-inner {
+                font-size: 10px;
+            }
+            .split-flap-status {
+                font-size: 10px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .flap-char-slot {
+                width: 18px;
+                height: 27px;
+            }
+            .flap-char-inner {
+                font-size: 12px;
+            }
+        }
+
+        .case-study-preview {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin: 40px 0;
+            padding: 40px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .case-art {
+            background: #f0f9ff;
+            height: 200px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-grey);
+            font-size: 12px;
+        }
+
+        .case-meta {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .case-study-preview h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-black);
+        }
+
+        .case-description {
+            font-size: 15px;
+            color: var(--color-grey);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .case-study-preview {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="section-label">[ split-flap test ]</div>
+        <h1>Ideas Page Layout with Split-flap Component</h1>
+        
+        <div class="content-section">
+            <div class="section-label">[ the approach ]</div>
+            <h2>Demonstration over declaration</h2>
+            <p>Traditional case studies show screenshots and describe process. We questioned whether that structure serves the outcome.</p>
+            <p>Each case study includes generative art built specifically for that project. Not decoration. Computational proof of AI-human collaboration.</p>
+            <div class="insight">The generative art proves computational sophistication through demonstration, not claims. This is invisible scaffolding made visible.</div>
+        </div>
+        
+        <!-- Split-flap Component -->
+        <section class="split-flap-container">
+            <div class="split-flap-status">
+                <div class="status-light"></div>
+                <span class="status-text">IN PROGRESS</span>
+            </div>
+            <div class="split-flap-display" id="splitFlapDisplay"></div>
+        </section>
+        
+        <div class="section-label">[ selected work ]</div>
+        
+        <!-- Sample case study to show context -->
+        <div class="case-study-preview">
+            <div class="case-art">[ generative art here ]</div>
+            <div>
+                <div class="case-meta">[ house brand development ]</div>
+                <h3>OF THE CULTURE</h3>
+                <div class="case-description">
+                    TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.
+                </div>
+            </div>
+        </div>
+        
+        <p style="text-align: center; color: var(--color-grey); font-size: 12px; margin-top: 80px;">
+            Split-flap component cycling through client portfolio:<br>
+            ISLE OF VERT PUBLISHING → OF THE CULTURE → PLAIN VANILLE → FIELDBOTZ → [REDACTED]
+        </p>
+    </div>
+
+    <script>
+        class SplitFlapDisplay {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.phrases = [
+                    "ISLE OF VERT PUBLISHING",
+                    "OF THE CULTURE", 
+                    "PLAIN VANILLE",
+                    "FIELDBOTZ",
+                    "[REDACTED]"
+                ];
+                this.characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789[]().,- ';
+                this.currentPhraseIndex = 0;
+                
+                // Calculate max length for consistent display width
+                this.maxLength = Math.max(...this.phrases.map(phrase => phrase.length));
+                
+                this.initializeDisplay();
+                this.startCycle();
+            }
+
+            initializeDisplay() {
+                this.container.innerHTML = '';
+                this.charSlots = [];
+                
+                // Create character slots
+                for (let i = 0; i < this.maxLength; i++) {
+                    const charSlot = document.createElement('div');
+                    charSlot.className = 'flap-char-slot';
+                    
+                    const charInner = document.createElement('div');
+                    charInner.className = 'flap-char-inner';
+                    charInner.textContent = ' ';
+                    
+                    charSlot.appendChild(charInner);
+                    this.container.appendChild(charSlot);
+                    this.charSlots.push(charSlot);
+                }
+            }
+
+            async animateToPhrase(targetPhrase) {
+                const paddedPhrase = targetPhrase.padEnd(this.maxLength, ' ');
+                
+                // Phase 1: Clear trailing characters that need to be removed
+                const currentText = this.charSlots.map(slot => 
+                    slot.querySelector('.flap-char-inner').textContent
+                ).join('');
+                
+                const clearPromises = [];
+                for (let i = paddedPhrase.length; i < this.maxLength; i++) {
+                    if (currentText[i] && currentText[i] !== ' ') {
+                        const delay = (i - paddedPhrase.length) * 15;
+                        clearPromises.push(
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                    this.animateCharacter(i, ' ', currentText[i], 'clear').then(resolve);
+                                }, delay);
+                            })
+                        );
+                    }
+                }
+                
+                await Promise.all(clearPromises);
+                
+                // Phase 2: Animate to new phrase (left to right)
+                const buildPromises = [];
+                for (let i = 0; i < paddedPhrase.length; i++) {
+                    const currentChar = this.charSlots[i].querySelector('.flap-char-inner').textContent;
+                    if (currentChar !== paddedPhrase[i]) {
+                        const delay = i * 45;
+                        buildPromises.push(
+                            new Promise(resolve => {
+                                setTimeout(() => {
+                                    this.animateCharacter(i, paddedPhrase[i], currentChar).then(resolve);
+                                }, delay);
+                            })
+                        );
+                    }
+                }
+                
+                await Promise.all(buildPromises);
+            }
+
+            async animateCharacter(index, targetChar, currentChar, animationType = 'normal') {
+                const charSlot = this.charSlots[index];
+                const charInner = charSlot.querySelector('.flap-char-inner');
+                
+                // Determine animation parameters based on type
+                let cycles, speed;
+                
+                if (animationType === 'clear') {
+                    cycles = 3;
+                    speed = 35;
+                } else if (targetChar === ' ') {
+                    cycles = 1;
+                    speed = 18;
+                } else if (currentChar === ' ') {
+                    cycles = 5;
+                    speed = 65;
+                } else {
+                    cycles = 6;
+                    speed = 70;
+                }
+
+                // Animate through random characters
+                for (let cycle = 0; cycle < cycles; cycle++) {
+                    const randomChar = this.characters[Math.floor(Math.random() * this.characters.length)];
+                    charInner.textContent = randomChar;
+                    
+                    const variance = Math.random() * 10 - 5;
+                    await new Promise(resolve => setTimeout(resolve, speed + variance));
+                }
+
+                charInner.textContent = targetChar;
+                await new Promise(resolve => setTimeout(resolve, 10));
+            }
+
+            startCycle() {
+                const animateNext = async () => {
+                    const phrase = this.phrases[this.currentPhraseIndex];
+                    await this.animateToPhrase(phrase);
+                    
+                    this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.phrases.length;
+                    
+                    setTimeout(animateNext, 4000);
+                };
+
+                animateNext();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new SplitFlapDisplay('splitFlapDisplay');
+        });
+    </script>
+</body>
+</html>

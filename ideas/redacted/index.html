@@ -71,7 +71,7 @@
 
         /* Navigation */
         .nav-back {
-            position: absolute;
+            position: fixed;
             top: 40px;
             left: 40px;
             z-index: 100;
@@ -89,25 +89,6 @@
             opacity: 0.7;
         }
 
-        .nav-home {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            z-index: 100;
-            font-size: 10px;
-            color: var(--color-grey-light);
-            text-decoration: none;
-            background: rgba(255, 254, 250, 0.20);
-            backdrop-filter: blur(15px);
-            padding: 8px 14px;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: opacity 0.3s;
-        }
-
-        .nav-home:hover {
-            opacity: 0.8;
-            color: var(--color-black);
-        }
 
         /* Hero Section with Generative Art */
         .hero {
@@ -233,7 +214,7 @@
         /* Spec Grid */
         .spec-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
             margin: 40px 0;
         }
@@ -297,13 +278,8 @@
             opacity: 0.7;
         }
 
-        .footer-signature strong {
-            color: var(--color-black);
-            font-weight: 600;
-        }
-
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .hero h1 {
                 font-size: 28px;
                 line-height: 1.3;
@@ -363,12 +339,6 @@
                 font-size: 10px;
             }
 
-            .nav-home {
-                top: 20px;
-                right: 20px;
-                padding: 8px 12px;
-                font-size: 9px;
-            }
             
             .section-label {
                 font-weight: 700;
@@ -410,9 +380,8 @@
 </head>
 <body>
 
-    <!-- Home Navigation -->
     <!-- Navigation -->
-    <a href="../" class="nav-back">← Ideas in Motion</a>
+    <a href="../" class="nav-back">← IDEAS IN MOTION</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">
@@ -536,7 +505,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2025 <a href="../../">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
+        <p>© 2025 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
     </footer>
 
     <script>
@@ -640,37 +609,6 @@
                     step++;
                 } else {
                     p.noLoop();
-                    
-                    // On mobile, convert to static image with smooth crossfade
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            const canvas = document.querySelector('#hero-art canvas');
-                            if (canvas) {
-                                const imgData = canvas.toDataURL();
-                                const img = document.createElement('img');
-                                img.src = imgData;
-                                img.style.width = '100%';
-                                img.style.height = '100%';
-                                img.style.objectFit = 'cover';
-                                img.style.position = 'absolute';
-                                img.style.top = '0';
-                                img.style.left = '0';
-                                img.style.opacity = '0';
-                                img.style.transition = 'opacity 0.8s ease-in-out';
-                                img.style.zIndex = '2';
-                                
-                                canvas.parentNode.appendChild(img);
-                                
-                                // Smooth crossfade
-                                setTimeout(() => {
-                                    img.style.opacity = '1';
-                                    setTimeout(() => {
-                                        canvas.style.display = 'none';
-                                    }, 800);
-                                }, 50);
-                            }
-                        }, 500);
-                    }
                 }
             };
 
@@ -703,7 +641,6 @@
                 return false;
             }
         }, { passive: false });
-
     </script>
 
 </body>

@@ -43,15 +43,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    
+    <!-- OF THE CULTURE Brand Font -->
     <style>
-        /* ITC Avant Garde Gothic Pro - OF THE CULTURE Brand Font */
         @font-face {
             font-family: 'ITC Avant Garde Gothic Pro';
-            src: url('../../fonts/ITCAvantGardePro-Bk.otf') format('opentype');
+            src: url('data:font/woff2;base64,') format('woff2');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
         }
+    </style>
+    <style>
         :root {
             --color-black: #000000;
             --color-white: #FFFFFF;
@@ -148,10 +151,10 @@
         }
 
         .hero h1 {
-            font-family: 'ITC Avant Garde Gothic Pro', 'Lekton', sans-serif;
+            font-family: 'ITC Avant Garde Gothic Pro', 'JetBrains Mono', monospace !important;
             font-size: 48px;
             font-weight: 400;
-            letter-spacing: 2px;
+            letter-spacing: 0.15em;
             margin-bottom: 32px;
             color: var(--color-black);
             line-height: 1.2;
@@ -201,9 +204,8 @@
         }
 
         h2 {
-            font-family: 'ITC Avant Garde Gothic Pro', 'Lekton', sans-serif;
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 24px;
             color: var(--color-black);
         }
@@ -305,17 +307,10 @@
             opacity: 0.7;
         }
 
-        .footer-signature strong {
-            color: var(--color-black);
-            font-weight: 600;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
-                font-family: 'ITC Avant Garde Gothic Pro', 'Lekton', sans-serif;
                 font-size: 28px;
-                font-weight: 400;
                 line-height: 1.3;
                 letter-spacing: 1px;
                 margin-bottom: 24px;
@@ -341,9 +336,7 @@
             }
 
             .section h2 {
-                font-family: 'ITC Avant Garde Gothic Pro', 'Lekton', sans-serif;
                 font-size: 20px;
-                font-weight: 400;
                 margin-bottom: 20px;
             }
 
@@ -380,12 +373,10 @@
             }
 
             .nav-back {
-                position: absolute;
                 top: 20px;
                 left: 20px;
-                padding: 8px 14px;
+                padding: 10px 16px;
                 font-size: 10px;
-                z-index: 50;
             }
 
             
@@ -414,9 +405,7 @@
         /* Additional mobile improvements */
         @media (max-width: 480px) {
             .hero h1 {
-                font-family: 'ITC Avant Garde Gothic Pro', 'Lekton', sans-serif;
                 font-size: 24px;
-                font-weight: 400;
             }
 
             .hero-content {
@@ -432,7 +421,7 @@
 <body>
 
     <!-- Navigation -->
-    <a href="../" class="nav-back">← Ideas in Motion</a>
+    <a href="../" class="nav-back">← IDEAS IN MOTION</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">
@@ -457,7 +446,7 @@
             <div class="section-label">[ the challenge ]</div>
             <h2>Building a house brand from philosophy</h2>
             <div class="content">
-                <p>OF THE CULTURE needed to embody TUKU's methodology while establishing its own distinct voice. Not a client project with constraints. A venture where we could question every inherited structure.</p>
+                <p>OF THE CULTURE needed to embody TUKU's methodology while establishing its own distinct voice. Not a client project with constraints. A venture where we could <strong>question every inherited structure</strong>.</p>
                 <p>Standard e-commerce platforms optimize for volume, not intention. Agency models add coordination layers that dilute vision. Premium brands get forced into commodity patterns.</p>
             </div>
         </section>
@@ -490,7 +479,7 @@
             <div class="content">
                 <ul>
                     <li>Whether coordination layers serve premium brand outcomes</li>
-                    <li>What one strategic director with AI capabilities could achieve</li>
+                    <li><strong>What one strategic director with AI capabilities could achieve</strong></li>
                     <li>How to maintain unified vision while building sophisticated infrastructure</li>
                     <li>Whether platform defaults should dictate brand expression</li>
                     <li>Standard checkout experiences that break brand immersion</li>
@@ -504,7 +493,7 @@
             <h2>Custom infrastructure, unified vision</h2>
             <div class="content">
                 <p>Complete brand system built without agency coordination overhead. E-commerce experience that maintains aesthetic integrity through every touchpoint.</p>
-                <p>AI handled technical execution invisibly. Human direction maintained strategic coherence. The result proves what's possible when structure enables rather than constrains.</p>
+                <p><strong>AI handled technical execution invisibly.</strong> Human direction maintained strategic coherence. The result proves what's possible when <strong>structure enables rather than constrains</strong>.</p>
             </div>
         </section>
 
@@ -526,8 +515,8 @@
             <div class="section-label">[ return on investment ]</div>
             <h2>What it enables</h2>
             <div class="content">
-                <p>Complete creative control without agency coordination costs. Brand expression that doesn't compromise for platform defaults. Infrastructure that enables iteration rather than locks into templates.</p>
-                <p>The real ROI: Proof that TUKU's methodology works at scale. A house brand that demonstrates rather than claims capability.</p>
+                <p><strong>Complete creative control without agency coordination costs.</strong> Brand expression that doesn't compromise for platform defaults. Infrastructure that enables iteration rather than locks into templates.</p>
+                <p>The real ROI: Proof that TUKU's methodology works at scale. A house brand that <strong>demonstrates rather than claims capability</strong>.</p>
             </div>
         </section>
 
@@ -535,7 +524,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2025 <a href="../../">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
+        <p>© 2025 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
     </footer>
 
     <script>
@@ -630,37 +619,6 @@
                     step++;
                 } else {
                     p.noLoop();
-                    
-                    // On mobile, convert to static image with smooth crossfade
-                    if (window.innerWidth <= 768) {
-                        setTimeout(() => {
-                            const canvas = document.querySelector('#hero-art canvas');
-                            if (canvas) {
-                                const imgData = canvas.toDataURL();
-                                const img = document.createElement('img');
-                                img.src = imgData;
-                                img.style.width = '100%';
-                                img.style.height = '100%';
-                                img.style.objectFit = 'cover';
-                                img.style.position = 'absolute';
-                                img.style.top = '0';
-                                img.style.left = '0';
-                                img.style.opacity = '0';
-                                img.style.transition = 'opacity 0.8s ease-in-out';
-                                img.style.zIndex = '2';
-                                
-                                canvas.parentNode.appendChild(img);
-                                
-                                // Smooth crossfade
-                                setTimeout(() => {
-                                    img.style.opacity = '1';
-                                    setTimeout(() => {
-                                        canvas.style.display = 'none';
-                                    }, 800);
-                                }, 50);
-                            }
-                        }, 500);
-                    }
                 }
             };
 
@@ -693,7 +651,6 @@
                 return false;
             }
         }, { passive: false });
-
     </script>
 
 </body>

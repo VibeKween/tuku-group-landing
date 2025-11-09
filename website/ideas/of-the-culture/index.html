@@ -43,6 +43,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    
+    <!-- OF THE CULTURE Brand Font -->
+    <style>
+        @font-face {
+            font-family: 'ITC Avant Garde Gothic Pro';
+            src: url('data:font/woff2;base64,') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
     <style>
         :root {
             --color-black: #000000;
@@ -87,25 +98,6 @@
             opacity: 0.7;
         }
 
-        .nav-home {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            z-index: 100;
-            font-size: 10px;
-            color: var(--color-grey-light);
-            text-decoration: none;
-            background: rgba(255, 254, 250, 0.20);
-            backdrop-filter: blur(15px);
-            padding: 8px 14px;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: opacity 0.3s;
-        }
-
-        .nav-home:hover {
-            opacity: 0.8;
-            color: var(--color-black);
-        }
 
         /* Hero Section with Generative Art */
         .hero {
@@ -159,9 +151,10 @@
         }
 
         .hero h1 {
+            font-family: 'ITC Avant Garde Gothic Pro', 'JetBrains Mono', monospace !important;
             font-size: 48px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
             margin-bottom: 32px;
             color: var(--color-black);
             line-height: 1.2;
@@ -292,33 +285,26 @@
 
         /* Footer */
         .footer {
-            max-width: 900px;
+            max-width: 600px;
             margin: 120px auto 80px;
             padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 60px;
+            text-align: center;
+            opacity: 0.6;
         }
 
-        .footer-reflection {
-            font-size: 13px;
-            font-style: italic;
-            color: var(--color-grey);
-            line-height: 1.7;
-            text-align: left;
-        }
-
-        .footer-signature {
-            font-size: 11px;
-            color: var(--color-grey-light);
-            line-height: 1.8;
-            text-align: right;
-        }
-
-        .footer-signature strong {
+        .footer p {
+            font-size: 0.75rem;
             color: var(--color-black);
-            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        .footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            opacity: 0.7;
         }
 
         /* Responsive */
@@ -382,19 +368,8 @@
             }
 
             .footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 24px;
                 padding: 0 20px;
                 margin: 80px auto 60px;
-            }
-
-            .footer-signature {
-                text-align: left;
-            }
-
-            .footer-reflection {
-                font-size: 12px;
             }
 
             .nav-back {
@@ -404,12 +379,6 @@
                 font-size: 10px;
             }
 
-            .nav-home {
-                top: 20px;
-                right: 20px;
-                padding: 8px 12px;
-                font-size: 9px;
-            }
             
             .section-label {
                 font-weight: 700;
@@ -452,8 +421,7 @@
 <body>
 
     <!-- Navigation -->
-    <a href="../" class="nav-back">← Ideas in Motion</a>
-    <a href="https://tukugroup.com" class="nav-home">TUKU GROUP</a>
+    <a href="../" class="nav-back">← IDEAS IN MOTION</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">
@@ -478,7 +446,7 @@
             <div class="section-label">[ the challenge ]</div>
             <h2>Building a house brand from philosophy</h2>
             <div class="content">
-                <p>OF THE CULTURE needed to embody TUKU's methodology while establishing its own distinct voice. Not a client project with constraints. A venture where we could question every inherited structure.</p>
+                <p>OF THE CULTURE needed to embody TUKU's methodology while establishing its own distinct voice. Not a client project with constraints. A venture where we could <strong>question every inherited structure</strong>.</p>
                 <p>Standard e-commerce platforms optimize for volume, not intention. Agency models add coordination layers that dilute vision. Premium brands get forced into commodity patterns.</p>
             </div>
         </section>
@@ -511,7 +479,7 @@
             <div class="content">
                 <ul>
                     <li>Whether coordination layers serve premium brand outcomes</li>
-                    <li>What one strategic director with AI capabilities could achieve</li>
+                    <li><strong>What one strategic director with AI capabilities could achieve</strong></li>
                     <li>How to maintain unified vision while building sophisticated infrastructure</li>
                     <li>Whether platform defaults should dictate brand expression</li>
                     <li>Standard checkout experiences that break brand immersion</li>
@@ -525,7 +493,7 @@
             <h2>Custom infrastructure, unified vision</h2>
             <div class="content">
                 <p>Complete brand system built without agency coordination overhead. E-commerce experience that maintains aesthetic integrity through every touchpoint.</p>
-                <p>AI handled technical execution invisibly. Human direction maintained strategic coherence. The result proves what's possible when structure enables rather than constrains.</p>
+                <p><strong>AI handled technical execution invisibly.</strong> Human direction maintained strategic coherence. The result proves what's possible when <strong>structure enables rather than constrains</strong>.</p>
             </div>
         </section>
 
@@ -547,8 +515,8 @@
             <div class="section-label">[ return on investment ]</div>
             <h2>What it enables</h2>
             <div class="content">
-                <p>Complete creative control without agency coordination costs. Brand expression that doesn't compromise for platform defaults. Infrastructure that enables iteration rather than locks into templates.</p>
-                <p>The real ROI: Proof that TUKU's methodology works at scale. A house brand that demonstrates rather than claims capability.</p>
+                <p><strong>Complete creative control without agency coordination costs.</strong> Brand expression that doesn't compromise for platform defaults. Infrastructure that enables iteration rather than locks into templates.</p>
+                <p>The real ROI: Proof that TUKU's methodology works at scale. A house brand that <strong>demonstrates rather than claims capability</strong>.</p>
             </div>
         </section>
 
@@ -556,14 +524,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-reflection">
-            OF THE CULTURE emerged from questioning whether traditional agency structures serve premium brand outcomes. The result demonstrates what strategic direction plus invisible AI scaffolding can create.
-        </div>
-        <div class="footer-signature">
-            <strong>TUKU GROUP</strong><br>
-            Independent Creative House<br>
-            tukugroup.com
-        </div>
+        <p>© 2025 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
     </footer>
 
     <script>

@@ -274,21 +274,26 @@
             margin: 120px auto 80px;
             padding: 0 40px;
             text-align: center;
+            opacity: 0.6;
         }
 
-        .footer-signature {
-            font-size: 11px;
-            color: var(--color-grey-light);
+        .footer p {
+            font-size: 0.75rem;
+            color: var(--color-black);
             line-height: 1.8;
         }
 
-        .footer-signature strong {
-            color: var(--color-black);
-            font-weight: 600;
+        .footer a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        /* Home Navigation */
-        .nav-home {
+        .footer a:hover {
+            opacity: 0.7;
+        }
+
+        /* Navigation */
+        .nav-back {
             position: fixed;
             top: 40px;
             left: 40px;
@@ -303,7 +308,7 @@
             transition: opacity 0.3s;
         }
 
-        .nav-home:hover {
+        .nav-back:hover {
             opacity: 0.7;
         }
 
@@ -369,7 +374,7 @@
                 margin: 80px auto 60px;
             }
 
-            .nav-home {
+            .nav-back {
                 top: 20px;
                 left: 20px;
                 padding: 10px 16px;
@@ -421,8 +426,8 @@
 </head>
 <body>
 
-    <!-- Home Navigation -->
-    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+    <!-- Navigation -->
+    <a href="https://tukugroup.com" class="nav-back">← TUKU GROUP</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">
@@ -538,11 +543,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-signature">
-            <strong>TUKU GROUP</strong><br>
-            Independent Creative House<br>
-            tukugroup.com
-        </div>
+        <p>© 2025 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
     </footer>
 
     <script>
