@@ -536,8 +536,8 @@
         <div class="art-notation">
             [ invisible scaffolding ]<br>
             multi-octave flow fields<br>
-            1,800 particles<br>
-            180 simulation steps
+            900 particles<br>
+            160 simulation steps
         </div>
     </section>
 
@@ -614,11 +614,11 @@
                 <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving LLM-human collaboration through algorithmic sophistication.</p>
                 <div class="case-stats">
                     <div class="stat">
-                        <div class="stat-value">1,800</div>
+                        <div class="stat-value">900</div>
                         <div class="stat-label">particles simulated</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value">180</div>
+                        <div class="stat-value">160</div>
                         <div class="stat-label">evolution steps</div>
                     </div>
                     <div class="stat">
@@ -639,9 +639,9 @@
     <script>
         // Configuration for Ideas in Motion visualization 
         const config = {
-            particleCount: 1800,
-            steps: 180,
-            baseFrequency: 0.0135,
+            particleCount: 900,
+            steps: 160,
+            baseFrequency: 0.015,
             octaves: 3,
             colors: {
                 earth_gold: [193, 154, 75],
@@ -725,9 +725,9 @@
                         }
 
                         // Draw line
-                        const opacity = p.map(particle.age, 0, config.steps, 50, 200);
+                        const opacity = p.map(particle.age, 0, config.steps, 30, 120);
                         p.stroke(color[0], color[1], color[2], opacity);
-                        p.strokeWeight(0.3 + particle.alignment * 0.3);
+                        p.strokeWeight(0.15 + particle.alignment * 0.2);
                         p.line(particle.prevX, particle.prevY, particle.x, particle.y);
 
                         particle.age++;
