@@ -753,10 +753,9 @@
                     // On mobile, convert to static image to prevent disappearing
                     if (window.innerWidth <= 768) {
                         setTimeout(() => {
-                            const heroContainer = document.getElementById('hero-art');
-                            const canvas = heroContainer.querySelector('canvas');
-                            if (canvas && heroContainer) {
-                                const imgData = canvas.toDataURL('image/png', 1.0);
+                            const canvas = document.querySelector('#hero-art canvas');
+                            if (canvas) {
+                                const imgData = canvas.toDataURL();
                                 const img = document.createElement('img');
                                 img.src = imgData;
                                 img.style.width = '100%';
@@ -765,14 +764,10 @@
                                 img.style.position = 'absolute';
                                 img.style.top = '0';
                                 img.style.left = '0';
-                                img.style.background = 'rgb(250, 249, 245)';
-                                img.style.zIndex = '1';
-                                
-                                // Remove canvas completely
-                                canvas.remove();
-                                heroContainer.appendChild(img);
+                                canvas.style.display = 'none';
+                                canvas.parentNode.appendChild(img);
                             }
-                        }, 300);
+                        }, 500);
                     }
                 }
             };
@@ -880,14 +875,18 @@
         
         // Initialize sketches with touch disabled
         new p5(heroSketch);
-        new p5(otcSketch);
-        new p5(cryptoSketch);
-        new p5(scaffoldingSketch);
+        
+        // Only initialize case study art on desktop to prevent mobile scrolling interference
+        if (window.innerWidth > 768) {
+            new p5(otcSketch);
+            new p5(cryptoSketch);
+            new p5(scaffoldingSketch);
+        }
         
         // Additional global touch blocking
         document.addEventListener('touchstart', function(e) {
             const target = e.target;
-            if (target.closest('#hero-art') || target.closest('.case-art')) {
+            if (target.closest('#hero-art')) {
                 e.preventDefault();
                 e.stopPropagation();
                 return false;
@@ -896,24 +895,12 @@
         
         document.addEventListener('touchmove', function(e) {
             const target = e.target;
-            if (target.closest('#hero-art') || target.closest('.case-art')) {
+            if (target.closest('#hero-art')) {
                 e.preventDefault();
                 e.stopPropagation();
                 return false;
             }
         }, { passive: false });
-        
-        // Mobile-specific cleanup to prevent black artifacts
-        if (window.innerWidth <= 768) {
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(() => {
-                    const heroArt = document.getElementById('hero-art');
-                    if (heroArt) {
-                        heroArt.style.background = 'rgb(250, 249, 245)';
-                    }
-                }, 1000);
-            });
-        }
     </script>
 
 </body>
