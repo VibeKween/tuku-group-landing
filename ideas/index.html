@@ -672,6 +672,17 @@
             p.setup = function() {
                 const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
                 canvas.parent('hero-art');
+                
+                // Disable ALL touch and mouse events
+                canvas.elt.style.pointerEvents = 'none';
+                canvas.elt.style.touchAction = 'none';
+                canvas.elt.ontouchstart = null;
+                canvas.elt.ontouchmove = null;
+                canvas.elt.ontouchend = null;
+                canvas.elt.onmousedown = null;
+                canvas.elt.onmousemove = null;
+                canvas.elt.onmouseup = null;
+                
                 p.background(250, 249, 245, 255);
                 
                 // Initialize particles
@@ -837,11 +848,33 @@
             };
         }
 
-        // Initialize sketches
+        // Disable p5.js default touch behaviors
+        p5.disableFriendlyErrors = true;
+        
+        // Initialize sketches with touch disabled
         new p5(heroSketch);
         new p5(otcSketch);
         new p5(cryptoSketch);
         new p5(scaffoldingSketch);
+        
+        // Additional global touch blocking
+        document.addEventListener('touchstart', function(e) {
+            const target = e.target;
+            if (target.closest('#hero-art') || target.closest('.case-art')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', function(e) {
+            const target = e.target;
+            if (target.closest('#hero-art') || target.closest('.case-art')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, { passive: false });
     </script>
 
 </body>
