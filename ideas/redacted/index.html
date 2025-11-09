@@ -694,25 +694,6 @@
             }
         }, { passive: false });
 
-        // Enhanced mobile image protection - prevent disappearing on scroll
-        function protectImages() {
-            const images = document.querySelectorAll('#hero-art, .hero-art-container, img, canvas');
-            images.forEach(img => {
-                img.style.visibility = 'visible !important';
-                img.style.opacity = '1 !important';
-                img.style.transform = 'none !important';
-                img.style.display = 'block !important';
-                img.style.position = 'static !important';
-            });
-        }
-
-        // Continuously protect images on mobile
-        if (window.innerWidth <= 768) {
-            setInterval(protectImages, 100);
-            document.addEventListener('scroll', protectImages, { passive: true });
-            document.addEventListener('touchstart', protectImages, { passive: true });
-            document.addEventListener('touchmove', protectImages, { passive: true });
-        }
     </script>
 
 </body>
