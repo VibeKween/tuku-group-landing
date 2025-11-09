@@ -560,9 +560,9 @@
             OF THE CULTURE emerged from questioning whether traditional agency structures serve premium brand outcomes. The result demonstrates what strategic direction plus invisible AI scaffolding can create.
         </div>
         <div class="footer-signature">
-            <strong>TUKU GROUP</strong><br>
+            <strong><a href="../../" style="color: var(--color-black); text-decoration: none;">TUKU GROUP</a></strong><br>
             Independent Creative House<br>
-            tukugroup.com
+            <a href="../../" style="color: var(--color-grey-light); text-decoration: none;">tukugroup.com</a>
         </div>
     </footer>
 
@@ -690,6 +690,26 @@
                 return false;
             }
         }, { passive: false });
+
+        // Enhanced mobile image protection - prevent disappearing on scroll
+        function protectImages() {
+            const images = document.querySelectorAll('#hero-art, .hero-art-container, img, canvas');
+            images.forEach(img => {
+                img.style.visibility = 'visible !important';
+                img.style.opacity = '1 !important';
+                img.style.transform = 'none !important';
+                img.style.display = 'block !important';
+                img.style.position = 'static !important';
+            });
+        }
+
+        // Continuously protect images on mobile
+        if (window.innerWidth <= 768) {
+            setInterval(protectImages, 100);
+            document.addEventListener('scroll', protectImages, { passive: true });
+            document.addEventListener('touchstart', protectImages, { passive: true });
+            document.addEventListener('touchmove', protectImages, { passive: true });
+        }
     </script>
 
 </body>
