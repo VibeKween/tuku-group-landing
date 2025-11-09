@@ -142,12 +142,12 @@
         }
 
         .hero h1 {
-            font-size: 48px;
+            font-size: 2.5rem;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: -0.02em;
+            line-height: 1;
             margin-bottom: 24px;
             color: var(--color-black);
-            line-height: 1.2;
         }
 
         .hero .subtitle {
@@ -281,9 +281,10 @@
         /* Responsive */
         @media (max-width: 600px) {
             .hero h1 {
-                font-size: 28px;
-                line-height: 1.3;
-                letter-spacing: 1px;
+                font-size: 2rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                line-height: 1;
                 margin-bottom: 24px;
             }
 
@@ -365,7 +366,10 @@
         /* Additional mobile improvements */
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 24px;
+                font-size: 1.75rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                line-height: 1;
             }
 
             .hero-content {
@@ -408,7 +412,7 @@
             <div class="content">
                 <p>[REDACTED] needed a portfolio management dashboard for their cryptocurrency advisory business. Not a prototype. Not an MVP. A production system handling real client money where calculation errors directly impact revenue.</p>
                 <p>The complexity: <strong>lot-level tracking with FIFO accounting</strong>. Each cryptocurrency purchase creates an independent lot with its own 3-year performance fee window. The system must reduce lots using First-In-First-Out methodology while tracking which specific lots have doubled in value.</p>
-                <p><strong>The constraint:</strong> Developer handoff to Claude Code (AI), not human developers. Every business rule, every edge case, every architectural decision needed explicit documentation. No shortcuts. No gaps.</p>
+                <p><strong>The constraint:</strong> Developer handoff to Claude Code (LLM), not human developers. Every business rule, every edge case, every architectural decision needed explicit documentation. No shortcuts. No gaps.</p>
             </div>
         </section>
 
@@ -457,7 +461,7 @@
             <div class="section-label">[ the invisible work ]</div>
             <h2>What 400 pages enables</h2>
             <div class="content">
-                <p><strong>One-and-done implementation.</strong> AI developers can execute complex financial logic without human intervention because every decision is documented. No back-and-forth. No clarification cycles.</p>
+                <p><strong>One-and-done implementation.</strong> LLM developers can execute complex financial logic without human intervention because every decision is documented. No back-and-forth. No clarification cycles.</p>
                 <p><strong>Future maintainability.</strong> When business rules change, documentation provides the context needed to understand why current logic exists and what constraints must be preserved.</p>
                 <p><strong>Audit trail.</strong> Financial systems require explaining why calculations produce specific results. Documentation maps business rules to technical implementation.</p>
             </div>
@@ -481,12 +485,12 @@
         <section class="section">
             <div class="section-label">[ the philosophy ]</div>
             <div class="content">
-                <p>TUKU produced comprehensive documentation knowing AI would execute the build. This required questioning whether traditional documentation approaches serve AI-human handoffs.</p>
+                <p>TUKU produced comprehensive documentation knowing an LLM would execute the build. This required questioning whether traditional documentation approaches serve LLM-human handoffs.</p>
                 <p>The generative art visualizes the documentation process: 2,500 specification points gravitating toward three knowledge centers (business logic, technical architecture, implementation details). Each point represents a documented decision. Clusters form where specifications accumulate around core concepts. Gold traces mark high-precision areas requiring exhaustive detail. Blue paths show supporting documentation that connects concepts.</p>
                 <p>Over 180 simulation steps, the field evolves from scattered requirements to structured knowledge, mirroring how 110-130 hours of specification work crystallizes business complexity into implementable architecture.</p>
             </div>
             <div class="insight-quote">
-                When documentation accumulates with this level of precision, implementation becomes execution rather than interpretation. AI can build production systems because ambiguity has been removed through exhaustive specification.
+                When documentation accumulates with this level of precision, implementation becomes execution rather than interpretation. LLMs can build production systems because ambiguity has been removed through exhaustive specification.
             </div>
         </section>
 
@@ -620,8 +624,11 @@
         // Disable p5.js default touch behaviors
         p5.disableFriendlyErrors = true;
         
-        // Initialize sketch with touch disabled
-        new p5(heroSketch);
+        // Ensure DOM is ready before initializing sketch
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize sketch with touch disabled
+            new p5(heroSketch);
+        });
         
         // Additional global touch blocking
         document.addEventListener('touchstart', function(e) {

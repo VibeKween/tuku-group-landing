@@ -48,7 +48,7 @@
     <style>
         @font-face {
             font-family: 'ITC Avant Garde Gothic Pro';
-            src: url('data:font/woff2;base64,') format('woff2');
+            src: url('../../fonts/ITCAvantGardePro-Bk.otf') format('opentype');
             font-weight: 400;
             font-style: normal;
             font-display: swap;
@@ -479,7 +479,7 @@
             <div class="content">
                 <ul>
                     <li>Whether coordination layers serve premium brand outcomes</li>
-                    <li><strong>What one strategic director with AI capabilities could achieve</strong></li>
+                    <li><strong>What one strategic director with LLM capabilities could achieve</strong></li>
                     <li>How to maintain unified vision while building sophisticated infrastructure</li>
                     <li>Whether platform defaults should dictate brand expression</li>
                     <li>Standard checkout experiences that break brand immersion</li>
@@ -493,7 +493,7 @@
             <h2>Custom infrastructure, unified vision</h2>
             <div class="content">
                 <p>Complete brand system built without agency coordination overhead. E-commerce experience that maintains aesthetic integrity through every touchpoint.</p>
-                <p><strong>AI handled technical execution invisibly.</strong> Human direction maintained strategic coherence. The result proves what's possible when <strong>structure enables rather than constrains</strong>.</p>
+                <p><strong>LLMs handled technical execution invisibly.</strong> Human direction maintained strategic coherence. The result proves what's possible when <strong>structure enables rather than constrains</strong>.</p>
             </div>
         </section>
 
@@ -501,7 +501,7 @@
         <section class="section">
             <div class="section-label">[ the philosophy ]</div>
             <div class="content">
-                <p>OF THE CULTURE demonstrates invisible scaffolding in practice. AI shaping behind the scenes. Human direction maintaining unified strategic vision across every touchpoint.</p>
+                <p>OF THE CULTURE demonstrates invisible scaffolding in practice. LLMs shaping behind the scenes. Human direction maintaining unified strategic vision across every touchpoint.</p>
                 <p>The generative art visualizes this approach: 1,200 particles orbiting from a central core, representing brand identity radiating outward. Inner orbits move with high coherence (core brand values), while outer orbits maintain connection with organic variation (customer touchpoints). Gold traces mark the unified vision at the center. Blue paths show strong brand expression. Each orbital layer represents a different brand touchpoint, all emanating from the same strategic core.</p>
                 <p>No coordination layers. No dilution through team handoffs. One vision expressing itself consistently across 200 simulation steps.</p>
             </div>
@@ -630,8 +630,11 @@
         // Disable p5.js default touch behaviors
         p5.disableFriendlyErrors = true;
         
-        // Initialize sketch with touch disabled
-        new p5(heroSketch);
+        // Ensure DOM is ready before initializing sketch
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize sketch with touch disabled
+            new p5(heroSketch);
+        });
         
         // Additional global touch blocking
         document.addEventListener('touchstart', function(e) {
