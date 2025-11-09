@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OF THE CULTURE - TUKU GROUP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #C19A4B;
+            --color-blue-light: #f0f9ff;
+            --color-blue-accent: #5691c8;
+            --color-grey: #4A4A4A;
+            --color-grey-light: #808080;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.8;
+        }
+
+        /* Home Navigation */
+        .nav-home {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--color-black);
+            text-decoration: none;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: opacity 0.3s;
+        }
+
+        .nav-home:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section with Generative Art */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #hero-art {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            color: var(--color-black);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--color-grey);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .art-notation {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 11px;
+            color: var(--color-grey);
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            text-align: right;
+            line-height: 1.6;
+            z-index: 10;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        /* Content Container */
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 40px;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-black);
+        }
+
+        .content p {
+            font-size: 15px;
+            color: var(--color-grey);
+            margin-bottom: 24px;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content li {
+            font-size: 13px;
+            color: var(--color-grey);
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .content li:before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--color-blue-accent);
+            position: absolute;
+            left: 8px;
+            top: 10px;
+        }
+
+        /* Spec Grid */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+
+        .spec-item {
+            text-align: left;
+        }
+
+        .spec-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 8px;
+        }
+
+        .spec-label {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            text-transform: lowercase;
+        }
+
+        .spec-detail {
+            font-size: 11px;
+            color: var(--color-grey);
+            margin-top: 4px;
+        }
+
+        /* Insight Quote */
+        .insight-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--color-grey-light);
+            margin: 40px 0;
+            padding: 24px;
+            background: var(--color-blue-light);
+            border-left: 2px solid var(--color-blue-accent);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 60px;
+        }
+
+        .footer-reflection {
+            font-size: 13px;
+            font-style: italic;
+            color: var(--color-grey);
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .footer-signature {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            line-height: 1.8;
+            text-align: right;
+        }
+
+        .footer-signature strong {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+                line-height: 1.3;
+                letter-spacing: 1px;
+                margin-bottom: 24px;
+            }
+
+            .hero-content {
+                padding: 24px;
+                max-width: 90%;
+                background: rgba(255, 254, 250, 0.40);
+            }
+
+            .hero p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .content-container {
+                padding: 80px 20px;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .content p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .content li {
+                font-size: 12px;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin: 32px 0;
+            }
+
+            .spec-value {
+                font-size: 24px;
+            }
+
+            .insight-quote {
+                font-size: 13px;
+                padding: 20px;
+                margin: 32px 0;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+                padding: 0 20px;
+                margin: 80px auto 60px;
+            }
+
+            .footer-signature {
+                text-align: left;
+            }
+
+            .footer-reflection {
+                font-size: 12px;
+            }
+
+            .nav-home {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            .art-notation {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+        }
+
+        /* Additional mobile improvements */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-content {
+                padding: 20px;
+            }
+
+            .content-container {
+                padding: 60px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Navigation -->
+    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+
+    <!-- Hero Section with Generative Art -->
+    <section class="hero">
+        <div id="hero-art"></div>
+        <div class="hero-content">
+            <h1>OF THE CULTURE</h1>
+            <p>TUKU's first house brand. A venture built to demonstrate the methodology in practice.</p>
+        </div>
+        <div class="art-notation">
+            [ brand emergence ]<br>
+            unified vision<br>
+            radiating outward<br>
+            coherent identity
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-container">
+
+        <!-- The Challenge -->
+        <section class="section">
+            <div class="section-label">[ the challenge ]</div>
+            <h2>Building a house brand from philosophy</h2>
+            <div class="content">
+                <p>OF THE CULTURE needed to embody TUKU's methodology while establishing its own distinct voice. Not a client project with constraints. A venture where we could question every inherited structure.</p>
+                <p>Standard e-commerce platforms optimize for volume, not intention. Agency models add coordination layers that dilute vision. Premium brands get forced into commodity patterns.</p>
+            </div>
+        </section>
+
+        <!-- By the Numbers -->
+        <section class="section">
+            <div class="section-label">[ by the numbers ]</div>
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-value">6</div>
+                    <div class="spec-label">week sprint</div>
+                    <div class="spec-detail">from concept to launch</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">100%</div>
+                    <div class="spec-label">internal build</div>
+                    <div class="spec-detail">strategic director + ai capabilities</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">1</div>
+                    <div class="spec-label">unified vision</div>
+                    <div class="spec-detail">no coordination layers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Questioned -->
+        <section class="section">
+            <div class="section-label">[ what we questioned ]</div>
+            <div class="content">
+                <ul>
+                    <li>Whether coordination layers serve premium brand outcomes</li>
+                    <li>What one strategic director with AI capabilities could achieve</li>
+                    <li>How to maintain unified vision while building sophisticated infrastructure</li>
+                    <li>Whether platform defaults should dictate brand expression</li>
+                    <li>Standard checkout experiences that break brand immersion</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- What We Built -->
+        <section class="section">
+            <div class="section-label">[ what we built ]</div>
+            <h2>Custom infrastructure, unified vision</h2>
+            <div class="content">
+                <p>Complete brand system built without agency coordination overhead. E-commerce experience that maintains aesthetic integrity through every touchpoint.</p>
+                <p>AI handled technical execution invisibly. Human direction maintained strategic coherence. The result proves what's possible when structure enables rather than constrains.</p>
+            </div>
+        </section>
+
+        <!-- The Philosophy -->
+        <section class="section">
+            <div class="section-label">[ the philosophy ]</div>
+            <div class="content">
+                <p>OF THE CULTURE demonstrates invisible scaffolding in practice. AI shaping behind the scenes. Human direction maintaining unified strategic vision across every touchpoint.</p>
+                <p>The generative art visualizes this approach: 1,200 particles orbiting from a central core, representing brand identity radiating outward. Inner orbits move with high coherence (core brand values), while outer orbits maintain connection with organic variation (customer touchpoints). Gold traces mark the unified vision at the center. Blue paths show strong brand expression. Each orbital layer represents a different brand touchpoint, all emanating from the same strategic core.</p>
+                <p>No coordination layers. No dilution through team handoffs. One vision expressing itself consistently across 200 simulation steps.</p>
+            </div>
+            <div class="insight-quote">
+                When brand identity radiates from a unified core rather than being assembled through coordination layers, every touchpoint maintains coherent expression without compromise.
+            </div>
+        </section>
+
+        <!-- Return on Investment -->
+        <section class="section">
+            <div class="section-label">[ return on investment ]</div>
+            <h2>What it enables</h2>
+            <div class="content">
+                <p>Complete creative control without agency coordination costs. Brand expression that doesn't compromise for platform defaults. Infrastructure that enables iteration rather than locks into templates.</p>
+                <p>The real ROI: Proof that TUKU's methodology works at scale. A house brand that demonstrates rather than claims capability.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-reflection">
+            OF THE CULTURE emerged from questioning whether traditional agency structures serve premium brand outcomes. The result demonstrates what strategic direction plus invisible AI scaffolding can create.
+        </div>
+        <div class="footer-signature">
+            <strong>TUKU GROUP</strong><br>
+            Independent Creative House<br>
+            tukugroup.com
+        </div>
+    </footer>
+
+    <script>
+        // OF THE CULTURE: Brand Emergence Visualization
+        // Represents unified vision radiating outward from core identity
+        function heroSketch(p) {
+            let orbits = [];
+            let step = 0;
+            const maxSteps = 200;
+
+            p.setup = function() {
+                const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+                canvas.parent('hero-art');
+                p.background(250, 249, 245, 255);
+                
+                // Create orbiting particles representing brand touchpoints
+                // emanating from unified core vision
+                for (let i = 0; i < 1200; i++) {
+                    const angle = p.random(p.TWO_PI);
+                    const radius = p.random(50, p.min(p.width, p.height) * 0.45);
+                    const speed = p.random(0.0008, 0.003);
+                    const coherence = p.map(radius, 50, p.min(p.width, p.height) * 0.45, 1.0, 0.4);
+                    
+                    orbits.push({
+                        angle: angle,
+                        radius: radius,
+                        speed: speed,
+                        coherence: coherence,
+                        x: 0,
+                        y: 0,
+                        prevX: 0,
+                        prevY: 0,
+                        age: 0
+                    });
+                }
+            };
+
+            p.draw = function() {
+                if (step < maxSteps) {
+                    const centerX = p.width / 2;
+                    const centerY = p.height / 2;
+                    
+                    for (let orbit of orbits) {
+                        // Store previous position
+                        orbit.prevX = orbit.x;
+                        orbit.prevY = orbit.y;
+                        
+                        // Update angle based on coherence (inner = more unified)
+                        orbit.angle += orbit.speed * orbit.coherence;
+                        
+                        // Add organic variation (less structure = more variation)
+                        const variance = p.noise(orbit.angle * 2, step * 0.01) * 0.1;
+                        const adjustedRadius = orbit.radius * (1 + variance * (1 - orbit.coherence));
+                        
+                        // Calculate position
+                        orbit.x = centerX + Math.cos(orbit.angle) * adjustedRadius;
+                        orbit.y = centerY + Math.sin(orbit.angle) * adjustedRadius;
+                        
+                        // Color based on coherence (distance from center = brand touchpoint type)
+                        let color;
+                        if (orbit.coherence > 0.8) {
+                            color = [193, 154, 75]; // Gold - core brand identity
+                        } else if (orbit.coherence > 0.6) {
+                            color = [86, 145, 200]; // Blue - strong brand expression
+                        } else if (orbit.coherence > 0.45) {
+                            color = [140, 180, 210]; // Light blue - customer touchpoints
+                        } else {
+                            color = [200, 200, 200]; // Grey - peripheral influence
+                        }
+                        
+                        // Draw orbital trace
+                        if (orbit.age > 0) {
+                            const opacity = p.map(orbit.age, 0, maxSteps, 40, 160);
+                            p.stroke(color[0], color[1], color[2], opacity);
+                            p.strokeWeight(0.3 + orbit.coherence * 0.6);
+                            p.line(orbit.prevX, orbit.prevY, orbit.x, orbit.y);
+                        }
+                        
+                        orbit.age++;
+                    }
+                    step++;
+                } else {
+                    p.noLoop();
+                }
+            };
+
+            p.windowResized = function() {
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
+            };
+        }
+
+        // Initialize
+        new p5(heroSketch);
+    </script>
+
+</body>
+</html>

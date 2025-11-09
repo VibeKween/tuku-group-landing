@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[REDACTED] Documentation - TUKU GROUP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #C19A4B;
+            --color-blue-light: #f0f9ff;
+            --color-blue-accent: #5691c8;
+            --color-grey: #4A4A4A;
+            --color-grey-light: #808080;
+            --crypto-navy: #2D4159;
+            --crypto-gold: #C8A882;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.8;
+        }
+
+        /* Home Navigation */
+        .nav-home {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--color-black);
+            text-decoration: none;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: opacity 0.3s;
+        }
+
+        .nav-home:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section with Generative Art */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #hero-art {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            color: var(--color-black);
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 15px;
+            color: var(--color-grey);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .art-notation {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 11px;
+            color: var(--color-grey);
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            text-align: right;
+            line-height: 1.6;
+            z-index: 10;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        /* Content Container */
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 40px;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-black);
+        }
+
+        .content p {
+            font-size: 15px;
+            color: var(--color-grey);
+            margin-bottom: 24px;
+        }
+
+        .content strong {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        /* Spec Grid */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+
+        .spec-item {
+            text-align: left;
+        }
+
+        .spec-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 8px;
+        }
+
+        .spec-label {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            text-transform: lowercase;
+        }
+
+        .spec-detail {
+            font-size: 11px;
+            color: var(--color-grey);
+            margin-top: 4px;
+        }
+
+        /* Insight Quote */
+        .insight-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--color-grey-light);
+            margin: 40px 0;
+            padding: 24px;
+            background: var(--color-blue-light);
+            border-left: 2px solid var(--color-blue-accent);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 60px;
+        }
+
+        .footer-reflection {
+            font-size: 13px;
+            font-style: italic;
+            color: var(--color-grey);
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .footer-signature {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            line-height: 1.8;
+            text-align: right;
+        }
+
+        .footer-signature strong {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+                line-height: 1.3;
+                letter-spacing: 1px;
+                margin-bottom: 24px;
+            }
+
+            .hero-content {
+                padding: 24px;
+                max-width: 90%;
+                background: rgba(255, 254, 250, 0.40);
+            }
+
+            .hero .subtitle {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .content-container {
+                padding: 80px 20px;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+
+            .content p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 32px 0;
+            }
+
+            .spec-value {
+                font-size: 24px;
+            }
+
+            .insight-quote {
+                font-size: 13px;
+                padding: 20px;
+                margin: 32px 0;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+                padding: 0 20px;
+                margin: 80px auto 60px;
+            }
+
+            .footer-signature {
+                text-align: left;
+            }
+
+            .footer-reflection {
+                font-size: 12px;
+            }
+
+            .nav-home {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            .art-notation {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+        }
+
+        /* Additional mobile improvements */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-content {
+                padding: 20px;
+            }
+
+            .content-container {
+                padding: 60px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Navigation -->
+    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+
+    <!-- Hero Section with Generative Art -->
+    <section class="hero">
+        <div id="hero-art"></div>
+        <div class="hero-content">
+            <h1>400 PAGES<br>ZERO AMBIGUITY</h1>
+            <p class="subtitle">Complete business architecture for a cryptocurrency portfolio management system. Documentation that enables one-and-done implementation of complex financial logic.</p>
+        </div>
+        <div class="art-notation">
+            [ precision accumulation ]<br>
+            specifications clustering<br>
+            toward completeness<br>
+            110-130 hours crystallized
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-container">
+
+        <!-- The Challenge -->
+        <section class="section">
+            <div class="section-label">[ the challenge ]</div>
+            <h2>Financial accuracy at scale</h2>
+            <div class="content">
+                <p>[REDACTED] needed a portfolio management dashboard for their cryptocurrency advisory business. Not a prototype. Not an MVP. A production system handling real client money where calculation errors directly impact revenue.</p>
+                <p>The complexity: <strong>lot-level tracking with FIFO accounting</strong>. Each cryptocurrency purchase creates an independent lot with its own 3-year performance fee window. The system must reduce lots using First-In-First-Out methodology while tracking which specific lots have doubled in value.</p>
+                <p><strong>The constraint:</strong> Developer handoff to Claude Code (AI), not human developers. Every business rule, every edge case, every architectural decision needed explicit documentation. No shortcuts. No gaps.</p>
+            </div>
+        </section>
+
+        <!-- By the Numbers -->
+        <section class="section">
+            <div class="section-label">[ by the numbers ]</div>
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-value">400</div>
+                    <div class="spec-label">pages produced</div>
+                    <div class="spec-detail">across 19 comprehensive documents</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">20,088</div>
+                    <div class="spec-label">lines of markdown</div>
+                    <div class="spec-detail">every business rule documented</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">5:1</div>
+                    <div class="spec-label">spec to code ratio</div>
+                    <div class="spec-detail">industry standard: 1:1 to 2:1</div>
+                </div>
+            </div>
+
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-value">110-130h</div>
+                    <div class="spec-label">time invested</div>
+                    <div class="spec-detail">more than the 87-89h build itself</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">19</div>
+                    <div class="spec-label">document types</div>
+                    <div class="spec-detail">architecture to implementation</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">0</div>
+                    <div class="spec-label">ambiguous decisions</div>
+                    <div class="spec-detail">clarity enabling execution</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Invisible Work -->
+        <section class="section">
+            <div class="section-label">[ the invisible work ]</div>
+            <h2>What 400 pages enables</h2>
+            <div class="content">
+                <p><strong>One-and-done implementation.</strong> AI developers can execute complex financial logic without human intervention because every decision is documented. No back-and-forth. No clarification cycles.</p>
+                <p><strong>Future maintainability.</strong> When business rules change, documentation provides the context needed to understand why current logic exists and what constraints must be preserved.</p>
+                <p><strong>Audit trail.</strong> Financial systems require explaining why calculations produce specific results. Documentation maps business rules to technical implementation.</p>
+            </div>
+            <div class="insight-quote">
+                The difference between prototype thinking and production thinking: prototypes test if something can work. Production systems document why it works and what happens when edge cases emerge.
+            </div>
+        </section>
+
+        <!-- Technical Depth -->
+        <section class="section">
+            <div class="section-label">[ technical depth ]</div>
+            <h2>Document architecture</h2>
+            <div class="content">
+                <p><strong>19 specialized documents</strong> covering business requirements, data models, API specifications, calculation logic, error handling, testing requirements, and implementation guidance.</p>
+                <p>Each document serves a specific purpose in the handoff chain. Business logic documents explain what the system must do. Technical specifications explain how to build it. Implementation guides connect business rules to code structure.</p>
+                <p>The result: 20,088 lines of markdown that function as invisible scaffolding for 4,000 lines of production code.</p>
+            </div>
+        </section>
+
+        <!-- The Philosophy -->
+        <section class="section">
+            <div class="section-label">[ the philosophy ]</div>
+            <div class="content">
+                <p>TUKU produced comprehensive documentation knowing AI would execute the build. This required questioning whether traditional documentation approaches serve AI-human handoffs.</p>
+                <p>The generative art visualizes the documentation process: 2,500 specification points gravitating toward three knowledge centers (business logic, technical architecture, implementation details). Each point represents a documented decision. Clusters form where specifications accumulate around core concepts. Gold traces mark high-precision areas requiring exhaustive detail. Blue paths show supporting documentation that connects concepts.</p>
+                <p>Over 180 simulation steps, the field evolves from scattered requirements to structured knowledge, mirroring how 110-130 hours of specification work crystallizes business complexity into implementable architecture.</p>
+            </div>
+            <div class="insight-quote">
+                When documentation accumulates with this level of precision, implementation becomes execution rather than interpretation. AI can build production systems because ambiguity has been removed through exhaustive specification.
+            </div>
+        </section>
+
+        <!-- Return on Investment -->
+        <section class="section">
+            <div class="section-label">[ return on investment ]</div>
+            <h2>Cost vs. value analysis</h2>
+            <div class="content">
+                <p><strong>Time investment:</strong> 110-130 hours of documentation exceeded the 87-89 hour build. Traditional wisdom suggests this is inefficient.</p>
+                <p><strong>Reality:</strong> Zero clarification cycles. Zero rework. Zero bugs from misunderstood requirements. One-and-done implementation of complex financial logic handling real client money.</p>
+                <p><strong>The real ROI:</strong> Confidence. System handles $100K-$500K portfolios with calculation accuracy that directly impacts revenue. Maintainability. Future developers understand why decisions were made. Scalability. Documentation enables adding features without breaking existing logic.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-reflection">
+            What emerged from relentless iteration toward specification completeness: documentation that functions as invisible scaffolding, enabling AI to execute complex financial systems with production-grade precision.
+        </div>
+        <div class="footer-signature">
+            <strong>TUKU GROUP</strong><br>
+            Independent Creative House<br>
+            tukugroup.com
+        </div>
+    </footer>
+
+    <script>
+        // [REDACTED]: Precision Accumulation Visualization
+        // Represents specifications clustering toward completeness
+        function heroSketch(p) {
+            let specs = [];
+            let step = 0;
+            const maxSteps = 180;
+            
+            // Three knowledge centers (business logic, architecture, implementation)
+            let centers = [];
+
+            p.setup = function() {
+                const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+                canvas.parent('hero-art');
+                p.background(250, 249, 245, 255);
+                
+                // Define three knowledge centers
+                centers = [
+                    { x: p.width * 0.3, y: p.height * 0.4 },  // Business logic
+                    { x: p.width * 0.7, y: p.height * 0.35 }, // Technical architecture
+                    { x: p.width * 0.5, y: p.height * 0.7 }   // Implementation details
+                ];
+                
+                // Initialize specification points
+                for (let i = 0; i < 2500; i++) {
+                    // Assign each spec to a knowledge center
+                    const centerIndex = p.floor(p.random(3));
+                    const center = centers[centerIndex];
+                    
+                    // Start scattered, will gravitate toward center
+                    const angle = p.random(p.TWO_PI);
+                    const distance = p.random(100, 300);
+                    
+                    specs.push({
+                        x: center.x + Math.cos(angle) * distance,
+                        y: center.y + Math.sin(angle) * distance,
+                        prevX: center.x + Math.cos(angle) * distance,
+                        prevY: center.y + Math.sin(angle) * distance,
+                        centerIndex: centerIndex,
+                        precision: p.random(0.5, 1.0), // how precisely specified
+                        age: 0
+                    });
+                }
+            };
+
+            p.draw = function() {
+                if (step < maxSteps) {
+                    for (let spec of specs) {
+                        spec.prevX = spec.x;
+                        spec.prevY = spec.y;
+                        
+                        const center = centers[spec.centerIndex];
+                        
+                        // Gravitate toward knowledge center
+                        const dx = center.x - spec.x;
+                        const dy = center.y - spec.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        // Higher precision = stronger pull toward center
+                        const pullStrength = 0.02 * spec.precision;
+                        
+                        // Add subtle noise for organic clustering
+                        const noise = p.noise(spec.x * 0.005, spec.y * 0.005, step * 0.01) - 0.5;
+                        
+                        spec.x += (dx * pullStrength) + noise * 0.5;
+                        spec.y += (dy * pullStrength) + noise * 0.5;
+                        
+                        // Color based on precision level
+                        let color;
+                        if (spec.precision > 0.85) {
+                            color = [193, 154, 75]; // Gold - high precision specs
+                        } else if (spec.precision > 0.7) {
+                            color = [200, 168, 100]; // Light gold
+                        } else if (spec.precision > 0.55) {
+                            color = [86, 145, 200]; // Blue - supporting docs
+                        } else {
+                            color = [180, 180, 180]; // Grey - initial scatter
+                        }
+                        
+                        // Draw specification trace
+                        const opacity = p.map(spec.age, 0, maxSteps, 30, 150);
+                        p.stroke(color[0], color[1], color[2], opacity);
+                        p.strokeWeight(0.2 + spec.precision * 0.5);
+                        p.line(spec.prevX, spec.prevY, spec.x, spec.y);
+                        
+                        spec.age++;
+                    }
+                    step++;
+                } else {
+                    p.noLoop();
+                }
+            };
+
+            p.windowResized = function() {
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
+            };
+        }
+
+        // Initialize
+        new p5(heroSketch);
+    </script>
+
+</body>
+</html>

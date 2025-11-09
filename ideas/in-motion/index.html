@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies - TUKU GROUP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #C19A4B;
+            --color-blue-light: #f0f9ff;
+            --color-blue-accent: #5691c8;
+            --color-grey: #4A4A4A;
+            --color-grey-light: #808080;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.8;
+        }
+
+        /* Hero Section with Generative Art */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #hero-art {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            color: var(--color-black);
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--color-grey);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .art-notation {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 11px;
+            color: var(--color-grey);
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            text-align: right;
+            line-height: 1.6;
+            z-index: 10;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .scroll-indicator:hover {
+            opacity: 1;
+        }
+
+        .scroll-text {
+            font-size: 11px;
+            color: var(--color-black);
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--color-black), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(8px);
+            }
+        }
+
+        /* Philosophy Section */
+        .philosophy-section {
+            max-width: 600px;
+            margin: 120px auto;
+            padding: 0 40px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .philosophy-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: var(--color-black);
+        }
+
+        .philosophy-section p {
+            font-size: 15px;
+            color: var(--color-grey);
+            margin-bottom: 24px;
+        }
+
+        .philosophy-section .insight {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--color-grey-light);
+            margin-top: 40px;
+            padding: 24px;
+            background: var(--color-blue-light);
+            border-left: 2px solid var(--color-blue-accent);
+        }
+
+        /* Case Studies Grid */
+        .case-studies-container {
+            max-width: 1200px;
+            margin: 0 auto 120px;
+            padding: 0 40px;
+        }
+
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 80px;
+        }
+
+        /* Individual Case Study Card */
+        .case-study {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+            padding: 60px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .case-study:first-child {
+            border-top: none;
+        }
+
+        .case-art {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: var(--color-blue-light);
+        }
+
+        .case-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-black);
+        }
+
+        .case-meta {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .case-description {
+            font-size: 15px;
+            color: var(--color-grey);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .case-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            text-transform: lowercase;
+        }
+
+        .case-link {
+            display: inline-block;
+            font-size: 13px;
+            color: var(--color-blue-accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .case-link:hover {
+            border-bottom-color: var(--color-blue-accent);
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 600px;
+            margin: 120px auto 80px;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .footer-signature {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            line-height: 1.8;
+        }
+
+        .footer-signature strong {
+            color: var(--color-black);
+            font-weight: 600;
+        }
+
+        /* Home Navigation */
+        .nav-home {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--color-black);
+            text-decoration: none;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: opacity 0.3s;
+        }
+
+        .nav-home:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+                line-height: 1.3;
+                letter-spacing: 1px;
+                margin-bottom: 24px;
+            }
+
+            .hero-content {
+                padding: 24px;
+                max-width: 90%;
+                background: rgba(255, 254, 250, 0.40);
+            }
+
+            .hero p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .case-study {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 40px 0;
+            }
+
+            .case-stats {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin: 24px 0;
+            }
+
+            .case-art {
+                height: 280px;
+                margin-bottom: 16px;
+            }
+
+            .philosophy-section {
+                margin: 80px auto;
+                padding: 0 20px;
+            }
+
+            .philosophy-section h2 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .philosophy-section p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .case-studies-container {
+                padding: 0 20px;
+                margin: 0 auto 80px;
+            }
+
+            .footer {
+                padding: 0 20px;
+                margin: 80px auto 60px;
+            }
+
+            .nav-home {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            .art-notation {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+
+            .scroll-indicator {
+                bottom: 20px;
+            }
+
+            .scroll-text {
+                font-size: 10px;
+            }
+
+            .scroll-line {
+                height: 30px;
+            }
+        }
+
+        /* Additional mobile improvements */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-content {
+                padding: 20px;
+            }
+
+            .case-studies-container,
+            .philosophy-section,
+            .footer {
+                padding: 0 16px;
+            }
+
+            .case-study {
+                gap: 24px;
+                padding: 32px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Navigation -->
+    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+
+    <!-- Hero Section with Generative Art -->
+    <section class="hero">
+        <div id="hero-art"></div>
+        <div class="hero-content">
+            <h1>IDEAS IN MOTION</h1>
+            <p>We don't make portfolios that describe what we did. We create artifacts that demonstrate how we think.</p>
+        </div>
+        <div class="art-notation">
+            [ invisible scaffolding ]<br>
+            multi-octave flow fields<br>
+            1,800 particles<br>
+            180 simulation steps
+        </div>
+        <div class="scroll-indicator">
+            <span class="scroll-text">[ scroll to explore ]</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section">
+        <div class="section-label">[ the approach ]</div>
+        <h2>Demonstration over declaration</h2>
+        <p>Traditional case studies show screenshots and describe process. We questioned whether that structure serves the outcome.</p>
+        <p>Each case study includes generative art built specifically for that project. Not decoration. Computational proof of AI-human collaboration. The algorithms visualize the philosophy behind the work.</p>
+        <p>Multi-octave Perlin noise generating vector flow fields. Particle systems with alignment coefficients. Natural selection through field resonance. Every parameter exhaustively calibrated.</p>
+        <div class="insight">The generative art proves computational sophistication through demonstration, not claims. This is invisible scaffolding made visible.</div>
+    </section>
+
+    <!-- Case Studies Grid -->
+    <div class="case-studies-container">
+        <div class="section-label">[ selected work ]</div>
+        <div class="case-studies-grid">
+
+            <!-- OF THE CULTURE -->
+            <article class="case-study">
+                <div class="case-art" id="otc-art"></div>
+                <div class="case-content">
+                    <div class="case-meta">[ house brand development ]</div>
+                    <h3>OF THE CULTURE</h3>
+                    <p class="case-description">TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.</p>
+                    <div class="case-stats">
+                        <div class="stat">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">week sprint</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">internal build</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">cultural venture</div>
+                        </div>
+                    </div>
+                    <a href="/ideas/of-the-culture" class="case-link">view case study →</a>
+                </div>
+            </article>
+
+            <!-- CRYPTOGAINS Documentation -->
+            <article class="case-study">
+                <div class="case-art" id="crypto-art"></div>
+                <div class="case-content">
+                    <div class="case-meta">[ strategic documentation ]</div>
+                    <h3>[REDACTED]</h3>
+                    <p class="case-description">Complete business architecture. 400 pages enabling one-and-done implementation. Documentation that functions as invisible scaffolding for portfolio management transformation.</p>
+                    <div class="case-stats">
+                        <div class="stat">
+                            <div class="stat-value">400</div>
+                            <div class="stat-label">pages produced</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">20,088</div>
+                            <div class="stat-label">lines of code</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">5:1</div>
+                            <div class="stat-label">spec to code ratio</div>
+                        </div>
+                    </div>
+                    <a href="/ideas/redacted" class="case-link">view case study →</a>
+                </div>
+            </article>
+
+            <!-- Invisible Scaffolding Exploration -->
+            <article class="case-study">
+                <div class="case-art" id="scaffolding-art"></div>
+                <div class="case-content">
+                    <div class="case-meta">[ philosophical exploration ]</div>
+                    <h3>INVISIBLE SCAFFOLDING</h3>
+                    <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving AI-human collaboration through algorithmic sophistication.</p>
+                    <div class="case-stats">
+                        <div class="stat">
+                            <div class="stat-value">1,800</div>
+                            <div class="stat-label">particles simulated</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">180</div>
+                            <div class="stat-label">evolution steps</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">visual explorations</div>
+                        </div>
+                    </div>
+                    <a href="/ideas/invisible-scaffolding" class="case-link">view case study →</a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-signature">
+            <strong>TUKU GROUP</strong><br>
+            Independent Creative House<br>
+            tukugroup.com
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const config = {
+            particleCount: 1800,
+            steps: 180,
+            baseFrequency: 0.0135,
+            octaves: 3,
+            colors: {
+                earth_gold: [193, 154, 75],
+                accent_blue: [86, 145, 200],
+                earth_clay: [165, 101, 73],
+                accent_cyan: [102, 191, 209],
+                trace_elegant: [235, 235, 235]
+            }
+        };
+
+        // Hero Art Sketch
+        function heroSketch(p) {
+            let particles = [];
+            let step = 0;
+
+            p.setup = function() {
+                const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+                canvas.parent('hero-art');
+                p.background(250, 249, 245, 255);
+                
+                // Initialize particles
+                for (let i = 0; i < config.particleCount; i++) {
+                    particles.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        prevX: p.random(p.width),
+                        prevY: p.random(p.height),
+                        alignment: p.random(0.4, 1.0),
+                        age: 0
+                    });
+                }
+            };
+
+            p.draw = function() {
+                if (step < config.steps) {
+                    // Draw particles
+                    for (let particle of particles) {
+                        // Multi-octave flow field
+                        let fx = 0, fy = 0;
+                        for (let octave = 0; octave < config.octaves; octave++) {
+                            const freq = config.baseFrequency * Math.pow(2, octave);
+                            const amp = 1 / Math.pow(2, octave);
+                            const angle = p.noise(particle.x * freq, particle.y * freq, step * 0.01) * p.TWO_PI * 2;
+                            fx += Math.cos(angle) * amp;
+                            fy += Math.sin(angle) * amp;
+                        }
+
+                        // Update position
+                        particle.prevX = particle.x;
+                        particle.prevY = particle.y;
+                        particle.x += fx * particle.alignment * 2;
+                        particle.y += fy * particle.alignment * 2;
+
+                        // Wrap edges
+                        if (particle.x < 0) particle.x = p.width;
+                        if (particle.x > p.width) particle.x = 0;
+                        if (particle.y < 0) particle.y = p.height;
+                        if (particle.y > p.height) particle.y = 0;
+
+                        // Color based on alignment
+                        let color;
+                        if (particle.alignment > 0.82) {
+                            color = config.colors.earth_gold;
+                        } else if (particle.alignment > 0.65) {
+                            color = config.colors.earth_clay;
+                        } else if (particle.alignment > 0.45) {
+                            color = config.colors.trace_elegant;
+                        } else {
+                            color = config.colors.accent_blue;
+                        }
+
+                        // Draw line
+                        const opacity = p.map(particle.age, 0, config.steps, 50, 200);
+                        p.stroke(color[0], color[1], color[2], opacity);
+                        p.strokeWeight(0.3 + particle.alignment * 0.3);
+                        p.line(particle.prevX, particle.prevY, particle.x, particle.y);
+
+                        particle.age++;
+                    }
+                    step++;
+                } else {
+                    p.noLoop();
+                }
+            };
+
+            p.windowResized = function() {
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
+            };
+        }
+
+        // OTC Art Sketch (simplified version)
+        function otcSketch(p) {
+            p.setup = function() {
+                const container = document.getElementById('otc-art');
+                const canvas = p.createCanvas(container.offsetWidth, 400);
+                canvas.parent('otc-art');
+                p.background(240, 249, 255);
+                p.noLoop();
+            };
+
+            p.draw = function() {
+                // Simplified cultural flow visualization
+                for (let i = 0; i < 200; i++) {
+                    const x = p.random(p.width);
+                    const y = p.random(p.height);
+                    const angle = p.noise(x * 0.01, y * 0.01) * p.TWO_PI * 2;
+                    const length = p.random(20, 60);
+                    
+                    p.stroke(86, 145, 200, 60);
+                    p.strokeWeight(p.random(0.5, 2));
+                    p.line(x, y, x + Math.cos(angle) * length, y + Math.sin(angle) * length);
+                }
+            };
+        }
+
+        // Crypto Art Sketch (precision accumulation)
+        function cryptoSketch(p) {
+            p.setup = function() {
+                const container = document.getElementById('crypto-art');
+                const canvas = p.createCanvas(container.offsetWidth, 400);
+                canvas.parent('crypto-art');
+                p.background(245, 243, 238);
+                p.noLoop();
+            };
+
+            p.draw = function() {
+                // Grid representing structured documentation
+                p.stroke(193, 154, 75, 40);
+                p.strokeWeight(0.5);
+                
+                const spacing = 20;
+                for (let x = 0; x < p.width; x += spacing) {
+                    p.line(x, 0, x, p.height);
+                }
+                for (let y = 0; y < p.height; y += spacing) {
+                    p.line(0, y, p.width, y);
+                }
+
+                // Accumulating precision points
+                for (let i = 0; i < 400; i++) {
+                    const x = p.random(p.width);
+                    const y = p.random(p.height);
+                    p.fill(193, 154, 75, p.random(80, 200));
+                    p.noStroke();
+                    p.circle(x, y, p.random(1, 3));
+                }
+            };
+        }
+
+        // Scaffolding Art Sketch (flow fields)
+        function scaffoldingSketch(p) {
+            p.setup = function() {
+                const container = document.getElementById('scaffolding-art');
+                const canvas = p.createCanvas(container.offsetWidth, 400);
+                canvas.parent('scaffolding-art');
+                p.background(250, 249, 245);
+                p.noLoop();
+            };
+
+            p.draw = function() {
+                // Flow field visualization
+                for (let i = 0; i < 300; i++) {
+                    let x = p.random(p.width);
+                    let y = p.random(p.height);
+                    
+                    p.strokeWeight(1);
+                    for (let j = 0; j < 50; j++) {
+                        const angle = p.noise(x * 0.01, y * 0.01, j * 0.1) * p.TWO_PI * 2;
+                        const prevX = x;
+                        const prevY = y;
+                        x += Math.cos(angle) * 2;
+                        y += Math.sin(angle) * 2;
+                        
+                        const alignment = p.noise(x * 0.01, y * 0.01);
+                        let color = alignment > 0.6 ? [193, 154, 75] : [86, 145, 200];
+                        
+                        p.stroke(color[0], color[1], color[2], 40);
+                        p.line(prevX, prevY, x, y);
+                    }
+                }
+            };
+        }
+
+        // Initialize sketches
+        new p5(heroSketch);
+        new p5(otcSketch);
+        new p5(cryptoSketch);
+        new p5(scaffoldingSketch);
+    </script>
+
+</body>
+</html>
