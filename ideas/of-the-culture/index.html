@@ -635,7 +635,7 @@
                 } else {
                     p.noLoop();
                     
-                    // On mobile, convert to static image to prevent disappearing
+                    // On mobile, convert to static image with smooth crossfade
                     if (window.innerWidth <= 768) {
                         setTimeout(() => {
                             const canvas = document.querySelector('#hero-art canvas');
@@ -649,8 +649,19 @@
                                 img.style.position = 'absolute';
                                 img.style.top = '0';
                                 img.style.left = '0';
-                                canvas.style.display = 'none';
+                                img.style.opacity = '0';
+                                img.style.transition = 'opacity 0.8s ease-in-out';
+                                img.style.zIndex = '2';
+                                
                                 canvas.parentNode.appendChild(img);
+                                
+                                // Smooth crossfade
+                                setTimeout(() => {
+                                    img.style.opacity = '1';
+                                    setTimeout(() => {
+                                        canvas.style.display = 'none';
+                                    }, 800);
+                                }, 50);
                             }
                         }, 500);
                     }

@@ -167,7 +167,7 @@
             text-transform: lowercase;
             margin-bottom: 24px;
             letter-spacing: 0.5px;
-            font-weight: 500;
+            font-weight: 700;
         }
 
         .content-section h2 {
@@ -186,6 +186,7 @@
         .insight {
             font-size: 14px;
             font-style: italic;
+            font-weight: 500;
             color: var(--color-grey-light);
             margin-top: 40px;
             padding: 24px;
@@ -202,11 +203,6 @@
 
         .case-study-item {
             padding: 40px 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .case-study-item:first-child {
-            border-top: none;
         }
 
         .case-meta {
@@ -215,6 +211,7 @@
             text-transform: lowercase;
             margin-bottom: 16px;
             letter-spacing: 0.5px;
+            font-weight: 700;
         }
 
         .case-study-item h3 {
@@ -253,6 +250,7 @@
             font-size: 11px;
             color: var(--color-grey-light);
             text-transform: lowercase;
+            font-weight: 500;
         }
 
         .case-link {
@@ -337,6 +335,20 @@
 
             .case-study-item {
                 padding: 32px 0;
+            }
+            
+            .case-link {
+                font-weight: 600;
+            }
+            
+            .section-label {
+                font-weight: 700;
+                font-size: 12px;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+                font-weight: 500;
             }
         }
 
@@ -567,7 +579,7 @@
                 } else {
                     p.noLoop();
                     
-                    // On mobile, convert to static image to prevent disappearing
+                    // On mobile, convert to static image with smooth crossfade
                     if (window.innerWidth <= 768) {
                         setTimeout(() => {
                             const canvas = document.querySelector('#hero-art canvas');
@@ -581,8 +593,19 @@
                                 img.style.position = 'absolute';
                                 img.style.top = '0';
                                 img.style.left = '0';
-                                canvas.style.display = 'none';
+                                img.style.opacity = '0';
+                                img.style.transition = 'opacity 0.8s ease-in-out';
+                                img.style.zIndex = '2';
+                                
                                 canvas.parentNode.appendChild(img);
+                                
+                                // Smooth crossfade
+                                setTimeout(() => {
+                                    img.style.opacity = '1';
+                                    setTimeout(() => {
+                                        canvas.style.display = 'none';
+                                    }, 800);
+                                }, 50);
                             }
                         }, 500);
                     }
