@@ -748,6 +748,26 @@
                     step++;
                 } else {
                     p.noLoop();
+                    
+                    // On mobile, convert to static image to prevent disappearing
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            const canvas = document.querySelector('#hero-art canvas');
+                            if (canvas) {
+                                const imgData = canvas.toDataURL();
+                                const img = document.createElement('img');
+                                img.src = imgData;
+                                img.style.width = '100%';
+                                img.style.height = '100%';
+                                img.style.objectFit = 'cover';
+                                img.style.position = 'absolute';
+                                img.style.top = '0';
+                                img.style.left = '0';
+                                canvas.style.display = 'none';
+                                canvas.parentNode.appendChild(img);
+                            }
+                        }, 500);
+                    }
                 }
             };
 
@@ -763,11 +783,8 @@
                 const canvas = p.createCanvas(container.offsetWidth, 400);
                 canvas.parent('otc-art');
                 p.background(240, 249, 255);
-                p.noLoop();
-            };
-
-            p.draw = function() {
-                // Simplified cultural flow visualization
+                
+                // Draw once in setup, then stop
                 for (let i = 0; i < 200; i++) {
                     const x = p.random(p.width);
                     const y = p.random(p.height);
@@ -778,6 +795,8 @@
                     p.strokeWeight(p.random(0.5, 2));
                     p.line(x, y, x + Math.cos(angle) * length, y + Math.sin(angle) * length);
                 }
+                
+                p.noLoop();
             };
         }
 
