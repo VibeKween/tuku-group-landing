@@ -3,7 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[REDACTED] Documentation - TUKU GROUP</title>
+    <title>[REDACTED] Documentation - TUKU GROUP | Technical Architecture Case Study</title>
+    <meta name="description" content="400 pages of cryptocurrency portfolio management system documentation. Zero ambiguity technical architecture demonstrating precision accumulation methodology.">
+    <meta name="keywords" content="technical documentation, cryptocurrency portfolio, system architecture, precision accumulation, TUKU GROUP case study">
+    <meta name="author" content="Tuku Group">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://tukugroup.com/ideas/redacted/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://tukugroup.com/ideas/redacted/">
+    <meta property="og:title" content="[REDACTED] Documentation - Technical Architecture Case Study">
+    <meta property="og:description" content="400 pages, zero ambiguity. Complete technical architecture for cryptocurrency portfolio management system.">
+    <meta property="og:image" content="https://tukugroup.com/images/tuku-group-og-compact.png">
+    <meta property="og:site_name" content="Tuku Group">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@tukugroup">
+    <meta name="twitter:title" content="[REDACTED] Documentation - Technical Architecture">
+    <meta name="twitter:description" content="400 pages, zero ambiguity. Complete technical architecture case study.">
+    <meta name="twitter:image" content="https://tukugroup.com/images/tuku-group-og-compact.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon.png">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5KTM9YBETS');
+    </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,8 +69,8 @@
             line-height: 1.8;
         }
 
-        /* Home Navigation */
-        .nav-home {
+        /* Navigation */
+        .nav-back {
             position: fixed;
             top: 40px;
             left: 40px;
@@ -50,8 +85,28 @@
             transition: opacity 0.3s;
         }
 
-        .nav-home:hover {
+        .nav-back:hover {
             opacity: 0.7;
+        }
+
+        .nav-home {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 100;
+            font-size: 10px;
+            color: var(--color-grey-light);
+            text-decoration: none;
+            background: rgba(255, 254, 250, 0.20);
+            backdrop-filter: blur(15px);
+            padding: 8px 14px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: opacity 0.3s;
+        }
+
+        .nav-home:hover {
+            opacity: 0.8;
+            color: var(--color-black);
         }
 
         /* Hero Section with Generative Art */
@@ -71,6 +126,15 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none;
+            touch-action: none;
+            user-select: none;
+        }
+        
+        #hero-art canvas {
+            pointer-events: none !important;
+            touch-action: none !important;
+            user-select: none !important;
         }
 
         .hero-content {
@@ -133,6 +197,7 @@
             text-transform: lowercase;
             margin-bottom: 24px;
             letter-spacing: 0.5px;
+            font-weight: 500;
         }
 
         h2 {
@@ -292,11 +357,22 @@
                 font-size: 12px;
             }
 
-            .nav-home {
+            .nav-back {
                 top: 20px;
                 left: 20px;
                 padding: 10px 16px;
                 font-size: 10px;
+            }
+
+            .nav-home {
+                top: 20px;
+                right: 20px;
+                padding: 8px 12px;
+                font-size: 9px;
+            }
+            
+            .section-label {
+                font-weight: 600;
             }
 
             .art-notation {
@@ -326,7 +402,9 @@
 <body>
 
     <!-- Home Navigation -->
-    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+    <!-- Navigation -->
+    <a href="../" class="nav-back">← Ideas in Motion</a>
+    <a href="https://tukugroup.com" class="nav-home">TUKU GROUP</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">

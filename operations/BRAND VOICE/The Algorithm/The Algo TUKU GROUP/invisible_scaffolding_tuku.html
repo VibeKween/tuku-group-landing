@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Scaffolding - TUKU GROUP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Anthropic Brand Colors */
+        :root {
+            --anthropic-dark: #141413;
+            --anthropic-light: #faf9f5;
+            --anthropic-mid-gray: #b0aea5;
+            --anthropic-light-gray: #e8e6dc;
+            --anthropic-orange: #d97757;
+            --anthropic-blue: #6a9bcc;
+            --anthropic-green: #788c5d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--anthropic-light) 0%, #f5f3ee 100%);
+            min-height: 100vh;
+            color: var(--anthropic-dark);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(20, 20, 19, 0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar h1 {
+            font-family: 'Lora', serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--anthropic-dark);
+            margin-bottom: 8px;
+        }
+
+        .sidebar .subtitle {
+            color: var(--anthropic-mid-gray);
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        /* Control Sections */
+        .control-section {
+            margin-bottom: 32px;
+        }
+
+        .control-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--anthropic-dark);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-section h3::before {
+            content: '•';
+            color: var(--anthropic-orange);
+            font-weight: bold;
+        }
+
+        /* Seed Controls */
+        .seed-input {
+            width: 100%;
+            background: var(--anthropic-light);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--anthropic-light-gray);
+            text-align: center;
+        }
+
+        .seed-input:focus {
+            outline: none;
+            border-color: var(--anthropic-orange);
+            box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.1);
+            background: white;
+        }
+
+        .seed-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .regen-button {
+            margin-bottom: 0;
+        }
+
+        /* Parameter Controls */
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--anthropic-dark);
+            margin-bottom: 8px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 4px;
+            background: var(--anthropic-light-gray);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--anthropic-orange);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: #c86641;
+        }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--anthropic-orange);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .value-display {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--anthropic-mid-gray);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        /* Buttons */
+        .button {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--anthropic-dark);
+            color: var(--anthropic-light);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .button:hover {
+            background: #2a2a28;
+            transform: translateY(-1px);
+        }
+
+        .button.secondary {
+            background: var(--anthropic-light-gray);
+            color: var(--anthropic-dark);
+        }
+
+        .button.secondary:hover {
+            background: var(--anthropic-mid-gray);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #canvas-container {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(20, 20, 19, 0.15);
+            overflow: hidden;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Lora', serif;
+            font-size: 18px;
+            color: var(--anthropic-mid-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Controls -->
+        <div class="sidebar">
+            <h1>Invisible Scaffolding</h1>
+            <p class="subtitle">Algorithmic art for TUKU GROUP exploring AI as invisible infrastructure that guides creative emergence</p>
+
+            <!-- Seed Section -->
+            <div class="control-section">
+                <h3>Seed</h3>
+                <input type="text" id="seed-input" class="seed-input" value="12345" onchange="updateSeed()">
+                <div class="seed-controls">
+                    <button class="button secondary" onclick="previousSeed()">Previous</button>
+                    <button class="button secondary" onclick="nextSeed()">Next</button>
+                </div>
+                <button class="button regen-button" onclick="randomSeedAndUpdate()">Random Seed</button>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="control-section">
+                <h3>Parameters</h3>
+                
+                <!-- Particle Count -->
+                <div class="control-group">
+                    <label>Exploration Density</label>
+                    <div class="slider-container">
+                        <input type="range" id="particleCount" min="1000" max="8000" step="500" value="3500" oninput="updateParam('particleCount', this.value)">
+                        <span class="value-display" id="particleCount-value">3500</span>
+                    </div>
+                </div>
+
+                <!-- Flow Strength -->
+                <div class="control-group">
+                    <label>System Influence</label>
+                    <div class="slider-container">
+                        <input type="range" id="flowStrength" min="0.1" max="3.0" step="0.1" value="1.2" oninput="updateParam('flowStrength', this.value)">
+                        <span class="value-display" id="flowStrength-value">1.2</span>
+                    </div>
+                </div>
+
+                <!-- Noise Scale -->
+                <div class="control-group">
+                    <label>Scaffolding Detail</label>
+                    <div class="slider-container">
+                        <input type="range" id="noiseScale" min="0.001" max="0.01" step="0.0005" value="0.0035" oninput="updateParam('noiseScale', this.value)">
+                        <span class="value-display" id="noiseScale-value">0.0035</span>
+                    </div>
+                </div>
+
+                <!-- Noise Octaves -->
+                <div class="control-group">
+                    <label>System Layers</label>
+                    <div class="slider-container">
+                        <input type="range" id="noiseOctaves" min="1" max="4" step="1" value="3" oninput="updateParam('noiseOctaves', this.value)">
+                        <span class="value-display" id="noiseOctaves-value">3</span>
+                    </div>
+                </div>
+
+                <!-- Fade Rate -->
+                <div class="control-group">
+                    <label>Memory Persistence</label>
+                    <div class="slider-container">
+                        <input type="range" id="fadeRate" min="1" max="15" step="1" value="5" oninput="updateParam('fadeRate', this.value)">
+                        <span class="value-display" id="fadeRate-value">5</span>
+                    </div>
+                </div>
+
+                <!-- Alignment Bias -->
+                <div class="control-group">
+                    <label>Resonance Threshold</label>
+                    <div class="slider-container">
+                        <input type="range" id="alignmentBias" min="0.0" max="1.0" step="0.05" value="0.35" oninput="updateParam('alignmentBias', this.value)">
+                        <span class="value-display" id="alignmentBias-value">0.35</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="control-section">
+                <h3>Actions</h3>
+                <div class="button-row">
+                    <button class="button" onclick="resetParameters()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Canvas Area -->
+        <div class="canvas-area">
+            <div id="canvas-container">
+                <div class="loading">Initializing generative art...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════
+        // GENERATIVE ART PARAMETERS
+        // ═══════════════════════════════════════════════════════════════════════
+
+        let params = {
+            seed: 12345,
+            particleCount: 3500,
+            flowStrength: 1.2,
+            noiseScale: 0.0035,
+            noiseOctaves: 3,
+            fadeRate: 5,
+            alignmentBias: 0.35
+        };
+
+        let defaultParams = {...params};
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // P5.JS GENERATIVE ART ALGORITHM - INVISIBLE SCAFFOLDING
+        // ═══════════════════════════════════════════════════════════════════════
+
+        let particles = [];
+        let flowField = [];
+        let cols, rows;
+        let scl = 15; // Flow field resolution
+        let frameCount = 0;
+        let maxFrames = 600; // Runtime before settling
+        
+        // TUKU GROUP color palette - sophisticated earth tones with accent
+        const SCAFFOLDING_BLACK = [20, 20, 19]; // Deep infrastructure
+        const EARTH_WARM = [139, 115, 85]; // Human refinement
+        const EARTH_COOL = [120, 140, 125]; // Balanced exploration
+        const ACCENT_ORANGE = [217, 119, 87]; // Creative breakthrough
+        const BACKGROUND = [250, 249, 245]; // Clean canvas
+
+        function setup() {
+            let canvas = createCanvas(1200, 1200);
+            canvas.parent('canvas-container');
+            
+            initializeSystem();
+            
+            // Remove loading message
+            document.querySelector('.loading').style.display = 'none';
+        }
+
+        function initializeSystem() {
+            // Seed the randomness for reproducibility
+            randomSeed(params.seed);
+            noiseSeed(params.seed);
+
+            // Clear particles and recreate
+            particles = [];
+            frameCount = 0;
+            
+            // Initialize particles from edges (exploration begins at boundaries)
+            for (let i = 0; i < params.particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            // Calculate flow field dimensions
+            cols = floor(width / scl);
+            rows = floor(height / scl);
+            
+            // Generate multi-layered flow field (invisible scaffolding)
+            generateFlowField();
+
+            // Clear background with subtle warmth
+            background(BACKGROUND[0], BACKGROUND[1], BACKGROUND[2]);
+        }
+
+        function generateFlowField() {
+            flowField = [];
+            let zoff = 0;
+            
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let index = x + y * cols;
+                    
+                    // Multi-octave noise for layered influence
+                    let angle = 0;
+                    let amplitude = 1.0;
+                    
+                    for (let octave = 0; octave < params.noiseOctaves; octave++) {
+                        let freq = Math.pow(2, octave);
+                        let noiseVal = noise(
+                            x * params.noiseScale * freq,
+                            y * params.noiseScale * freq,
+                            zoff + octave * 100
+                        );
+                        angle += noiseVal * TWO_PI * 4 * amplitude;
+                        amplitude *= 0.5; // Each layer contributes less
+                    }
+                    
+                    // Create vector force from angle
+                    let v = p5.Vector.fromAngle(angle);
+                    v.setMag(params.flowStrength);
+                    flowField[index] = v;
+                }
+            }
+        }
+
+        function draw() {
+            // Subtle fade for trail accumulation
+            fill(BACKGROUND[0], BACKGROUND[1], BACKGROUND[2], params.fadeRate);
+            noStroke();
+            rect(0, 0, width, height);
+            
+            // Update and draw particles
+            for (let particle of particles) {
+                particle.follow(flowField);
+                particle.update();
+                particle.edges();
+                particle.show();
+            }
+            
+            frameCount++;
+            
+            // Gradual slowdown as system reaches equilibrium
+            if (frameCount > maxFrames) {
+                noLoop(); // Stop when stable
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // PARTICLE SYSTEM - CREATIVE AGENTS INFLUENCED BY INVISIBLE FORCES
+        // ═══════════════════════════════════════════════════════════════════════
+
+        class Particle {
+            constructor() {
+                // Initialize from edges (exploration begins at boundaries)
+                let edge = floor(random(4));
+                if (edge === 0) { // Top
+                    this.pos = createVector(random(width), 0);
+                } else if (edge === 1) { // Right
+                    this.pos = createVector(width, random(height));
+                } else if (edge === 2) { // Bottom
+                    this.pos = createVector(random(width), height);
+                } else { // Left
+                    this.pos = createVector(0, random(height));
+                }
+                
+                this.vel = createVector(0, 0);
+                this.acc = createVector(0, 0);
+                this.maxSpeed = 3;
+                this.prevPos = this.pos.copy();
+                
+                // Particle identity (affects color and behavior)
+                this.alignmentScore = random(1); // How aligned with field
+                this.lifetime = random(400, 800);
+                this.age = 0;
+            }
+
+            follow(vectors) {
+                let x = floor(this.pos.x / scl);
+                let y = floor(this.pos.y / scl);
+                let index = x + y * cols;
+                
+                if (index >= 0 && index < vectors.length) {
+                    let force = vectors[index];
+                    
+                    // Particles have varying affinity for the field
+                    // Some follow closely, some explore tangentially
+                    let alignment = map(this.alignmentScore, 0, 1, 0.3, 1.0);
+                    force = force.copy().mult(alignment);
+                    
+                    this.applyForce(force);
+                }
+            }
+
+            applyForce(force) {
+                this.acc.add(force);
+            }
+
+            update() {
+                this.vel.add(this.acc);
+                this.vel.limit(this.maxSpeed);
+                this.pos.add(this.vel);
+                this.acc.mult(0);
+                this.age++;
+                
+                // Respawn if too old
+                if (this.age > this.lifetime) {
+                    this.respawn();
+                }
+            }
+
+            respawn() {
+                // Respawn from edges
+                let edge = floor(random(4));
+                if (edge === 0) {
+                    this.pos = createVector(random(width), 0);
+                } else if (edge === 1) {
+                    this.pos = createVector(width, random(height));
+                } else if (edge === 2) {
+                    this.pos = createVector(random(width), height);
+                } else {
+                    this.pos = createVector(0, random(height));
+                }
+                this.vel = createVector(0, 0);
+                this.age = 0;
+                this.prevPos = this.pos.copy();
+            }
+
+            edges() {
+                if (this.pos.x > width || this.pos.x < 0 || 
+                    this.pos.y > height || this.pos.y < 0) {
+                    this.respawn();
+                }
+            }
+
+            show() {
+                // Color based on alignment with field (resonance)
+                let resonance = this.vel.mag() / this.maxSpeed;
+                let alignment = this.alignmentScore;
+                
+                // Determine color based on particle state
+                let col;
+                let alpha;
+                
+                if (alignment > 0.7 && resonance > 0.6) {
+                    // High alignment + high energy = breakthrough (orange accent)
+                    col = ACCENT_ORANGE;
+                    alpha = map(resonance, 0.6, 1.0, 100, 180);
+                } else if (alignment > 0.5) {
+                    // Good alignment = warm earth tone (human refinement)
+                    col = EARTH_WARM;
+                    alpha = map(alignment, 0.5, 1.0, 40, 100);
+                } else if (resonance > 0.4) {
+                    // Exploring tangentially = cool earth tone
+                    col = EARTH_COOL;
+                    alpha = map(resonance, 0.4, 0.8, 30, 80);
+                } else {
+                    // Low energy = scaffolding visible (infrastructure)
+                    col = SCAFFOLDING_BLACK;
+                    alpha = map(resonance, 0, 0.4, 15, 40);
+                }
+                
+                // Draw particle trail
+                stroke(col[0], col[1], col[2], alpha);
+                strokeWeight(1.2);
+                line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+                
+                this.prevPos = this.pos.copy();
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // UI CONTROL HANDLERS
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function updateParam(paramName, value) {
+            let numValue = parseFloat(value);
+            params[paramName] = numValue;
+            document.getElementById(paramName + '-value').textContent = 
+                paramName === 'noiseScale' ? numValue.toFixed(4) : 
+                paramName === 'flowStrength' || paramName === 'alignmentBias' ? numValue.toFixed(2) : 
+                Math.round(numValue);
+            
+            // Regenerate if certain parameters change
+            if (paramName === 'particleCount' || paramName === 'noiseScale' || 
+                paramName === 'noiseOctaves' || paramName === 'flowStrength') {
+                initializeSystem();
+                loop(); // Restart animation
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // SEED CONTROL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════
+
+        function updateSeedDisplay() {
+            document.getElementById('seed-input').value = params.seed;
+        }
+
+        function updateSeed() {
+            let input = document.getElementById('seed-input');
+            let newSeed = parseInt(input.value);
+            if (newSeed && newSeed > 0) {
+                params.seed = newSeed;
+                initializeSystem();
+                loop();
+            } else {
+                updateSeedDisplay();
+            }
+        }
+
+        function previousSeed() {
+            params.seed = Math.max(1, params.seed - 1);
+            updateSeedDisplay();
+            initializeSystem();
+            loop();
+        }
+
+        function nextSeed() {
+            params.seed = params.seed + 1;
+            updateSeedDisplay();
+            initializeSystem();
+            loop();
+        }
+
+        function randomSeedAndUpdate() {
+            params.seed = Math.floor(Math.random() * 999999) + 1;
+            updateSeedDisplay();
+            initializeSystem();
+            loop();
+        }
+
+        function resetParameters() {
+            params = {...defaultParams};
+            
+            // Update UI elements
+            document.getElementById('particleCount').value = params.particleCount;
+            document.getElementById('particleCount-value').textContent = params.particleCount;
+            document.getElementById('flowStrength').value = params.flowStrength;
+            document.getElementById('flowStrength-value').textContent = params.flowStrength.toFixed(2);
+            document.getElementById('noiseScale').value = params.noiseScale;
+            document.getElementById('noiseScale-value').textContent = params.noiseScale.toFixed(4);
+            document.getElementById('noiseOctaves').value = params.noiseOctaves;
+            document.getElementById('noiseOctaves-value').textContent = params.noiseOctaves;
+            document.getElementById('fadeRate').value = params.fadeRate;
+            document.getElementById('fadeRate-value').textContent = params.fadeRate;
+            document.getElementById('alignmentBias').value = params.alignmentBias;
+            document.getElementById('alignmentBias-value').textContent = params.alignmentBias.toFixed(2);
+            
+            updateSeedDisplay();
+            initializeSystem();
+            loop();
+        }
+
+        // Initialize UI on load
+        window.addEventListener('load', function() {
+            updateSeedDisplay();
+        });
+    </script>
+</body>
+</html>

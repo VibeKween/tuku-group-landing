@@ -464,6 +464,26 @@ a.inline-link {
   text-decoration-thickness: 2px;
 }
 
+/* Ideas in Motion link styling */
+.ideas-link {
+  color: var(--color-grey-light);
+  text-decoration: none;
+  font-size: 0.95em;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  padding: 8px 16px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  background: rgba(128, 128, 128, 0.02);
+}
+
+.ideas-link:hover {
+  color: var(--color-black);
+  border-color: rgba(128, 128, 128, 0.4);
+  background: rgba(128, 128, 128, 0.05);
+  transform: translateY(-1px);
+}
+
 /* Center the Connect CTA section */
 .cta-section {
   text-align: center;
