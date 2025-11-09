@@ -658,6 +658,26 @@
                     step++;
                 } else {
                     p.noLoop();
+                    
+                    // On mobile, convert to static image to prevent disappearing
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            const canvas = document.querySelector('#hero-art canvas');
+                            if (canvas) {
+                                const imgData = canvas.toDataURL();
+                                const img = document.createElement('img');
+                                img.src = imgData;
+                                img.style.width = '100%';
+                                img.style.height = '100%';
+                                img.style.objectFit = 'cover';
+                                img.style.position = 'absolute';
+                                img.style.top = '0';
+                                img.style.left = '0';
+                                canvas.style.display = 'none';
+                                canvas.parentNode.appendChild(img);
+                            }
+                        }, 500);
+                    }
                 }
             };
 
