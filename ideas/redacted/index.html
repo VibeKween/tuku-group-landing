@@ -129,12 +129,24 @@
             pointer-events: none;
             touch-action: none;
             user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            will-change: auto;
         }
         
-        #hero-art canvas {
-            pointer-events: none !important;
-            touch-action: none !important;
-            user-select: none !important;
+        #hero-art canvas,
+        #hero-art main,
+        #hero-art * {
+            pointer-events: none;
+            touch-action: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            will-change: auto;
         }
 
         .hero-content {
@@ -372,7 +384,17 @@
             }
             
             .section-label {
-                font-weight: 600;
+                font-weight: 700;
+                font-size: 12px;
+            }
+            
+            .spec-label {
+                font-size: 12px;
+                font-weight: 500;
+            }
+            
+            .spec-detail {
+                font-size: 11px;
             }
 
             .art-notation {
