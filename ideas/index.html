@@ -67,6 +67,26 @@
             line-height: 1.8;
         }
 
+        /* Navigation */
+        .nav-back {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--color-black);
+            text-decoration: none;
+            background: rgba(255, 254, 250, 0.30);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: opacity 0.3s;
+        }
+
+        .nav-back:hover {
+            opacity: 0.7;
+        }
+
         /* Hero Section with Generative Art */
         .hero {
             position: relative;
@@ -75,7 +95,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: rgb(250, 249, 245);
         }
 
         #hero-art {
@@ -92,21 +111,6 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            will-change: auto;
-        }
-
-        
-        #hero-art canvas,
-        #hero-art main,
-        #hero-art * {
-            pointer-events: none;
-            touch-action: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            will-change: auto;
         }
 
         .hero-content {
@@ -115,7 +119,7 @@
             text-align: center;
             max-width: 800px;
             padding: 40px;
-            background: rgba(250, 249, 245, 0.85);
+            background: rgba(255, 254, 250, 0.30);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(0, 0, 0, 0.03);
         }
@@ -141,7 +145,7 @@
             right: 40px;
             font-size: 11px;
             color: var(--color-grey);
-            background: rgba(250, 249, 245, 0.85);
+            background: rgba(255, 254, 250, 0.30);
             backdrop-filter: blur(20px);
             padding: 12px 16px;
             text-align: right;
@@ -150,52 +154,8 @@
             border: 1px solid rgba(0, 0, 0, 0.03);
         }
 
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-
-        .scroll-indicator:hover {
-            opacity: 1;
-        }
-
-        .scroll-text {
-            font-size: 11px;
-            color: var(--color-black);
-            letter-spacing: 0.5px;
-            text-transform: lowercase;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--color-black), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% {
-                opacity: 0.3;
-                transform: translateY(0);
-            }
-            50% {
-                opacity: 1;
-                transform: translateY(8px);
-            }
-        }
-
-        /* Philosophy Section */
-        .philosophy-section {
+        /* Content Sections */
+        .content-section {
             max-width: 600px;
             margin: 120px auto;
             padding: 0 40px;
@@ -210,20 +170,20 @@
             font-weight: 500;
         }
 
-        .philosophy-section h2 {
+        .content-section h2 {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 32px;
             color: var(--color-black);
         }
 
-        .philosophy-section p {
+        .content-section p {
             font-size: 15px;
             color: var(--color-grey);
             margin-bottom: 24px;
         }
 
-        .philosophy-section .insight {
+        .insight {
             font-size: 14px;
             font-style: italic;
             color: var(--color-grey-light);
@@ -233,74 +193,35 @@
             border-left: 2px solid var(--color-blue-accent);
         }
 
-        /* Case Studies Grid */
-        .case-studies-container {
-            max-width: 1200px;
+        /* Case Studies List */
+        .case-studies {
+            max-width: 800px;
             margin: 0 auto 120px;
             padding: 0 40px;
         }
 
-        .case-studies-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 80px;
-        }
-
-        /* Individual Case Study Card */
-        .case-study {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-            padding: 60px 0;
+        .case-study-item {
+            padding: 40px 0;
             border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
-        .case-study:first-child {
+        .case-study-item:first-child {
             border-top: none;
-        }
-
-        .case-art {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            background: var(--color-blue-light);
-            pointer-events: none;
-            touch-action: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            will-change: auto;
-        }
-        
-        .case-art canvas,
-        .case-art main,
-        .case-art * {
-            pointer-events: none;
-            touch-action: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            will-change: auto;
-        }
-
-        .case-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--color-black);
         }
 
         .case-meta {
             font-size: 11px;
             color: var(--color-gold);
             text-transform: lowercase;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             letter-spacing: 0.5px;
+        }
+
+        .case-study-item h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-black);
         }
 
         .case-description {
@@ -367,26 +288,6 @@
             font-weight: 600;
         }
 
-        /* Home Navigation */
-        .nav-home {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            z-index: 100;
-            font-size: 11px;
-            color: var(--color-black);
-            text-decoration: none;
-            background: rgba(250, 249, 245, 0.85);
-            backdrop-filter: blur(20px);
-            padding: 12px 20px;
-            border: 1px solid rgba(0, 0, 0, 0.03);
-            transition: opacity 0.3s;
-        }
-
-        .nav-home:hover {
-            opacity: 0.7;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -399,7 +300,7 @@
             .hero-content {
                 padding: 24px;
                 max-width: 90%;
-                background: rgba(250, 249, 245, 0.90);
+                background: rgba(255, 254, 250, 0.40);
             }
 
             .hero p {
@@ -407,49 +308,14 @@
                 line-height: 1.6;
             }
 
-            .case-study {
-                grid-template-columns: 1fr;
-                gap: 32px;
-                padding: 40px 0;
-            }
-
-            .case-stats {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                margin: 24px 0;
-            }
-
-            .case-art {
-                height: 280px;
-                margin-bottom: 16px;
-            }
-
-            .philosophy-section {
-                margin: 80px auto;
-                padding: 0 20px;
-            }
-
-            .philosophy-section h2 {
-                font-size: 20px;
-                margin-bottom: 20px;
-            }
-
-            .philosophy-section p {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-
-            .case-studies-container {
-                padding: 0 20px;
-                margin: 0 auto 80px;
-            }
-
+            .content-section,
+            .case-studies,
             .footer {
                 padding: 0 20px;
-                margin: 80px auto 60px;
+                margin: 80px auto;
             }
 
-            .nav-home {
+            .nav-back {
                 top: 20px;
                 left: 20px;
                 padding: 10px 16px;
@@ -463,41 +329,14 @@
                 font-size: 10px;
             }
 
-            .scroll-indicator {
-                bottom: 60px;
-                right: 20px;
-                left: auto;
-                z-index: 25;
-                font-size: 10px;
-                padding: 6px 10px;
-                transform: none;
-                position: fixed;
-            }
-            
-            .case-link {
-                font-weight: 600;
-            }
-            
-            .section-label {
-                font-weight: 700;
-                font-size: 12px;
-            }
-            
-            .stat-label {
-                font-size: 12px;
-                font-weight: 500;
-            }
-            
-            .stat-detail {
-                font-size: 11px;
+            .case-stats {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin: 24px 0;
             }
 
-            .scroll-text {
-                display: none; /* Hide on mobile - problematic with touch scrolling */
-            }
-
-            .scroll-line {
-                height: 30px;
+            .case-study-item {
+                padding: 32px 0;
             }
         }
 
@@ -511,23 +350,17 @@
                 padding: 20px;
             }
 
-            .case-studies-container,
-            .philosophy-section,
+            .content-section,
+            .case-studies,
             .footer {
                 padding: 0 16px;
-            }
-
-            .case-study {
-                gap: 24px;
-                padding: 32px 0;
             }
         }
     </style>
 </head>
 <body>
-
-    <!-- Home Navigation -->
-    <a href="https://tukugroup.com" class="nav-home">← TUKU GROUP</a>
+    <!-- Navigation -->
+    <a href="https://tukugroup.com" class="nav-back">← TUKU GROUP</a>
 
     <!-- Hero Section with Generative Art -->
     <section class="hero">
@@ -542,14 +375,10 @@
             1,800 particles<br>
             180 simulation steps
         </div>
-        <div class="scroll-indicator">
-            <span class="scroll-text">[ scroll to explore ]</span>
-            <div class="scroll-line"></div>
-        </div>
     </section>
 
     <!-- Philosophy Section -->
-    <section class="philosophy-section">
+    <section class="content-section">
         <div class="section-label">[ the approach ]</div>
         <h2>Demonstration over declaration</h2>
         <p>Traditional case studies show screenshots and describe process. We questioned whether that structure serves the outcome.</p>
@@ -558,100 +387,88 @@
         <div class="insight">The generative art proves computational sophistication through demonstration, not claims. This is invisible scaffolding made visible.</div>
     </section>
 
-    <!-- Case Studies Grid -->
-    <div class="case-studies-container">
+    <!-- Case Studies -->
+    <div class="case-studies">
         <div class="section-label">[ selected work ]</div>
-        <div class="case-studies-grid">
-
-            <!-- OF THE CULTURE -->
-            <article class="case-study">
-                <div class="case-art" id="otc-art"></div>
-                <div class="case-content">
-                    <div class="case-meta">[ house brand development ]</div>
-                    <h3>OF THE CULTURE</h3>
-                    <p class="case-description">TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.</p>
-                    <div class="case-stats">
-                        <div class="stat">
-                            <div class="stat-value">6</div>
-                            <div class="stat-label">week sprint</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">100%</div>
-                            <div class="stat-label">internal build</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">cultural venture</div>
-                        </div>
-                    </div>
-                    <a href="/ideas/of-the-culture" class="case-link">view case study →</a>
+        
+        <!-- OF THE CULTURE -->
+        <article class="case-study-item">
+            <div class="case-meta">[ house brand development ]</div>
+            <h3>OF THE CULTURE</h3>
+            <p class="case-description">TUKU's first house brand. A venture built to demonstrate the methodology in practice. AI shaping behind the scenes. Human refinement creating cultural resonance.</p>
+            <div class="case-stats">
+                <div class="stat">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">week sprint</div>
                 </div>
-            </article>
-
-            <!-- CRYPTOGAINS Documentation -->
-            <article class="case-study">
-                <div class="case-art" id="crypto-art"></div>
-                <div class="case-content">
-                    <div class="case-meta">[ strategic documentation ]</div>
-                    <h3>[REDACTED]</h3>
-                    <p class="case-description">Complete business architecture. 400 pages enabling one-and-done implementation. Documentation that functions as invisible scaffolding for portfolio management transformation.</p>
-                    <div class="case-stats">
-                        <div class="stat">
-                            <div class="stat-value">400</div>
-                            <div class="stat-label">pages produced</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">20,088</div>
-                            <div class="stat-label">lines of code</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">5:1</div>
-                            <div class="stat-label">spec to code ratio</div>
-                        </div>
-                    </div>
-                    <a href="/ideas/redacted" class="case-link">view case study →</a>
+                <div class="stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">internal build</div>
                 </div>
-            </article>
-
-            <!-- Invisible Scaffolding Exploration -->
-            <article class="case-study">
-                <div class="case-art" id="scaffolding-art"></div>
-                <div class="case-content">
-                    <div class="case-meta">[ philosophical exploration ]</div>
-                    <h3>INVISIBLE SCAFFOLDING</h3>
-                    <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving AI-human collaboration through algorithmic sophistication.</p>
-                    <div class="case-stats">
-                        <div class="stat">
-                            <div class="stat-value">1,800</div>
-                            <div class="stat-label">particles simulated</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">180</div>
-                            <div class="stat-label">evolution steps</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">7</div>
-                            <div class="stat-label">visual explorations</div>
-                        </div>
-                    </div>
-                    <a href="/ideas/invisible-scaffolding" class="case-link">view case study →</a>
+                <div class="stat">
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">cultural venture</div>
                 </div>
-            </article>
+            </div>
+            <a href="/ideas/of-the-culture" class="case-link">view case study →</a>
+        </article>
 
-        </div>
+        <!-- CRYPTOGAINS Documentation -->
+        <article class="case-study-item">
+            <div class="case-meta">[ strategic documentation ]</div>
+            <h3>[REDACTED]</h3>
+            <p class="case-description">Complete business architecture. 400 pages enabling one-and-done implementation. Documentation that functions as invisible scaffolding for portfolio management transformation.</p>
+            <div class="case-stats">
+                <div class="stat">
+                    <div class="stat-value">400</div>
+                    <div class="stat-label">pages produced</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">20,088</div>
+                    <div class="stat-label">lines of code</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">5:1</div>
+                    <div class="stat-label">spec to code ratio</div>
+                </div>
+            </div>
+            <a href="/ideas/redacted" class="case-link">view case study →</a>
+        </article>
+
+        <!-- Invisible Scaffolding Exploration -->
+        <article class="case-study-item">
+            <div class="case-meta">[ philosophical exploration ]</div>
+            <h3>INVISIBLE SCAFFOLDING</h3>
+            <p class="case-description">We didn't make art to explain our philosophy. We coded our philosophy and art emerged. Seven-page computational exploration proving AI-human collaboration through algorithmic sophistication.</p>
+            <div class="case-stats">
+                <div class="stat">
+                    <div class="stat-value">1,800</div>
+                    <div class="stat-label">particles simulated</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">180</div>
+                    <div class="stat-label">evolution steps</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">visual explorations</div>
+                </div>
+            </div>
+            <a href="/ideas/invisible-scaffolding" class="case-link">view case study →</a>
+        </article>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-signature">
-            <strong>TUKU GROUP</strong><br>
+            <strong><a href="../../" style="color: var(--color-black); text-decoration: none;">TUKU GROUP</a></strong><br>
             Independent Creative House<br>
             tukugroup.com
         </div>
     </footer>
 
     <script>
-        // Configuration
+        // Configuration for Ideas in Motion visualization 
         const config = {
             particleCount: 1800,
             steps: 180,
@@ -666,7 +483,7 @@
             }
         };
 
-        // Hero Art Sketch
+        // Hero Art Sketch - Clean implementation matching other pages
         function heroSketch(p) {
             let particles = [];
             let step = 0;
@@ -777,111 +594,11 @@
             };
         }
 
-        // OTC Art Sketch (simplified version)
-        function otcSketch(p) {
-            p.setup = function() {
-                const container = document.getElementById('otc-art');
-                const canvas = p.createCanvas(container.offsetWidth, 400);
-                canvas.parent('otc-art');
-                p.background(240, 249, 255);
-                p.noLoop();
-            };
-
-            p.draw = function() {
-                // Simplified cultural flow visualization
-                for (let i = 0; i < 200; i++) {
-                    const x = p.random(p.width);
-                    const y = p.random(p.height);
-                    const angle = p.noise(x * 0.01, y * 0.01) * p.TWO_PI * 2;
-                    const length = p.random(20, 60);
-                    
-                    p.stroke(86, 145, 200, 60);
-                    p.strokeWeight(p.random(0.5, 2));
-                    p.line(x, y, x + Math.cos(angle) * length, y + Math.sin(angle) * length);
-                }
-            };
-        }
-
-        // Crypto Art Sketch (precision accumulation)
-        function cryptoSketch(p) {
-            p.setup = function() {
-                const container = document.getElementById('crypto-art');
-                const canvas = p.createCanvas(container.offsetWidth, 400);
-                canvas.parent('crypto-art');
-                p.background(245, 243, 238);
-                p.noLoop();
-            };
-
-            p.draw = function() {
-                // Grid representing structured documentation
-                p.stroke(193, 154, 75, 40);
-                p.strokeWeight(0.5);
-                
-                const spacing = 20;
-                for (let x = 0; x < p.width; x += spacing) {
-                    p.line(x, 0, x, p.height);
-                }
-                for (let y = 0; y < p.height; y += spacing) {
-                    p.line(0, y, p.width, y);
-                }
-
-                // Accumulating precision points
-                for (let i = 0; i < 400; i++) {
-                    const x = p.random(p.width);
-                    const y = p.random(p.height);
-                    p.fill(193, 154, 75, p.random(80, 200));
-                    p.noStroke();
-                    p.circle(x, y, p.random(1, 3));
-                }
-            };
-        }
-
-        // Scaffolding Art Sketch (flow fields)
-        function scaffoldingSketch(p) {
-            p.setup = function() {
-                const container = document.getElementById('scaffolding-art');
-                const canvas = p.createCanvas(container.offsetWidth, 400);
-                canvas.parent('scaffolding-art');
-                p.background(250, 249, 245);
-                p.noLoop();
-            };
-
-            p.draw = function() {
-                // Flow field visualization
-                for (let i = 0; i < 300; i++) {
-                    let x = p.random(p.width);
-                    let y = p.random(p.height);
-                    
-                    p.strokeWeight(1);
-                    for (let j = 0; j < 50; j++) {
-                        const angle = p.noise(x * 0.01, y * 0.01, j * 0.1) * p.TWO_PI * 2;
-                        const prevX = x;
-                        const prevY = y;
-                        x += Math.cos(angle) * 2;
-                        y += Math.sin(angle) * 2;
-                        
-                        const alignment = p.noise(x * 0.01, y * 0.01);
-                        let color = alignment > 0.6 ? [193, 154, 75] : [86, 145, 200];
-                        
-                        p.stroke(color[0], color[1], color[2], 40);
-                        p.line(prevX, prevY, x, y);
-                    }
-                }
-            };
-        }
-
         // Disable p5.js default touch behaviors
         p5.disableFriendlyErrors = true;
         
-        // Initialize sketches with touch disabled
+        // Initialize sketch with touch disabled
         new p5(heroSketch);
-        
-        // Only initialize case study art on desktop to prevent mobile scrolling interference
-        if (window.innerWidth > 768) {
-            new p5(otcSketch);
-            new p5(cryptoSketch);
-            new p5(scaffoldingSketch);
-        }
         
         // Additional global touch blocking
         document.addEventListener('touchstart', function(e) {
@@ -901,6 +618,7 @@
                 return false;
             }
         }, { passive: false });
+
     </script>
 
 </body>
