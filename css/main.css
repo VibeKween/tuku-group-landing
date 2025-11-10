@@ -438,16 +438,22 @@ a:hover {
   border-color: #3a6b97;
 }
 
-/* Inline link styling */
+/* Inline link styling with gradient animation */
 .inline-link {
-  color: #4a7ba7;
+  background: linear-gradient(90deg, #4a7ba7, #6b9bc3, #8bb5d9, #6b9bc3, #4a7ba7);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-decoration: underline;
+  text-decoration-color: #4a7ba7;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   text-decoration-skip-ink: none;
   border: none;
   padding-bottom: 0;
   font-weight: 600;
+  animation: gradientFlow 1.5s ease-in-out infinite;
   transition: opacity 0.2s ease;
 }
 
@@ -460,8 +466,18 @@ a.inline-link {
   text-underline-offset: 2px !important;
 }
 
+/* Gradient flow animation */
+@keyframes gradientFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 .inline-link:hover {
-  opacity: 0.7;
+  animation-duration: 1s;
   text-decoration-thickness: 2px;
 }
 
