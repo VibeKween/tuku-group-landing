@@ -6,8 +6,14 @@ Main TUKU GROUP landing page with integrated private payment portal. Dual direct
 
 ### Public Pages
 - **Homepage** (`/`) - Main manifesto-style landing page
-- **Approach** (`/approach.html`) - Methodology and philosophy page
+- **Approach** (`/approach.html`) - Methodology and philosophy page  
 - **Studio** (`/studio.html`) - Public work engagement page
+
+### IDEAS Case Studies
+- **IDEAS Hub** (`/ideas/`) - Case studies overview with generative particle system
+- **OF THE CULTURE** (`/ideas/of-the-culture/`) - House brand case study with emergence visualization
+- **[REDACTED]** (`/ideas/redacted/`) - 400-page documentation case study with precision accumulation
+- **INVISIBLE SCAFFOLDING** (`/ideas/invisible-scaffolding/`) - Philosophy methodology with network emergence
 
 ### Private Payment Portal
 - **Location**: `/fewer-better-slower/` - Private payment portal with Stripe integration
@@ -85,6 +91,8 @@ cp website/cloud-system-static.js .
 - **Ultra-minimal Design**: Manifesto-style content following "craft over noise"
 - **Cloud Background System**: Subtle animated cloud elements
 - **Split-Flap Display**: Terminal-style project ticker
+- **Enhanced Hero Images**: Object-fit canvas system with mobile-first reliability (Nov 2024)
+- **Generative Art System**: p5.js visualizations across 4 IDEAS case study pages
 - **Private Pricing**: Payment portal only accessible via direct link
 - **Mobile-First**: Responsive design with single breakpoint at 768px
 - **Pure Implementation**: No frameworks, optimal for performance
@@ -109,3 +117,46 @@ When shared on iMessage, Slack, or social media, displays:
 - Cloud positioned to hide left tail for alignment with text overlay
 - Light gradient background (#e8eef5 to #d8e4f0)
 - Meta tags include both OG and Twitter card support
+
+## Hero Image System (Nov 2024)
+
+### Enhanced Canvas Performance
+The IDEAS section uses an advanced hero image system with p5.js generative art that maintains perfect viewport coverage across all devices without mobile disappearing issues.
+
+**Technical Implementation:**
+```css
+/* Enhanced Hero Container */
+.hero {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100svh; /* Safe viewport height for iOS */
+    contain: layout style paint; /* Performance optimization */
+}
+
+/* Object-Fit Canvas System */
+#hero-art canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    transform: translateZ(0); /* GPU acceleration */
+}
+```
+
+**Key Improvements:**
+- ✅ **Mobile Reliability**: Safe viewport height (100svh) prevents iOS Safari issues
+- ✅ **Performance Optimization**: CSS containment and GPU acceleration  
+- ✅ **Cross-Device Consistency**: Object-fit ensures proper scaling
+- ✅ **No Disappearing Issues**: Robust viewport handling on all devices
+
+### Generative Art Pages
+Each IDEAS case study features custom p5.js visualizations:
+- **IDEAS Hub** (`/ideas/`) - Particle system representing ideas in motion
+- **OF THE CULTURE** - Orbital emergence representing brand development
+- **[REDACTED]** - Precision accumulation for technical documentation
+- **INVISIBLE SCAFFOLDING** - Network connections for methodology philosophy
+
+**Benefits Over Traditional Hero Images:**
+- No background-attachment: fixed issues on mobile
+- Reliable full viewport coverage without layout shifts
+- Enhanced performance through proper canvas handling
+- Maintained generative art functionality with improved stability

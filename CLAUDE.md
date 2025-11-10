@@ -29,6 +29,7 @@ cp -r website/css .
 cp website/cloud-system-static.js .
 cp website/favicon.ico .
 cp -r website/fewer-better-slower .
+cp -r website/ideas .
 ```
 
 ## Site Architecture
@@ -36,6 +37,12 @@ cp -r website/fewer-better-slower .
 ### Public Pages
 - **Homepage** (`/`): Main manifesto-style landing page
 - **Portfolio Approach** (`/portfolio-approach.html`): Methodology explanation page
+
+### IDEAS Case Studies
+- **IDEAS Hub** (`/ideas/`): Case studies overview with generative particle system
+- **OF THE CULTURE** (`/ideas/of-the-culture/`): House brand case study with emergence visualization  
+- **[REDACTED]** (`/ideas/redacted/`): 400-page documentation case study with precision accumulation
+- **INVISIBLE SCAFFOLDING** (`/ideas/invisible-scaffolding/`): Philosophy methodology with network emergence
 
 ### Private Payment Portal
 - **Location**: `/fewer-better-slower/` (non-discoverable URL for qualified leads)
@@ -167,6 +174,57 @@ cp -r website/fewer-better-slower .
 - **Behavior**: Single service expandable at a time
 - **Content**: Detailed service descriptions on click
 - **Animation**: Smooth height transitions with padding
+
+## Enhanced Hero Image System (Nov 2024)
+
+### Development Guidelines for IDEAS Pages
+
+All IDEAS case study pages (`/ideas/*`) use an enhanced hero image system with p5.js generative art that maintains perfect cross-device reliability.
+
+**Core Implementation Pattern:**
+```css
+/* Hero Container - Enhanced for Mobile */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100svh; /* Safe viewport height for iOS */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    contain: layout style paint; /* Performance optimization */
+}
+
+/* Canvas Performance Enhancement */
+#hero-art canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    transform: translateZ(0); /* GPU acceleration */
+}
+```
+
+**Key Requirements When Modifying Hero Areas:**
+1. **Always include** `min-height: 100svh` for iOS Safari compatibility
+2. **Always use** `object-fit: cover` on canvas elements
+3. **Always apply** `transform: translateZ(0)` for GPU acceleration
+4. **Never use** `background-attachment: fixed` (causes mobile issues)
+5. **Always test** on mobile devices after changes
+
+**Environment Sync for IDEAS Pages:**
+```bash
+# After modifying any /ideas/ page:
+cp -r website/ideas .
+```
+
+**Benefits of Enhanced System:**
+- ✅ Eliminates mobile disappearing issues
+- ✅ Consistent viewport coverage across devices  
+- ✅ Improved performance with CSS containment
+- ✅ Maintained generative art functionality
+- ✅ GPU acceleration for smooth rendering
 
 ## Important Notes
 
