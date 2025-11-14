@@ -6,10 +6,10 @@
 **Enhanced**: August 24, 2025  
 **Current Phase**: Production Ready + Split-Flap Component
 
-**Live Site**: https://tukugroup.com (Cloudflare Pages)  
-**Preview URL**: https://tuku-group-landing.pages.dev  
-**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)  
-**Repository**: https://github.com/VibeKween/tuku-group-landing  
+**Live Site**: https://tukugroup.com (Cloudflare Pages)
+**Preview URL**: https://tuku-group-landing.pages.dev
+**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)
+**Repository**: https://github.com/VibeKween/tuku-group-landing (private)  
 
 ---
 

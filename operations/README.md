@@ -205,11 +205,11 @@ contact@tukugroup.com
 
 ## Live Site
 
-**Production URL**: https://tukugroup.com  
-**Preview URL**: https://tuku-group-landing.pages.dev  
-**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)  
-**SIGNALS Blog**: https://tukugroup.com/signals/  
-**Repository**: https://github.com/VibeKween/tuku-group-landing
+**Production URL**: https://tukugroup.com
+**Preview URL**: https://tuku-group-landing.pages.dev
+**Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)
+**SIGNALS Blog**: https://tukugroup.com/signals/
+**Repository**: https://github.com/VibeKween/tuku-group-landing (private)
 
 ## SIGNALS Cultural Intelligence Blog
 

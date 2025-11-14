@@ -154,7 +154,7 @@ git push origin main
 
 - **Main Site**: https://tukugroup.com
 - **Payment Portal**: https://tukugroup.com/fewer-better-slower/
-- **Repository**: github.com/VibeKween/tuku-group-landing
+- **Repository**: github.com/VibeKween/tuku-group-landing (private)
 
 ---
 
