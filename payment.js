@@ -9,7 +9,7 @@ const SERVICES = {
   light: {
     id: 'light',
     name: 'CLARITY SPRINT',
-    price: 535000, // cents
+    price: 550000, // cents
     description: 'Strategic exploration. Custom direction.',
     details: `
       <p class="service-detail">An entry point for strategic exploration. We'll think through what you're building, assess what's needed, and you'll walk away with a custom artifact that gives you clarity and direction.</p>
