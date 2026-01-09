@@ -13,80 +13,82 @@
     <script>
         const sketch = (p) => {
             let streams = [];
-            // Voyj brand colors
-            const voyjColors = [
-                [81, 19, 19],     // Maroon
-                [81, 90, 53],     // Green
-                [132, 148, 73],   // Matcha
-                [128, 112, 96]    // Warm gray
+            const streamColors = [
+                [81, 19, 19],    // Maroon - Nucleus
+                [81, 90, 53],    // Green - Considered
+                [132, 148, 73],  // Matcha - Present
+                [128, 112, 96]   // Gray - Seen
             ];
 
             p.setup = () => {
                 const canvas = p.createCanvas(1200, 630);
                 canvas.parent('canvas-container');
 
-                // Create horizontal data streams - more for larger canvas
-                let streamCount = 18;
+                // Create horizontal data streams (like quote analysis lanes)
+                let streamCount = 20;
                 for (let i = 0; i < streamCount; i++) {
                     streams.push({
-                        y: p.map(i, 0, streamCount - 1, 80, p.height - 80),
-                        baseY: p.map(i, 0, streamCount - 1, 80, p.height - 80),
-                        particles: [],
-                        color: voyjColors[i % voyjColors.length],
-                        speed: p.random(0.25, 0.7),
-                        amplitude: p.random(15, 40),
+                        y: p.map(i, 0, streamCount - 1, p.height * 0.1, p.height * 0.9),
+                        baseY: p.map(i, 0, streamCount - 1, p.height * 0.1, p.height * 0.9),
+                        colorIndex: i % 4,
                         phase: p.random(p.TWO_PI),
-                        density: p.random(0.03, 0.06)
+                        speed: p.random(0.25, 0.7),
+                        amplitude: p.random(5, 15),
+                        segments: []
                     });
+
+                    // Initialize segments for each stream
+                    let segmentCount = 15;
+                    for (let j = 0; j < segmentCount; j++) {
+                        streams[i].segments.push({
+                            x: p.random(p.width),
+                            length: p.random(20, 60),
+                            active: p.random() > 0.3
+                        });
+                    }
                 }
 
                 p.background(250, 248, 242);
             };
 
             p.draw = () => {
-                // Soft fade
-                p.fill(250, 248, 242, 20);
+                // Soft fade for trails
+                p.fill(250, 248, 242, 25);
                 p.noStroke();
                 p.rect(0, 0, p.width, p.height);
 
-                // Alignment pulse
-                let alignmentPulse = p.sin(p.frameCount * 0.012) * 0.5 + 0.5;
+                // Global alignment pulse (represents consensus moments)
+                const alignmentPulse = (p.sin(p.frameCount * 0.012) + 1) * 0.5;
+                const isAligning = alignmentPulse > 0.85;
 
                 for (let stream of streams) {
-                    // Stream oscillation
-                    let oscillation = p.sin(p.frameCount * 0.018 + stream.phase) * stream.amplitude;
-                    stream.y = stream.baseY + oscillation * (1 - alignmentPulse * 0.6);
+                    const color = streamColors[stream.colorIndex];
 
-                    // Add particles
-                    if (p.random() < stream.density) {
-                        stream.particles.push({
-                            x: 0,
-                            y: stream.y + p.random(-8, 8),
-                            size: p.random(2, 5),
-                            speed: stream.speed + p.random(-0.1, 0.1)
-                        });
-                    }
+                    // Stream vertical oscillation (reduced during alignment)
+                    const oscillation = isAligning
+                        ? stream.amplitude * 0.2
+                        : stream.amplitude;
+                    stream.y = stream.baseY + p.sin(p.frameCount * 0.018 + stream.phase) * oscillation;
 
-                    // Update and draw particles
-                    for (let i = stream.particles.length - 1; i >= 0; i--) {
-                        let particle = stream.particles[i];
+                    for (let seg of stream.segments) {
+                        if (!seg.active) continue;
 
-                        // Wave motion
-                        let waveY = p.sin((particle.x + p.frameCount * 0.4) * 0.05) * 8;
-                        let targetY = stream.y + waveY;
-                        particle.y = p.lerp(particle.y, targetY, 0.08);
+                        // Move segment left to right
+                        seg.x += stream.speed;
+                        if (seg.x > p.width + 50) {
+                            seg.x = -seg.length;
+                            seg.active = p.random() > 0.2;
+                        }
 
-                        particle.x += particle.speed;
+                        // Draw segment with wave
+                        const opacity = isAligning ? 200 : 120;
+                        p.stroke(color[0], color[1], color[2], opacity);
+                        p.strokeWeight(isAligning ? 2.5 : 1.5);
 
-                        // Draw particle trail
-                        let alpha = p.map(particle.x, 0, p.width, 180, 60);
-                        p.noStroke();
-                        p.fill(stream.color[0], stream.color[1], stream.color[2], alpha);
-                        p.ellipse(particle.x, particle.y, particle.size);
-
-                        // Remove off-screen particles
-                        if (particle.x > p.width + 10) {
-                            stream.particles.splice(i, 1);
+                        // Draw as small dashed segments - slower wave
+                        for (let x = seg.x; x < seg.x + seg.length; x += 4) {
+                            const localY = stream.y + p.sin((x + p.frameCount * 0.4) * 0.05) * 3;
+                            p.point(x, localY);
                         }
                     }
                 }
