@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OF THE CULTURE OG Image Capture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #canvas-container { width: 1200px; height: 630px; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script>
+        const sketch = (p) => {
+            let brushes = [];
+            let colorPalette = [
+                [40, 40, 40],     // Dark charcoal
+                [80, 80, 80],     // Medium grey
+                [120, 120, 120],  // Mid grey
+                [160, 160, 160],  // Light grey
+                [60, 60, 60],     // Deep grey
+                [100, 100, 100]   // Neutral grey
+            ];
+
+            p.setup = () => {
+                const canvas = p.createCanvas(1200, 630);
+                canvas.parent('canvas-container');
+
+                // More brushes for larger canvas
+                for (let i = 0; i < 35; i++) {
+                    brushes.push({
+                        x: p.random(p.width * 0.1, p.width * 0.9),
+                        y: p.random(p.height * 0.15, p.height * 0.85),
+                        targetX: p.random(p.width * 0.1, p.width * 0.9),
+                        targetY: p.random(p.height * 0.15, p.height * 0.85),
+                        color: p.random(colorPalette),
+                        weight: p.random(3, 8),
+                        speed: p.random(0.005, 0.02),
+                        trail: [],
+                        maxTrailLength: p.random(20, 40),
+                        changeTarget: p.random(200, 400),
+                        counter: 0
+                    });
+                }
+
+                p.background(235, 237, 240);
+            };
+
+            p.draw = () => {
+                // Subtle fade for organic feel
+                p.fill(235, 237, 240, 12);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                for (let brush of brushes) {
+                    brush.counter++;
+
+                    let dx = brush.targetX - brush.x;
+                    let dy = brush.targetY - brush.y;
+                    brush.x += dx * brush.speed;
+                    brush.y += dy * brush.speed;
+
+                    brush.trail.push({x: brush.x, y: brush.y});
+                    if (brush.trail.length > brush.maxTrailLength) {
+                        brush.trail.shift();
+                    }
+
+                    if (brush.counter > brush.changeTarget || p.dist(brush.x, brush.y, brush.targetX, brush.targetY) < 10) {
+                        brush.targetX = p.random(p.width * 0.1, p.width * 0.9);
+                        brush.targetY = p.random(p.height * 0.15, p.height * 0.85);
+                        brush.counter = 0;
+                        brush.changeTarget = p.random(200, 400);
+                    }
+
+                    // Draw organic brush stroke
+                    p.noFill();
+                    for (let i = 1; i < brush.trail.length; i++) {
+                        let alpha = p.map(i, 0, brush.trail.length, 30, 150);
+                        let weight = p.map(i, 0, brush.trail.length, brush.weight * 0.3, brush.weight);
+                        p.stroke(brush.color[0], brush.color[1], brush.color[2], alpha);
+                        p.strokeWeight(weight);
+                        p.line(brush.trail[i-1].x, brush.trail[i-1].y, brush.trail[i].x, brush.trail[i].y);
+                    }
+
+                    // Brush head
+                    p.noStroke();
+                    p.fill(brush.color[0], brush.color[1], brush.color[2], 200);
+                    p.ellipse(brush.x, brush.y, brush.weight * 1.5);
+                }
+            };
+
+            // Press 's' to save the canvas as PNG
+            p.keyPressed = () => {
+                if (p.key === 's' || p.key === 'S') {
+                    p.saveCanvas('of-the-culture-og', 'png');
+                }
+            };
+        };
+
+        new p5(sketch);
+    </script>
+    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG, or take a screenshot when ready.</p>
+</body>
+</html>
