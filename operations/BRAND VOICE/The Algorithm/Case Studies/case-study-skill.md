@@ -192,10 +192,16 @@ const [clientSlug]Sketch = (p) => {
       - Update og:image and twitter:image URLs to new image
 
    **Reference captures:** `/website/images/og-capture/`
-   - `voyj-og.html` - Signal streams
+   - `ideas-og.html` - "IDEAS IN MOTION" text with animated MOTION letters
+   - `voyj-og.html` - Signal streams (maroon, green, matcha, gray)
    - `of-the-culture-og.html` - Greyscale brush strokes
-   - `redacted-og.html` - Pulsing grid
-   - `invisible-scaffolding-og.html` - Network connections
+   - `redacted-og.html` - Cyan/pink cycling grid on light blue
+   - `invisible-scaffolding-og.html` - Purple/magenta network connections
+
+   d. **Verify correct file is used**
+      - Open the saved PNG from repo to confirm it matches capture
+      - File sizes should match between Downloads and repo
+      - If mismatch, re-copy from Downloads or have user place in Case Studies folder
 
 4. **Twitter Cards**
    - twitter:card = summary_large_image
@@ -239,9 +245,21 @@ const [clientSlug]Sketch = (p) => {
 ```bash
 # After all changes in /website/, copy to root:
 cp -r /website/ideas /
+cp -r /website/images /
 
 # Verify:
 ls -la /ideas/[client-slug]/
+ls -la /images/[client-slug]-og.png
+```
+
+**CRITICAL: Multi-branch deployment**
+
+```bash
+# Push to main (production)
+git add -A && git commit -m "Add [CLIENT] case study" && git push origin main
+
+# Sync dev branch
+git checkout dev && git merge main --no-edit && git push origin dev && git checkout main
 ```
 
 **Production Approval Gate:**
