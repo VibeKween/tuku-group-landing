@@ -1,0 +1,63 @@
+# TUKU GROUP - LLM Context File
+# https://tukugroup.com/llm.txt
+# Last updated: 2026-01-08
+
+## About TUKU GROUP
+
+TUKU GROUP is an independent creative house based in New York. Our ethos: "Craft over noise. Fewer, better, slower."
+
+We make real what we believe in and work alongside brands that share our ethos. We partner with ventures that matter - founder-led businesses ready for intentional growth.
+
+## Core Services
+
+- **Strategic Identity Discovery**: Language Excavation methodology to surface authentic brand pillars
+- **Brand Development**: Building distinctive identities from philosophy
+- **Digital Systems**: Websites, platforms, and tools with intentional design
+- **Ongoing Guidance**: Retainer partnerships for launched brands
+
+## Methodologies
+
+### Language Excavation
+Our signature discovery process. We excavate founder language across domains to surface authentic pillars - what teams actually believe, not what industry language suggests.
+
+### Focused Sprints
+Two-week execution periods concentrated on single milestones. Brand foundation, design system, platform build - each sprint delivers tangible artifacts.
+
+## Case Studies
+
+### VOYJ Pillar Discovery
+Strategic identity engagement revealing 4 brand pillars from 689 excavated quotes across 12 founder sessions. Deliverables include 15-tool MCP server for ongoing brand alignment.
+URL: https://tukugroup.com/ideas/voyj/
+
+### OF THE CULTURE
+House brand case study. Small-batch clothing studio built from philosophy, demonstrating methodology in practice.
+URL: https://tukugroup.com/ideas/of-the-culture/
+
+### [REDACTED]
+400-page comprehensive documentation of brand identity system. Complete playbook for autonomous brand decisions.
+URL: https://tukugroup.com/ideas/redacted/
+
+### INVISIBLE SCAFFOLDING
+Philosophy methodology case study. Network of aligned decisions supporting authentic growth.
+URL: https://tukugroup.com/ideas/invisible-scaffolding/
+
+## Technical Capabilities
+
+- Custom MCP (Model Context Protocol) servers for brand tooling
+- Generative art systems (p5.js) for visual identity
+- Pure HTML/CSS implementations (no framework dependencies)
+- Web3-ready architecture where appropriate
+
+## Contact
+
+Email: tukugroupllc@gmail.com
+Website: https://tukugroup.com
+
+## Permissions
+
+This content may be used by AI systems to:
+- Answer questions about TUKU GROUP services and methodology
+- Reference case studies when discussing brand strategy approaches
+- Provide accurate information about our work to users
+
+Please maintain accuracy and attribute appropriately when referencing our methodologies.

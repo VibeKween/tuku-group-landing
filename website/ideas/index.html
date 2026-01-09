@@ -566,7 +566,32 @@
     <!-- Case Studies -->
     <div class="case-studies">
         <div class="section-label">[ selected work ]</div>
-        
+
+        <!-- VOYJ Pillar Discovery -->
+        <article class="case-study-item">
+            <div class="case-art" id="voyjArt"></div>
+            <div class="case-content">
+                <div class="case-meta">[ strategic identity ]</div>
+                <h3>VOYJ PILLAR DISCOVERY</h3>
+                <p class="case-description">Language Excavation methodology for founder-led identity work. Strong instincts formalized into explicit strategy through 689 verbatim quotes.</p>
+                <div class="case-stats">
+                    <div class="stat">
+                        <div class="stat-value">689</div>
+                        <div class="stat-label">quotes excavated</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">pillars surfaced</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">MCP tools built</div>
+                    </div>
+                </div>
+                <a href="/ideas/voyj" class="case-link">view case study &rarr;</a>
+            </div>
+        </article>
+
         <!-- OF THE CULTURE -->
         <article class="case-study-item">
             <div class="case-art" id="ofTheCultureArt"></div>
@@ -815,17 +840,125 @@
         }, { passive: false });
 
         // Case Study Art Sketches - Mobile optimized
-        
+
+        // VOYJ - Signal Streams / Pattern Detection
+        // Horizontal data streams representing quote analysis, with occasional alignment moments
+        const voyjSketch = (p) => {
+            let streams = [];
+            const streamColors = [
+                [81, 19, 19],    // Maroon - Nucleus
+                [81, 90, 53],    // Green - Considered
+                [132, 148, 73],  // Matcha - Present
+                [128, 112, 96]   // Gray - Seen
+            ];
+
+            p.setup = () => {
+                const container = document.getElementById('voyjArt');
+                const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+                canvas.parent('voyjArt');
+
+                // Create horizontal data streams (like quote analysis lanes)
+                let streamCount = window.innerWidth <= 768 ? 12 : 20;
+                for (let i = 0; i < streamCount; i++) {
+                    streams.push({
+                        y: p.map(i, 0, streamCount - 1, p.height * 0.1, p.height * 0.9),
+                        baseY: p.map(i, 0, streamCount - 1, p.height * 0.1, p.height * 0.9),
+                        colorIndex: i % 4,
+                        phase: p.random(p.TWO_PI),
+                        speed: p.random(0.25, 0.7),
+                        amplitude: p.random(5, 15),
+                        segments: []
+                    });
+
+                    // Initialize segments for each stream
+                    let segmentCount = window.innerWidth <= 768 ? 8 : 15;
+                    for (let j = 0; j < segmentCount; j++) {
+                        streams[i].segments.push({
+                            x: p.random(p.width),
+                            length: p.random(20, 60),
+                            active: p.random() > 0.3
+                        });
+                    }
+                }
+
+                p.background(250, 248, 242);
+            };
+
+            p.draw = () => {
+                // Soft fade for trails
+                p.fill(250, 248, 242, 25);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                // Global alignment pulse (represents consensus moments)
+                const alignmentPulse = (p.sin(p.frameCount * 0.012) + 1) * 0.5;
+                const isAligning = alignmentPulse > 0.85;
+
+                for (let stream of streams) {
+                    const color = streamColors[stream.colorIndex];
+
+                    // Stream vertical oscillation (reduced during alignment)
+                    const oscillation = isAligning
+                        ? stream.amplitude * 0.2
+                        : stream.amplitude;
+                    stream.y = stream.baseY + p.sin(p.frameCount * 0.018 + stream.phase) * oscillation;
+
+                    for (let seg of stream.segments) {
+                        if (!seg.active) continue;
+
+                        // Move segment left to right
+                        seg.x += stream.speed;
+                        if (seg.x > p.width + 50) {
+                            seg.x = -seg.length;
+                            seg.active = p.random() > 0.2;
+                        }
+
+                        // Draw segment with wave
+                        const opacity = isAligning ? 200 : 120;
+                        p.stroke(color[0], color[1], color[2], opacity);
+                        p.strokeWeight(isAligning ? 2.5 : 1.5);
+
+                        // Draw as small dashed segments - slower wave
+                        for (let x = seg.x; x < seg.x + seg.length; x += 4) {
+                            const localY = stream.y + p.sin((x + p.frameCount * 0.4) * 0.05) * 3;
+                            p.point(x, localY);
+                        }
+                    }
+
+                    // Random activation of segments
+                    if (p.random() > 0.995) {
+                        const randomSeg = stream.segments[p.floor(p.random(stream.segments.length))];
+                        randomSeg.active = !randomSeg.active;
+                    }
+                }
+
+                // Draw vertical "detection" lines during alignment
+                if (isAligning && p.frameCount % 3 === 0) {
+                    const x = p.random(p.width);
+                    p.stroke(81, 19, 19, 40);
+                    p.strokeWeight(0.5);
+                    p.line(x, 0, x, p.height);
+                }
+            };
+
+            p.windowResized = () => {
+                const container = document.getElementById('voyjArt');
+                if (container) {
+                    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+                }
+            };
+        };
+
         // OF THE CULTURE - Organic brush strokes with cultural essence
         const ofTheCultureSketch = (p) => {
             let brushes = [];
             let colorPalette = [
-                [193, 154, 75],   // TUKU gold
-                [165, 101, 73],   // Earth clay  
-                [218, 165, 32],   // Golden rod
-                [139, 69, 19],    // Saddle brown
-                [160, 82, 45],    // Sienna
-                [210, 180, 140]   // Tan
+                [40, 40, 40],     // Dark charcoal
+                [80, 80, 80],     // Medium grey
+                [120, 120, 120],  // Mid grey
+                [160, 160, 160],  // Light grey
+                [60, 60, 60],     // Deep grey
+                [100, 100, 100]   // Neutral grey
             ];
             
             p.setup = () => {
@@ -851,12 +984,12 @@
                     });
                 }
                 
-                p.background(250, 248, 240);
+                p.background(235, 237, 240);
             };
-            
+
             p.draw = () => {
                 // Subtle fade for organic feel
-                p.fill(250, 248, 240, 12);
+                p.fill(235, 237, 240, 12);
                 p.noStroke();
                 p.rect(0, 0, p.width, p.height);
                 
@@ -1064,7 +1197,7 @@
                 console.log('Initializing case study art...');
                 
                 // Check if containers exist
-                const containers = ['ofTheCultureArt', 'cryptogainsArt', 'invisibleScaffoldingArt'];
+                const containers = ['voyjArt', 'ofTheCultureArt', 'cryptogainsArt', 'invisibleScaffoldingArt'];
                 containers.forEach(id => {
                     const element = document.getElementById(id);
                     console.log(`Container ${id}:`, element ? 'found' : 'NOT FOUND');
@@ -1074,6 +1207,13 @@
                 });
                 
                 // Initialize sketches
+                try {
+                    new p5(voyjSketch);
+                    console.log('VOYJ sketch initialized');
+                } catch (e) {
+                    console.error('VOYJ sketch failed:', e);
+                }
+
                 try {
                     new p5(ofTheCultureSketch);
                     console.log('OF THE CULTURE sketch initialized');

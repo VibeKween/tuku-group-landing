@@ -1,0 +1,17 @@
+# TUKU GROUP - Robots.txt
+# https://tukugroup.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Private payment portal - not indexed
+Disallow: /fewer-better-slower/
+
+# Sitemap location
+Sitemap: https://tukugroup.com/sitemap.xml
+
+# LLM context file
+# See: https://tukugroup.com/llm.txt
+
+# Analytics: Google Analytics 4 (G-5KTM9YBETS)
+# All public pages are tracked for engagement insights
