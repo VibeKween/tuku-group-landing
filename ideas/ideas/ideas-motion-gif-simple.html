@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ ideas in motion ] - GIF Creator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300,400,500,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f8f8f8;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .info {
+            max-width: 600px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .canvas-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .status {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>[ ideas in motion ] GIF Creator</h2>
+        <p>Cloud particles flowing within bracket notation<br>
+        Creates animated GIF for social sharing!</p>
+    </div>
+    
+    <div class="canvas-container" id="canvas-container"></div>
+    
+    <div class="buttons">
+        <button onclick="saveStaticFrame()">Save Static PNG</button>
+        <button onclick="startGifCapture()" id="gifBtn">Create Animated GIF</button>
+    </div>
+    
+    <div class="status" id="status">Ready to create GIF...</div>
+    
+    <script>
+        let particles = [];
+        let flowField = [];
+        let cols, rows;
+        let scl = 8;
+        let zoff = 0;
+        let gif;
+        let capturing = false;
+        let framesCaptured = 0;
+        let maxGifFrames = 60; // 2 seconds at 30fps
+        
+        function setup() {
+            const canvas = createCanvas(1200, 630);
+            canvas.parent('canvas-container');
+            
+            cols = Math.floor(width / scl);
+            rows = Math.floor(height / scl);
+            flowField = new Array(cols * rows);
+            
+            // Create particles distributed throughout the entire bracket area
+            for (let i = 0; i < 300; i++) {
+                let startX = random(150, width - 150);
+                let startY = random(120, height - 120);
+                particles.push({
+                    pos: createVector(startX, startY),
+                    vel: createVector(random(-0.5, 0.5), random(-0.5, 0.5)),
+                    acc: createVector(0, 0),
+                    maxSpeed: random(0.8, 1.5),
+                    prevPos: createVector(startX, startY),
+                    alpha: random(0.3, 0.8),
+                    colorType: random(['neon-pink', 'electric-blue', 'bright-green', 'orange', 'purple', 'cyan']),
+                    age: 0
+                });
+            }
+            
+            background(250, 249, 245);
+        }
+        
+        function draw() {
+            // Background
+            fill(250, 249, 245);
+            noStroke();
+            rect(0, 0, width, height);
+            
+            // Update flow field
+            let yoff = 0;
+            for (let y = 0; y < rows; y++) {
+                let xoff = 0;
+                for (let x = 0; x < cols; x++) {
+                    let index = x + y * cols;
+                    let angle = noise(xoff, yoff, zoff) * TWO_PI * 1.2;
+                    let v = p5.Vector.fromAngle(angle);
+                    v.setMag(0.5);
+                    flowField[index] = v;
+                    xoff += 0.01;
+                }
+                yoff += 0.01;
+            }
+            zoff += 0.003;
+            
+            // Update and draw particles
+            for (let particle of particles) {
+                particle.age++;
+                
+                // Follow flow field
+                let x = Math.floor(particle.pos.x / scl);
+                let y = Math.floor(particle.pos.y / scl);
+                let index = x + y * cols;
+                if (flowField[index] && x >= 0 && x < cols && y >= 0 && y < rows) {
+                    let force = flowField[index];
+                    particle.acc.add(force);
+                }
+                
+                // Add some randomness to keep particles moving throughout
+                particle.acc.add(random(-0.02, 0.02), random(-0.02, 0.02));
+                
+                // Update physics
+                particle.vel.add(particle.acc);
+                particle.vel.limit(particle.maxSpeed);
+                particle.pos.add(particle.vel);
+                particle.acc.mult(0);
+                
+                // Bounce off bracket bounds with more energy
+                if (particle.pos.x > width - 150 || particle.pos.x < 150) {
+                    particle.vel.x *= -0.6;
+                    particle.pos.x = constrain(particle.pos.x, 150, width - 150);
+                }
+                if (particle.pos.y > height - 120 || particle.pos.y < 120) {
+                    particle.vel.y *= -0.6;
+                    particle.pos.y = constrain(particle.pos.y, 120, height - 120);
+                }
+                
+                // Ultra-bright, bold colors with maximum saturation
+                let r, g, b, a;
+                let timeVariation = sin(particle.age * 0.03) * 80;
+                let pulse = (sin(frameCount * 0.15 + particle.age * 0.02) + 1) * 0.5;
+                
+                switch(particle.colorType) {
+                    case 'neon-pink':
+                        r = 255;
+                        g = 0;
+                        b = 180;
+                        a = 255; // Maximum opacity for boldness
+                        break;
+                    case 'electric-blue':
+                        r = 0;
+                        g = 150;
+                        b = 255;
+                        a = 255;
+                        break;
+                    case 'bright-green':
+                        r = 0;
+                        g = 255;
+                        b = 0;
+                        a = 255;
+                        break;
+                    case 'orange':
+                        r = 255;
+                        g = 100;
+                        b = 0;
+                        a = 255;
+                        break;
+                    case 'purple':
+                        r = 200;
+                        g = 0;
+                        b = 255;
+                        a = 255;
+                        break;
+                    case 'cyan':
+                        r = 0;
+                        g = 255;
+                        b = 255;
+                        a = 255;
+                        break;
+                }
+                
+                // Draw thick, bold particle trails
+                stroke(r, g, b, a);
+                strokeWeight(random(3, 8)); // Much thicker lines
+                line(particle.pos.x, particle.pos.y, particle.prevPos.x, particle.prevPos.y);
+                
+                // Update previous position with some trailing
+                particle.prevPos.x = lerp(particle.prevPos.x, particle.pos.x, 0.85);
+                particle.prevPos.y = lerp(particle.prevPos.y, particle.pos.y, 0.85);
+                
+                // Occasionally respawn particles to keep energy up
+                if (particle.age > 300 && random() < 0.01) {
+                    particle.pos.set(random(150, width - 150), random(120, height - 120));
+                    particle.vel.set(random(-0.5, 0.5), random(-0.5, 0.5));
+                    particle.age = 0;
+                }
+            }
+            
+            // Draw brackets
+            fill(0);
+            noStroke();
+            textFont('JetBrains Mono');
+            textSize(200);
+            textAlign(LEFT, CENTER);
+            text('[', 30, height/2);
+            
+            textAlign(RIGHT, CENTER);
+            text(']', width - 30, height/2);
+            
+            // Bottom text
+            fill(0, 0, 0, 100);
+            textSize(16);
+            textAlign(CENTER, BOTTOM);
+            text('ideas in motion | tuku group', width/2, height - 30);
+            
+            // Handle GIF capture
+            if (capturing && frameCount % 2 === 0) { // Capture every other frame for smaller file
+                captureFrame();
+            }
+        }
+        
+        function saveStaticFrame() {
+            save('ideas-in-motion-static.png');
+        }
+        
+        function startGifCapture() {
+            if (capturing) return;
+            
+            document.getElementById('status').textContent = 'Initializing GIF creation...';
+            document.getElementById('gifBtn').disabled = true;
+            
+            // Initialize gif.js
+            gif = new GIF({
+                workers: 2,
+                quality: 10,
+                width: 1200,
+                height: 630,
+                workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
+            });
+            
+            gif.on('finished', function(blob) {
+                // Create download link
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'ideas-in-motion.gif';
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                document.getElementById('status').textContent = 'GIF downloaded! Ready to create another.';
+                document.getElementById('gifBtn').disabled = false;
+                capturing = false;
+                framesCaptured = 0;
+            });
+            
+            gif.on('progress', function(p) {
+                document.getElementById('status').textContent = `Creating GIF: ${Math.round(p * 100)}%`;
+            });
+            
+            capturing = true;
+            framesCaptured = 0;
+            document.getElementById('status').textContent = 'Capturing frames...';
+        }
+        
+        function captureFrame() {
+            if (framesCaptured >= maxGifFrames) {
+                capturing = false;
+                document.getElementById('status').textContent = 'Processing GIF...';
+                gif.render();
+                return;
+            }
+            
+            // Add current frame to gif
+            gif.addFrame(document.querySelector('canvas'), {delay: 100});
+            framesCaptured++;
+            
+            document.getElementById('status').textContent = `Capturing frame ${framesCaptured}/${maxGifFrames}...`;
+        }
+    </script>
+</body>
+</html>
