@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voyj OG Image Capture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #canvas-container { width: 1200px; height: 630px; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script>
+        const sketch = (p) => {
+            let streams = [];
+            // Voyj brand colors
+            const voyjColors = [
+                [81, 19, 19],     // Maroon
+                [81, 90, 53],     // Green
+                [132, 148, 73],   // Matcha
+                [128, 112, 96]    // Warm gray
+            ];
+
+            p.setup = () => {
+                const canvas = p.createCanvas(1200, 630);
+                canvas.parent('canvas-container');
+
+                // Create horizontal data streams - more for larger canvas
+                let streamCount = 18;
+                for (let i = 0; i < streamCount; i++) {
+                    streams.push({
+                        y: p.map(i, 0, streamCount - 1, 80, p.height - 80),
+                        baseY: p.map(i, 0, streamCount - 1, 80, p.height - 80),
+                        particles: [],
+                        color: voyjColors[i % voyjColors.length],
+                        speed: p.random(0.25, 0.7),
+                        amplitude: p.random(15, 40),
+                        phase: p.random(p.TWO_PI),
+                        density: p.random(0.03, 0.06)
+                    });
+                }
+
+                p.background(250, 248, 242);
+            };
+
+            p.draw = () => {
+                // Soft fade
+                p.fill(250, 248, 242, 20);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                // Alignment pulse
+                let alignmentPulse = p.sin(p.frameCount * 0.012) * 0.5 + 0.5;
+
+                for (let stream of streams) {
+                    // Stream oscillation
+                    let oscillation = p.sin(p.frameCount * 0.018 + stream.phase) * stream.amplitude;
+                    stream.y = stream.baseY + oscillation * (1 - alignmentPulse * 0.6);
+
+                    // Add particles
+                    if (p.random() < stream.density) {
+                        stream.particles.push({
+                            x: 0,
+                            y: stream.y + p.random(-8, 8),
+                            size: p.random(2, 5),
+                            speed: stream.speed + p.random(-0.1, 0.1)
+                        });
+                    }
+
+                    // Update and draw particles
+                    for (let i = stream.particles.length - 1; i >= 0; i--) {
+                        let particle = stream.particles[i];
+
+                        // Wave motion
+                        let waveY = p.sin((particle.x + p.frameCount * 0.4) * 0.05) * 8;
+                        let targetY = stream.y + waveY;
+                        particle.y = p.lerp(particle.y, targetY, 0.08);
+
+                        particle.x += particle.speed;
+
+                        // Draw particle trail
+                        let alpha = p.map(particle.x, 0, p.width, 180, 60);
+                        p.noStroke();
+                        p.fill(stream.color[0], stream.color[1], stream.color[2], alpha);
+                        p.ellipse(particle.x, particle.y, particle.size);
+
+                        // Remove off-screen particles
+                        if (particle.x > p.width + 10) {
+                            stream.particles.splice(i, 1);
+                        }
+                    }
+                }
+            };
+
+            // Press 's' to save the canvas as PNG
+            p.keyPressed = () => {
+                if (p.key === 's' || p.key === 'S') {
+                    p.saveCanvas('voyj-og', 'png');
+                }
+            };
+        };
+
+        new p5(sketch);
+    </script>
+    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG, or take a screenshot when ready.</p>
+</body>
+</html>

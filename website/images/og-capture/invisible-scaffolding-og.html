@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invisible Scaffolding OG Image Capture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #canvas-container { width: 1200px; height: 630px; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script>
+        const sketch = (p) => {
+            let agents = [];
+
+            p.setup = () => {
+                const canvas = p.createCanvas(1200, 630);
+                canvas.parent('canvas-container');
+
+                let agentCount = 80;
+                for (let i = 0; i < agentCount; i++) {
+                    agents.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        vx: p.random(-1, 1),
+                        vy: p.random(-1, 1),
+                        connections: 0
+                    });
+                }
+            };
+
+            p.draw = () => {
+                p.background(240, 249, 255, 20);
+
+                // Update agents
+                for (let agent of agents) {
+                    agent.vx += p.noise(agent.x * 0.01, agent.y * 0.01, p.frameCount * 0.005) * 0.05 - 0.025;
+                    agent.vy += p.noise(agent.x * 0.01, agent.y * 0.01, p.frameCount * 0.005 + 1000) * 0.05 - 0.025;
+
+                    agent.vx = p.constrain(agent.vx, -1, 1);
+                    agent.vy = p.constrain(agent.vy, -1, 1);
+
+                    agent.x += agent.vx;
+                    agent.y += agent.vy;
+
+                    // Wrap edges
+                    if (agent.x < 0) agent.x = p.width;
+                    if (agent.x > p.width) agent.x = 0;
+                    if (agent.y < 0) agent.y = p.height;
+                    if (agent.y > p.height) agent.y = 0;
+
+                    agent.connections = 0;
+                }
+
+                // Draw connections and agents
+                for (let i = 0; i < agents.length; i++) {
+                    for (let j = i + 1; j < agents.length; j++) {
+                        let dist = p.dist(agents[i].x, agents[i].y, agents[j].x, agents[j].y);
+                        if (dist < 80) {
+                            let alpha = p.map(dist, 0, 80, 100, 0);
+                            // Network connections in purple/magenta spectrum
+                            p.stroke(138, 43, 226, alpha); // Blue violet
+                            p.strokeWeight(0.5);
+                            p.line(agents[i].x, agents[i].y, agents[j].x, agents[j].y);
+                            agents[i].connections++;
+                            agents[j].connections++;
+                        }
+                    }
+
+                    // Draw agent nodes with connection-based coloring
+                    let size = p.map(agents[i].connections, 0, 5, 6, 16);
+                    if (agents[i].connections > 3) {
+                        p.fill(255, 0, 255, 180); // Bright magenta for highly connected
+                    } else if (agents[i].connections > 1) {
+                        p.fill(138, 43, 226, 150); // Blue violet for medium
+                    } else {
+                        p.fill(75, 0, 130, 120); // Indigo for isolated
+                    }
+                    p.noStroke();
+                    p.circle(agents[i].x, agents[i].y, size);
+                }
+            };
+
+            p.keyPressed = () => {
+                if (p.key === 's' || p.key === 'S') {
+                    p.saveCanvas('invisible-scaffolding-og', 'png');
+                }
+            };
+        };
+
+        new p5(sketch);
+    </script>
+    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG, or take a screenshot when ready.</p>
+</body>
+</html>

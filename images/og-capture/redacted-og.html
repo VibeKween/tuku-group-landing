@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>REDACTED OG Image Capture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #canvas-container { width: 1200px; height: 630px; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script>
+        const sketch = (p) => {
+            let grid = [];
+            let step = 0;
+
+            p.setup = () => {
+                const canvas = p.createCanvas(1200, 630);
+                canvas.parent('canvas-container');
+
+                let gridSize = 15;
+                for (let x = 0; x < p.width; x += gridSize) {
+                    for (let y = 0; y < p.height; y += gridSize) {
+                        grid.push({
+                            x: x,
+                            y: y,
+                            active: p.random() > 0.7,
+                            pulse: p.random(p.TWO_PI)
+                        });
+                    }
+                }
+            };
+
+            p.draw = () => {
+                p.background(240, 249, 255);
+
+                for (let point of grid) {
+                    if (point.active) {
+                        let pulse = p.sin(step + point.pulse) * 0.5 + 0.5;
+                        let size = pulse * 6 + 2;
+
+                        // Vibrant crypto-inspired colors
+                        let colorType = Math.floor(p.frameCount / 60) % 3;
+                        if (colorType === 0) {
+                            p.fill(0, 255, 127, 150 * pulse); // Spring green
+                        } else if (colorType === 1) {
+                            p.fill(255, 20, 147, 150 * pulse); // Deep pink
+                        } else {
+                            p.fill(0, 191, 255, 150 * pulse); // Deep sky blue
+                        }
+                        p.noStroke();
+                        p.circle(point.x, point.y, size);
+                    }
+
+                    // Random activation changes
+                    if (p.random() > 0.995) {
+                        point.active = !point.active;
+                    }
+                }
+
+                step += 0.01;
+            };
+
+            p.keyPressed = () => {
+                if (p.key === 's' || p.key === 'S') {
+                    p.saveCanvas('redacted-og', 'png');
+                }
+            };
+        };
+
+        new p5(sketch);
+    </script>
+    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG, or take a screenshot when ready.</p>
+</body>
+</html>
