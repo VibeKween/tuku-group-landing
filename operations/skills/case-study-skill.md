@@ -172,13 +172,38 @@ const [clientSlug]Sketch = (p) => {
    - og:site_name, og:locale
    - article:publisher, article:section, article:tag (3-4 tags)
 
-3. **Twitter Cards**
+3. **Custom OG Image (Share Image)**
+
+   Create a unique share image using the OG capture tool:
+
+   a. **Create capture HTML** at `/website/images/og-capture/[client-slug]-og.html`
+      - Copy thumbnail art code from IDEAS hub
+      - Set canvas size to 1200x630 (OG standard)
+      - Add 'S' key handler to save as PNG
+      - Match exact colors from thumbnail
+
+   b. **Generate the image**
+      - Open the HTML file in browser
+      - Let animation build up to desired state
+      - Press **'S'** to save as PNG (downloads automatically)
+
+   c. **Deploy the image**
+      - Copy PNG to `/website/images/` and `/images/`
+      - Update og:image and twitter:image URLs to new image
+
+   **Reference captures:** `/website/images/og-capture/`
+   - `voyj-og.html` - Signal streams
+   - `of-the-culture-og.html` - Greyscale brush strokes
+   - `redacted-og.html` - Pulsing grid
+   - `invisible-scaffolding-og.html` - Network connections
+
+4. **Twitter Cards**
    - twitter:card = summary_large_image
    - twitter:site, twitter:creator
    - twitter:title, twitter:description
    - twitter:image, twitter:image:alt
 
-4. **Structured Data (JSON-LD)**
+5. **Structured Data (JSON-LD)**
    - @type: Article
    - headline, description, image
    - author (reference org), publisher (with logo)
@@ -187,7 +212,7 @@ const [clientSlug]Sketch = (p) => {
    - keywords array
    - about (Service schema)
 
-5. **Site-Level Updates**
+6. **Site-Level Updates**
    - Update sitemap.xml with new case study URL
    - Update llm.txt with case study summary
    - Google Analytics (GA4) included in page
@@ -250,6 +275,7 @@ Proceed with production deployment? (Requires explicit approval)
 ### SEO & Discoverability
 - [ ] Meta tags complete (title, description, keywords, canonical)
 - [ ] Open Graph tags with image dimensions and alt text
+- [ ] Custom OG image created (capture tool → press 'S' → deploy PNG)
 - [ ] Twitter Cards configured
 - [ ] Structured data (JSON-LD Article schema) added
 - [ ] sitemap.xml updated with new URL
