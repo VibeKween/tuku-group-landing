@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IDEAS Hub OG Image Capture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        #canvas-container { width: 1200px; height: 630px; }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <script>
+        const sketch = (p) => {
+            let motionParticles = [];
+            let font;
+
+            p.preload = () => {
+                // We'll draw text manually since p5 handles fonts differently
+            };
+
+            p.setup = () => {
+                const canvas = p.createCanvas(1200, 630);
+                canvas.parent('canvas-container');
+                p.textFont('JetBrains Mono');
+
+                // Create particles for "MOTION" letters that trail/move
+                const motionLetters = ['M', 'O', 'T', 'I', 'O', 'N'];
+                const startX = 510;
+                const letterSpacing = 58;
+
+                for (let i = 0; i < motionLetters.length; i++) {
+                    motionParticles.push({
+                        letter: motionLetters[i],
+                        baseX: startX + i * letterSpacing,
+                        baseY: 340,
+                        x: startX + i * letterSpacing,
+                        y: 340,
+                        offsetX: 0,
+                        offsetY: 0,
+                        trail: [],
+                        phase: i * 0.5,
+                        speed: 0.02 + i * 0.003
+                    });
+                }
+
+                p.background(250, 248, 242);
+            };
+
+            p.draw = () => {
+                // Soft fade for trails
+                p.fill(250, 248, 242, 25);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                // Draw "IDEAS" and "IN" separately for precise spacing
+                p.fill(0);
+                p.textSize(64);
+                p.textStyle(p.NORMAL);
+                p.textAlign(p.LEFT, p.CENTER);
+                p.text('IDEAS', 180, 340);
+                p.text('IN', 390, 340);
+
+                // Draw motion trails for "MOTION"
+                for (let particle of motionParticles) {
+                    // Wave motion
+                    particle.offsetX = p.sin(p.frameCount * particle.speed + particle.phase) * 8;
+                    particle.offsetY = p.cos(p.frameCount * particle.speed * 1.3 + particle.phase) * 4;
+
+                    particle.x = particle.baseX + particle.offsetX;
+                    particle.y = particle.baseY + particle.offsetY;
+
+                    // Store trail positions
+                    particle.trail.push({x: particle.x, y: particle.y});
+                    if (particle.trail.length > 12) {
+                        particle.trail.shift();
+                    }
+
+                    // Draw trail (fading copies)
+                    for (let i = 0; i < particle.trail.length; i++) {
+                        let alpha = p.map(i, 0, particle.trail.length, 15, 80);
+                        p.fill(0, 0, 0, alpha);
+                        p.textSize(64);
+                        p.text(particle.letter, particle.trail[i].x, particle.trail[i].y);
+                    }
+
+                    // Draw main letter
+                    p.fill(0);
+                    p.text(particle.letter, particle.x, particle.y);
+                }
+
+                // Subtle TUKU gold accent line
+                p.stroke(193, 154, 75, 100);
+                p.strokeWeight(2);
+                p.line(180, 400, 1020, 400);
+            };
+
+            p.keyPressed = () => {
+                if (p.key === 's' || p.key === 'S') {
+                    p.saveCanvas('ideas-og', 'png');
+                }
+            };
+        };
+
+        new p5(sketch);
+    </script>
+    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG. "MOTION" letters move with trailing effect.</p>
+</body>
+</html>
