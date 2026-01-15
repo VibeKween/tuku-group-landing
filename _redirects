@@ -1,5 +1,0 @@
-# Cloudflare Pages redirects
-# Force proper 301 redirect to bust Apple's cached OG image
-
-/ideas/voyj/  /ideas/voyj-travel/  301
-/ideas/voyj  /ideas/voyj-travel/  301
