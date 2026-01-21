@@ -40,7 +40,8 @@ cp -r website/ideas .
 
 ### IDEAS Case Studies
 - **IDEAS Hub** (`/ideas/`): Case studies overview with generative particle system
-- **OF THE CULTURE** (`/ideas/of-the-culture/`): House brand case study with emergence visualization  
+- **VOYJ Pillar Discovery** (`/ideas/voyj-discovery/`): Strategic identity case study with language excavation methodology
+- **OF THE CULTURE** (`/ideas/of-the-culture/`): House brand case study with emergence visualization
 - **[REDACTED]** (`/ideas/redacted/`): 400-page documentation case study with precision accumulation
 - **INVISIBLE SCAFFOLDING** (`/ideas/invisible-scaffolding/`): Philosophy methodology with network emergence
 
@@ -221,10 +222,119 @@ cp -r website/ideas .
 
 **Benefits of Enhanced System:**
 - ✅ Eliminates mobile disappearing issues
-- ✅ Consistent viewport coverage across devices  
+- ✅ Consistent viewport coverage across devices
 - ✅ Improved performance with CSS containment
 - ✅ Maintained generative art functionality
 - ✅ GPU acceleration for smooth rendering
+
+## 🚨 CRITICAL: OG Images for iMessage/Social Previews (Jan 2026)
+
+### Requirements for Working iMessage Link Previews
+
+Apple's iMessage link preview system (LinkPresentation) is extremely strict about OG images. Follow these requirements to ensure previews work:
+
+**File Size Requirements:**
+- **MUST be under 500KB** - Apple's soft limit for iMessage OG images
+- Recommended: 200-400KB for reliable performance
+- Use `sips` to optimize: `sips -s format png -s formatOptions best --resampleWidth 1200 input.png --out output.png`
+
+**Dimension Requirements:**
+- **1200x630** (standard OG size) - recommended
+- **2400x1260** (2x retina) - also works but larger file size
+- Must match `og:image:width` and `og:image:height` meta tag values exactly
+
+**Format Requirements:**
+- PNG or JPEG both work
+- PNG recommended for generative art with transparency
+- JPEG for photos or when file size is critical
+
+**Meta Tag Structure (Required):**
+```html
+<meta property="og:image" content="https://tukugroup.com/images/[filename].png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Description of image">
+<meta name="twitter:image" content="https://tukugroup.com/images/[filename].png">
+```
+
+### ⚠️ Known Issues with p5.js saveCanvas
+
+The p5.js `saveCanvas()` function can produce PNG files that Apple's iMessage system rejects, even when they appear identical to working images.
+
+**Symptoms:**
+- Image shows in browser but not in iMessage preview
+- Apple shows generic fallback image instead
+- Other case study OG images work fine
+
+**Solution - Use Alternative Export Methods:**
+1. **Native canvas export** (preferred):
+   ```javascript
+   const canvas = document.querySelector('canvas');
+   canvas.toBlob((blob) => {
+       const url = URL.createObjectURL(blob);
+       const a = document.createElement('a');
+       a.href = url;
+       a.download = 'og-image.png';
+       a.click();
+   }, 'image/png');
+   ```
+
+2. **macOS screenshot** (Cmd+Shift+4) of the canvas area
+
+3. **Use a different source image** - images from other generative art captures or design tools work reliably
+
+### Debugging OG Image Issues
+
+**Step 1: Test with known-working image**
+```bash
+# Copy a working OG image (e.g., redacted-og.png) with new filename
+cp images/redacted-og.png images/test-og.png
+# Update meta tags to use test-og.png
+# If this works, issue is the image content itself
+```
+
+**Step 2: Check image properties**
+```bash
+sips -g all images/your-og-image.png
+# Verify: pixelWidth, pixelHeight, format, hasAlpha, space
+```
+
+**Step 3: Check HTTP response**
+```bash
+curl -sI "https://tukugroup.com/images/your-og-image.png" | head -10
+# Verify: HTTP/2 200, content-type: image/png
+```
+
+**Step 4: Force Apple CDN refresh**
+- Use a completely new filename (timestamp-based)
+- Apple caches aggressively; same URL may serve old/cached data
+
+### OG Image Capture Tools
+
+Located in `/images/og-capture/`:
+- `voyj-og.html` - VOYJ case study (uses native canvas.toBlob)
+- `redacted-og.html` - REDACTED case study
+- `ideas-og.html` - IDEAS hub page
+- `of-the-culture-og.html` - OF THE CULTURE case study
+- `invisible-scaffolding-og.html` - INVISIBLE SCAFFOLDING case study
+
+**Usage:**
+1. Open HTML file in browser
+2. Wait for animation to look good
+3. Press 'S' for PNG or 'J' for JPEG
+4. Optimize with sips if over 500KB
+5. Update meta tags in page HTML
+6. Sync to root and deploy
+
+### Quick OG Image Checklist
+
+- [ ] File size under 500KB
+- [ ] Dimensions match meta tag values
+- [ ] `og:image` uses absolute HTTPS URL
+- [ ] `twitter:image` matches `og:image`
+- [ ] Fresh filename if replacing existing image
+- [ ] Synced to both `/website/images/` and `/images/`
+- [ ] Tested in iMessage after Cloudflare propagation (~15-30 seconds)
 
 ## Important Notes
 
