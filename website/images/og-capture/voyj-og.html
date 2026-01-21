@@ -94,16 +94,40 @@
                 }
             };
 
-            // Press 's' to save the canvas as PNG
+            // Press 's' to save using native canvas export (not p5.js)
             p.keyPressed = () => {
                 if (p.key === 's' || p.key === 'S') {
-                    p.saveCanvas('voyj-og', 'png');
+                    // Use native canvas toBlob for cleaner PNG
+                    const canvas = document.querySelector('canvas');
+                    canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'voyj-og-native.png';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }, 'image/png');
+                }
+                // Press 'j' for JPEG (no alpha channel)
+                if (p.key === 'j' || p.key === 'J') {
+                    const canvas = document.querySelector('canvas');
+                    canvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'voyj-og-native.jpg';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }, 'image/jpeg', 0.95);
                 }
             };
         };
 
         new p5(sketch);
     </script>
-    <p style="font-family: monospace; padding: 20px;">Press 'S' to save as PNG, or take a screenshot when ready.</p>
+    <p style="font-family: monospace; padding: 20px;">
+        Press 'S' to save as PNG (native canvas export)<br>
+        Press 'J' to save as JPEG (no alpha channel)
+    </p>
 </body>
 </html>
