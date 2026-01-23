@@ -567,6 +567,31 @@
     <div class="case-studies">
         <div class="section-label">[ selected work ]</div>
 
+        <!-- SKATE IQ Foundation Sprint -->
+        <article class="case-study-item">
+            <div class="case-art" id="skateiqArt"></div>
+            <div class="case-content">
+                <div class="case-meta">[ foundation sprint ]</div>
+                <h3>SKATE IQ</h3>
+                <p class="case-description">Giving a 25-40M monthly view skateboarding platform visibility into its own operation. 4 tiers, 5 phases, instincts made transferable.</p>
+                <div class="case-stats">
+                    <div class="stat">
+                        <div class="stat-value">25-40M</div>
+                        <div class="stat-label">monthly views</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">production tiers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">roles clarified</div>
+                    </div>
+                </div>
+                <a href="/ideas/skateiq" class="case-link">view case study &rarr;</a>
+            </div>
+        </article>
+
         <!-- VOYJ Pillar Discovery -->
         <article class="case-study-item">
             <div class="case-art" id="voyjArt"></div>
@@ -840,6 +865,102 @@
         }, { passive: false });
 
         // Case Study Art Sketches - Mobile optimized
+
+        // SKATE IQ - "The Park" - Arcing trajectories on cream background
+        const skateiqSketch = (p) => {
+            const SAGE = '#70AA8B';
+            const BLACK = '#1A1A1A';
+
+            let skaters = [];
+            const NUM_SKATERS = 16;
+
+            p.setup = () => {
+                const container = document.getElementById('skateiqArt');
+                const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+                canvas.parent('skateiqArt');
+
+                for (let i = 0; i < NUM_SKATERS; i++) {
+                    skaters.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height),
+                        vx: p.random(-1, 1),
+                        vy: p.random(-0.5, 0.5),
+                        trail: [],
+                        maxTrail: p.floor(p.random(25, 45)),
+                        weight: p.random(1.5, 2.5),
+                        alpha: p.random(150, 220),
+                        curve: p.random(0.01, 0.03),
+                        phase: p.random(p.TWO_PI)
+                    });
+                }
+
+                p.background(248, 245, 240);
+            };
+
+            p.draw = () => {
+                // Soft fade for trails (cream background)
+                p.fill(248, 245, 240, 20);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                let sageColor = p.color(SAGE);
+
+                for (let skater of skaters) {
+                    // Carving motion - gentle curves like skating
+                    skater.vx += p.sin(p.frameCount * skater.curve + skater.phase) * 0.02;
+                    skater.vy += p.cos(p.frameCount * skater.curve + skater.phase) * 0.015;
+
+                    // Dampen velocity
+                    skater.vx *= 0.99;
+                    skater.vy *= 0.99;
+
+                    // Keep some minimum movement
+                    let speed = p.sqrt(skater.vx * skater.vx + skater.vy * skater.vy);
+                    if (speed < 0.3) {
+                        skater.vx += p.random(-0.2, 0.2);
+                        skater.vy += p.random(-0.1, 0.1);
+                    }
+
+                    skater.x += skater.vx;
+                    skater.y += skater.vy;
+
+                    // Wrap around edges
+                    if (skater.x < 0) skater.x = p.width;
+                    if (skater.x > p.width) skater.x = 0;
+                    if (skater.y < 0) skater.y = p.height;
+                    if (skater.y > p.height) skater.y = 0;
+
+                    // Store trail
+                    skater.trail.push({ x: skater.x, y: skater.y });
+                    if (skater.trail.length > skater.maxTrail) {
+                        skater.trail.shift();
+                    }
+
+                    // Draw trail (carve marks)
+                    p.noFill();
+                    p.beginShape();
+                    for (let i = 0; i < skater.trail.length; i++) {
+                        let a = p.map(i, 0, skater.trail.length, 0, skater.alpha);
+                        p.stroke(p.red(sageColor), p.green(sageColor), p.blue(sageColor), a);
+                        p.strokeWeight(skater.weight * p.map(i, 0, skater.trail.length, 0.3, 1));
+                        p.vertex(skater.trail[i].x, skater.trail[i].y);
+                    }
+                    p.endShape();
+
+                    // Wheel dot at current position
+                    p.fill(26, 26, 26, skater.alpha * 0.7);
+                    p.noStroke();
+                    p.ellipse(skater.x, skater.y, 3, 3);
+                }
+            };
+
+            p.windowResized = () => {
+                const container = document.getElementById('skateiqArt');
+                if (container) {
+                    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+                }
+            };
+        };
 
         // VOYJ - Signal Streams / Pattern Detection
         // Horizontal data streams representing quote analysis, with occasional alignment moments
@@ -1197,7 +1318,7 @@
                 console.log('Initializing case study art...');
                 
                 // Check if containers exist
-                const containers = ['voyjArt', 'ofTheCultureArt', 'cryptogainsArt', 'invisibleScaffoldingArt'];
+                const containers = ['skateiqArt', 'voyjArt', 'ofTheCultureArt', 'cryptogainsArt', 'invisibleScaffoldingArt'];
                 containers.forEach(id => {
                     const element = document.getElementById(id);
                     console.log(`Container ${id}:`, element ? 'found' : 'NOT FOUND');
@@ -1207,6 +1328,13 @@
                 });
                 
                 // Initialize sketches
+                try {
+                    new p5(skateiqSketch);
+                    console.log('SKATE IQ sketch initialized');
+                } catch (e) {
+                    console.error('SKATE IQ sketch failed:', e);
+                }
+
                 try {
                     new p5(voyjSketch);
                     console.log('VOYJ sketch initialized');

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKATE IQ - TUKU GROUP | Foundation Sprint Case Study</title>
+    <meta name="description" content="Foundation Sprint for Skate IQ. Giving a 25-40M view skateboarding platform visibility into its own operation. 4 tiers, 5 phases, instincts made transferable.">
+    <meta name="keywords" content="Foundation Sprint, production flow, skateboarding, YouTube, content operations, creator economy, Skate IQ, TUKU GROUP">
+    <meta name="author" content="Tuku Group">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://tukugroup.com/ideas/skateiq/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://tukugroup.com/ideas/skateiq/">
+    <meta property="og:title" content="SKATE IQ - Foundation Sprint Case Study">
+    <meta property="og:description" content="Giving a 25-40M view skateboarding platform visibility into its own operation.">
+    <meta property="og:image" content="https://tukugroup.com/images/skateiq-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="SKATE IQ Case Study by TUKU GROUP">
+    <meta property="og:site_name" content="Tuku Group">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:publisher" content="https://tukugroup.com">
+    <meta property="article:section" content="Case Studies">
+    <meta property="article:tag" content="foundation sprint">
+    <meta property="article:tag" content="production operations">
+    <meta property="article:tag" content="content strategy">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@tukugroup">
+    <meta name="twitter:creator" content="@tukugroup">
+    <meta name="twitter:title" content="SKATE IQ - Foundation Sprint Case Study">
+    <meta name="twitter:description" content="Giving a 25-40M view skateboarding platform visibility into its own operation.">
+    <meta name="twitter:image" content="https://tukugroup.com/images/skateiq-og.png">
+    <meta name="twitter:image:alt" content="SKATE IQ Case Study by TUKU GROUP">
+
+    <!-- Theme & Performance -->
+    <meta name="theme-color" content="#000000">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon.png">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5KTM9YBETS');
+    </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "SKATE IQ - Foundation Sprint Case Study",
+      "description": "Giving a 25-40M monthly view skateboarding platform visibility into its own operation.",
+      "image": "https://tukugroup.com/images/skateiq-og.png",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://tukugroup.com/#organization",
+        "name": "Tuku Group"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://tukugroup.com/#organization",
+        "name": "Tuku Group",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tukugroup.com/images/tuku-group-logo.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://tukugroup.com/ideas/skateiq/"
+      },
+      "articleSection": "Case Studies",
+      "keywords": ["foundation sprint", "production operations", "content strategy", "skateboarding"]
+    }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-black: #000000;
+            --color-white: #FFFFFF;
+            --color-gold: #C19A4B;
+            --color-blue-light: #f0f9ff;
+            --color-blue-accent: #5691c8;
+            --color-grey: #4A4A4A;
+            --color-grey-light: #808080;
+            --skateiq-sage: #70AA8B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            background: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.8;
+            font-synthesis: none;
+        }
+
+        /* Navigation */
+        .nav-back {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 100;
+            font-size: 11px;
+            color: var(--color-white);
+            text-decoration: none;
+            background: rgba(26, 26, 26, 0.60);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: opacity 0.3s;
+        }
+
+        .nav-back:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section - Dark Background */
+        .hero {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            contain: layout style paint;
+            background: #1A1A1A;
+        }
+
+        #hero-art {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            touch-action: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            will-change: auto;
+        }
+
+        #hero-art canvas,
+        #hero-art main,
+        #hero-art * {
+            pointer-events: none;
+            touch-action: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            will-change: auto;
+        }
+
+        #hero-art canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            display: block;
+            transform: translateZ(0);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(26, 26, 26, 0.70);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            margin-bottom: 32px;
+            color: var(--color-white);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .art-notation {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(26, 26, 26, 0.60);
+            backdrop-filter: blur(20px);
+            padding: 12px 16px;
+            text-align: right;
+            line-height: 1.6;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Content Container */
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 40px;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--color-gold);
+            text-transform: lowercase;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-black);
+        }
+
+        .content p {
+            font-size: 15px;
+            color: var(--color-grey);
+            margin-bottom: 24px;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content li {
+            font-size: 13px;
+            color: var(--color-grey);
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .content li:before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--skateiq-sage);
+            position: absolute;
+            left: 8px;
+            top: 10px;
+        }
+
+        /* Spec Grid */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+
+        .spec-item {
+            text-align: left;
+        }
+
+        .spec-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 8px;
+        }
+
+        .spec-label {
+            font-size: 11px;
+            color: var(--color-grey-light);
+            text-transform: lowercase;
+        }
+
+        .spec-detail {
+            font-size: 11px;
+            color: var(--color-grey);
+            margin-top: 4px;
+        }
+
+        /* Insight Quote */
+        .insight-quote {
+            font-size: 14px;
+            font-style: italic;
+            color: var(--color-grey-light);
+            margin: 40px 0;
+            padding: 24px;
+            background: #f0f5f2;
+            border-left: 2px solid var(--skateiq-sage);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 600px;
+            margin: 120px auto 80px;
+            padding: 0 40px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        .footer p {
+            font-size: 0.75rem;
+            color: var(--color-black);
+            line-height: 1.8;
+        }
+
+        .footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+                line-height: 1.3;
+                letter-spacing: 1px;
+                margin-bottom: 24px;
+            }
+
+            .hero-content {
+                padding: 24px;
+                max-width: 90%;
+            }
+
+            .hero p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .content-container {
+                padding: 80px 20px;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+
+            .section h2 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .content p {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .content li {
+                font-size: 12px;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }
+
+            .spec-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin: 32px 0;
+            }
+
+            .spec-value {
+                font-size: 24px;
+            }
+
+            .insight-quote {
+                font-size: 13px;
+                padding: 20px;
+                margin: 32px 0;
+            }
+
+            .footer {
+                padding: 0 20px;
+                margin: 80px auto 60px;
+            }
+
+            .nav-back {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+                font-size: 10px;
+            }
+
+            .section-label {
+                font-weight: 700;
+                font-size: 12px;
+            }
+
+            .spec-label {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .spec-detail {
+                font-size: 11px;
+            }
+
+            .art-notation {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 12px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero-content {
+                padding: 20px;
+            }
+
+            .content-container {
+                padding: 60px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <a href="../" class="nav-back">← IDEAS IN MOTION</a>
+
+    <!-- Hero Section with Generative Art -->
+    <section class="hero">
+        <div id="hero-art"></div>
+        <div class="hero-content">
+            <h1>SKATE IQ</h1>
+            <p>Giving a 25-40M monthly view skateboarding platform visibility into its own operation.</p>
+        </div>
+        <div class="art-notation">
+            [ the line ]<br>
+            scattered to aligned<br>
+            finding the carve<br>
+            through the transition
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-container">
+
+        <!-- The Challenge -->
+        <section class="section">
+            <div class="section-label">[ the challenge ]</div>
+            <h2>Visibility into success</h2>
+            <div class="content">
+                <p>Skate IQ pulls 25-40 million monthly YouTube views. Revenue streams are growing. The programs work. The audience keeps expanding.</p>
+                <p>The question wasn't whether things were working. They clearly were. The question was how to keep the momentum going as complexity increased. More ideas, more collaborators, more tiers of production. The founders wanted to see their own operation clearly enough to refine it, not fix it.</p>
+                <p>One founder described the production dynamic: everyone was "15% the production manager." Not broken, but diffuse. The engagement was about giving their instincts something concrete to work with. Clarity that lets ideas keep moving.</p>
+            </div>
+        </section>
+
+        <!-- By the Numbers -->
+        <section class="section">
+            <div class="section-label">[ by the numbers ]</div>
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-value">25-40M</div>
+                    <div class="spec-label">monthly YouTube views</div>
+                    <div class="spec-detail">the working baseline</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">11</div>
+                    <div class="spec-label">discovery sessions</div>
+                    <div class="spec-detail">individual and joint</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">4</div>
+                    <div class="spec-label">production tiers</div>
+                    <div class="spec-detail">solo tutorial to contest series</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">5</div>
+                    <div class="spec-label">phases mapped</div>
+                    <div class="spec-detail">idea through published video</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">12</div>
+                    <div class="spec-label">roles clarified</div>
+                    <div class="spec-detail">ownership made explicit</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Questioned -->
+        <section class="section">
+            <div class="section-label">[ what we questioned ]</div>
+            <div class="content">
+                <ul>
+                    <li>Where time actually goes versus where it should go</li>
+                    <li>What's present when a project clicks and absent when it stalls</li>
+                    <li>Whether everyone who says "I own production" means the same thing</li>
+                    <li>How to document instincts without killing the energy behind them</li>
+                    <li>Whether structure creates space for creativity or constrains it</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- The Methodology -->
+        <section class="section">
+            <div class="section-label">[ the methodology ]</div>
+            <h2>Foundation Sprint: 4 weeks, 11 sessions</h2>
+            <div class="content">
+                <p>Individual discovery with each founder. Joint retrospective comparing projects that clicked against projects that stalled. Pattern extraction. Then: mapping the production system.</p>
+                <ul>
+                    <li><strong>Week 1-2:</strong> Individual sessions (7 total, 2 hours each)</li>
+                    <li><strong>Week 3:</strong> Joint session mapping success and struggle stories</li>
+                    <li><strong>Week 4:</strong> Production flow synthesis and role mapping</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- What Emerged -->
+        <section class="section">
+            <div class="section-label">[ what emerged ]</div>
+            <div class="content">
+                <h2>The Tier System</h2>
+                <p>The founders had already intuited that not all videos require the same structure. A solo tutorial needs a few hours of planning. A multi-skater competition needs days. A contest series needs weeks and a production team.</p>
+                <p>The engagement formalized what they knew: four tiers, each with different planning requirements, team sizes, and workflows. The structure matches the complexity.</p>
+
+                <h2>The Production Phases</h2>
+                <p>Five phases from idea to published video. Each phase has a trigger, an output, and a done signal. Not process for process's sake. Reference points for identifying where things break and where to refine.</p>
+
+                <h2>The Core Pattern</h2>
+                <p>The founders already operated from strong instincts about what made production work. The engagement made those instincts visible and documented. Transferable to a growing team.</p>
+            </div>
+        </section>
+
+        <!-- Artifacts Delivered -->
+        <section class="section">
+            <div class="section-label">[ artifacts delivered ]</div>
+            <h2>Infrastructure that persists</h2>
+            <div class="content">
+                <p><strong>Cross-reference tooling.</strong> When one founder said something about production, the system surfaces what the other founder said about the same topic. Alignment checks built into the infrastructure.</p>
+                <p><strong>Alignment checks.</strong> Before anything went into the final documents, both founders' positions were verified. Where they diverged, the gap got flagged for the joint session rather than papered over.</p>
+                <p><strong>Production Flow Templates.</strong> All 4 tiers documented with phases, handoffs, and role definitions. Not one-off files. Built on structured data, so when roles change or new tiers emerge, the documents update.</p>
+                <p><strong>Interactive Production Flow Visualization.</strong> Operational tool for ongoing use. Select a tier; see the phases, handoffs, and gaps. Reference for planning any video.</p>
+                <p>The deliverables aren't hand-offs at the end of an engagement. They're infrastructure for ongoing operations.</p>
+            </div>
+        </section>
+
+        <!-- The Philosophy -->
+        <section class="section">
+            <div class="section-label">[ the philosophy ]</div>
+            <div class="content">
+                <p>The generative art draws from skateboarding itself: arcs, carves, the feeling of riding transition.</p>
+                <p>In the thumbnail, trajectories cross like a crowded session. Everyone carving their own line through the same space. Energy without coordination.</p>
+                <p>In the hero, those lines find the transition. They get pulled toward the ramp curve, then carve along it together. Structure that doesn't flatten the movement.</p>
+                <p>The tooling follows the same principle. No static documents that go stale. Systems that cross-reference, check alignment, and regenerate outputs. Frameworks that adapt as the operation grows.</p>
+                <p>The art honors both: the energy that built the channel, and the clarity that lets it scale.</p>
+            </div>
+        </section>
+
+        <!-- Return on Investment -->
+        <section class="section">
+            <div class="section-label">[ return on investment ]</div>
+            <h2>Reference points for what comes next</h2>
+            <div class="content">
+                <p>The production flow maps aren't strategy decks. They're reference points.</p>
+                <p>When a video stalls, identify which phase broke. When bringing on team members, hand them documented processes instead of tribal knowledge. When scoping a new project, know which tier it falls into and what that tier requires.</p>
+                <p>One founder said it clearly: video production works when you're ready to start the next one after finishing the last one. When you know what to do next. That's what visibility makes possible.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>SKATE IQ Foundation Sprint | a TUKU GROUP collab<br><br>© 2026 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
+    </footer>
+
+    <script>
+        // SKATE IQ Hero Art: "The Line"
+        // Particles converge toward horizontal transition line, then ride along it
+        function heroSketch(p) {
+            const BLACK = '#1A1A1A';
+            const SAGE = '#70AA8B';
+            const CREAM = '#F8F5F0';
+
+            let particles = [];
+            const NUM_PARTICLES = 50;
+            let transitionY;
+
+            p.setup = function() {
+                const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+                canvas.parent('hero-art');
+
+                // Disable ALL touch and mouse events
+                canvas.elt.style.pointerEvents = 'none';
+                canvas.elt.style.touchAction = 'none';
+                canvas.elt.ontouchstart = null;
+                canvas.elt.ontouchmove = null;
+                canvas.elt.ontouchend = null;
+                canvas.elt.onmousedown = null;
+                canvas.elt.onmousemove = null;
+                canvas.elt.onmouseup = null;
+
+                p.background(BLACK);
+
+                // The transition line position
+                transitionY = p.height * 0.55;
+
+                // Initialize particles scattered across canvas
+                for (let i = 0; i < NUM_PARTICLES; i++) {
+                    particles.push({
+                        x: p.random(p.width),
+                        y: p.random(p.height * 0.15, p.height * 0.85),
+                        vx: p.random(-1, 1),
+                        vy: 0,
+                        trail: [],
+                        maxTrail: p.floor(p.random(50, 90)),
+                        weight: p.random(1, 2.5),
+                        alpha: p.random(120, 220),
+                        pullStrength: p.random(0.002, 0.005),
+                        momentumX: p.random(0.4, 1.0) * (p.random() > 0.5 ? 1 : -1),
+                        phase: p.random(p.TWO_PI),
+                        conformity: p.random(0.03, 0.08)
+                    });
+                }
+            };
+
+            p.draw = function() {
+                // Soft fade for trails
+                p.fill(26, 26, 26, 15);
+                p.noStroke();
+                p.rect(0, 0, p.width, p.height);
+
+                let sageColor = p.color(SAGE);
+
+                // Draw subtle transition curve hint
+                p.noFill();
+                p.stroke(p.red(sageColor), p.green(sageColor), p.blue(sageColor), 15);
+                p.strokeWeight(35);
+                p.beginShape();
+                for (let x = 0; x < p.width; x += 15) {
+                    let curveY = transitionY + p.sin(x * 0.008 + p.frameCount * 0.012) * 30;
+                    p.vertex(x, curveY);
+                }
+                p.endShape();
+
+                // Update and draw particles
+                for (let particle of particles) {
+                    // Target position on the transition curve
+                    let targetY = transitionY + p.sin(particle.x * 0.008 + particle.phase + p.frameCount * 0.012) * 30;
+                    let distToLine = targetY - particle.y;
+
+                    // Pull toward the line (gravity toward transition)
+                    particle.vy += distToLine * particle.pullStrength;
+                    particle.vy *= 0.97;
+                    particle.vx *= 0.995;
+                    particle.vx += particle.momentumX * 0.015;
+
+                    // Once close to line, follow it
+                    if (Math.abs(distToLine) < 40) {
+                        particle.vy = p.lerp(particle.vy, distToLine * 0.12, particle.conformity);
+                    }
+
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    // Wrap around horizontally
+                    if (particle.x < 0) particle.x = p.width;
+                    if (particle.x > p.width) particle.x = 0;
+
+                    // Bounce at vertical bounds
+                    if (particle.y < 20) { particle.y = 20; particle.vy *= -0.5; }
+                    if (particle.y > p.height - 20) { particle.y = p.height - 20; particle.vy *= -0.5; }
+
+                    // Store trail
+                    particle.trail.push({ x: particle.x, y: particle.y });
+                    if (particle.trail.length > particle.maxTrail) {
+                        particle.trail.shift();
+                    }
+
+                    // Draw trail
+                    p.noFill();
+                    p.beginShape();
+                    for (let i = 0; i < particle.trail.length; i++) {
+                        let alpha = p.map(i, 0, particle.trail.length, 0, particle.alpha);
+                        p.stroke(p.red(sageColor), p.green(sageColor), p.blue(sageColor), alpha);
+                        p.strokeWeight(particle.weight * p.map(i, 0, particle.trail.length, 0.3, 1));
+                        p.vertex(particle.trail[i].x, particle.trail[i].y);
+                    }
+                    p.endShape();
+
+                    // Draw particle head (wheel)
+                    p.fill(CREAM);
+                    p.noStroke();
+                    p.ellipse(particle.x, particle.y, particle.weight * 2, particle.weight * 2);
+                }
+            };
+
+            p.windowResized = function() {
+                p.resizeCanvas(p.windowWidth, p.windowHeight);
+                transitionY = p.height * 0.55;
+            };
+        }
+
+        // Disable p5.js default touch behaviors
+        p5.disableFriendlyErrors = true;
+
+        // Ensure DOM is ready before initializing sketch
+        document.addEventListener('DOMContentLoaded', function() {
+            new p5(heroSketch);
+        });
+
+        // Additional global touch blocking
+        document.addEventListener('touchstart', function(e) {
+            const target = e.target;
+            if (target.closest('#hero-art')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(e) {
+            const target = e.target;
+            if (target.closest('#hero-art')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, { passive: false });
+    </script>
+
+</body>
+</html>
