@@ -646,8 +646,8 @@
 
                 p.background(BLACK);
 
-                // The transition line position
-                transitionY = p.height * 0.55;
+                // The transition line position (lower on mobile to avoid card overlap)
+                transitionY = window.innerWidth <= 768 ? p.height * 0.72 : p.height * 0.55;
 
                 // Initialize particles scattered across canvas
                 for (let i = 0; i < NUM_PARTICLES; i++) {
@@ -741,7 +741,7 @@
 
             p.windowResized = function() {
                 p.resizeCanvas(p.windowWidth, p.windowHeight);
-                transitionY = p.height * 0.55;
+                transitionY = window.innerWidth <= 768 ? p.height * 0.72 : p.height * 0.55;
             };
         }
 
