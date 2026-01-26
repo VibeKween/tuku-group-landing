@@ -2,7 +2,7 @@
 
 **Feature:** Calendar scheduling for consultations
 **Workflow:** A (New Feature Build)
-**Status:** Phase 1 In Progress
+**Status:** Production Complete (Jan 26, 2026)
 
 ---
 
@@ -15,11 +15,11 @@ Build a custom booking system at tukugroup.com/book that lets visitors schedule 
 ## Requirements
 
 ### Functional
-- Display available 30-minute slots from Google Calendar
-- Collect: name, email, optional context
-- Create Google Calendar event with both parties
-- Auto-send invite via Google Calendar
-- Provide reschedule/cancel via unique booking link
+- Display available time slots from Google Calendar (25-min duration, 30-min spacing)
+- Collect: name, email, optional context (context included in calendar event)
+- Create Google Calendar event on owner's calendar
+- Owner manually adds client as attendee (triggers invite) - *service account limitation*
+- Provide cancel via unique booking link (within 4-hour window)
 
 ### Privacy
 **Email is for calendar invite only.** No list, no marketing, no retention beyond booking. UI must state: "For calendar invite only. No mailing list."
@@ -67,7 +67,7 @@ landing → calendar → time → details → confirm → success
 
 **Landing**
 - Headline: "Schedule a conversation"
-- Subhead: "A 30-minute call to understand what you're building and whether TUKU is the right fit."
+- Subhead: "A 25-minute call to understand what you're building and whether TUKU is the right fit."
 - CTA: "Select a date"
 
 **Calendar**
@@ -84,17 +84,19 @@ landing → calendar → time → details → confirm → success
 
 **Confirm**
 - Headline: "Confirm your booking"
-- Note: "You'll receive a calendar invite with a Google Meet link."
+- Note: "Your booking will be confirmed shortly. We'll reach out with meeting details."
 - CTA: "Confirm booking"
 
 **Success**
 - Headline: "You're booked"
-- Message: "A calendar invite has been sent to [email]."
+- Message: "Your booking is confirmed. We'll reach out to [email] with meeting details."
 - CTA: "Manage booking"
 
 **Manage**
 - Headline: "Manage your booking"
-- Options: Reschedule, Cancel
+- Shows: Booking ID, Date, Time, Status
+- Cancel button: Available within 4 hours of booking
+- After 4 hours: "To cancel, use the calendar invite sent to your email."
 
 **Cancelled**
 - Headline: "Booking cancelled"
