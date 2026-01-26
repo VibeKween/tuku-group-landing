@@ -133,7 +133,7 @@
             <span id="confirm-email" class="summary-value"></span>
           </div>
         </div>
-        <p class="confirm-note">Your booking will be added to our calendar. We'll follow up with meeting details.</p>
+        <p class="confirm-note">Your booking will be confirmed shortly. We'll reach out with meeting details.</p>
         <button class="btn-primary" id="confirm-btn" onclick="TUKUBooking.confirmBooking()">Confirm booking</button>
         <div id="confirm-error" class="error-message" style="display: none;"></div>
       </div>
@@ -144,7 +144,7 @@
       <div class="step-content">
         <h2>You're booked</h2>
         <div class="success-icon">&#10003;</div>
-        <p class="success-message">Your booking is confirmed. We'll send meeting details to <strong id="success-email"></strong>.</p>
+        <p class="success-message">Your booking is confirmed. We'll reach out to <strong id="success-email"></strong> with meeting details.</p>
         <div class="booking-details">
           <p><strong id="success-date"></strong></p>
           <p id="success-time"></p>
@@ -180,7 +180,7 @@
           </div>
           <div id="manage-actions">
             <a href="#" id="meet-link" class="btn-primary" target="_blank" style="display: none;">Join Google Meet</a>
-            <p id="meet-pending" class="meet-note">Meeting details will be sent to your email.</p>
+            <p id="meet-pending" class="meet-note">We'll reach out with meeting details before your scheduled time.</p>
             <button class="btn-cancel" id="cancel-btn" onclick="TUKUBooking.cancelBooking()">Cancel booking</button>
           </div>
           <div id="manage-past" style="display: none;">
