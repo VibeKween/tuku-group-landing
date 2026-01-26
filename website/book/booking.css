@@ -370,6 +370,11 @@ h2 {
   color: var(--color-grey-light);
 }
 
+.form-group label .required {
+  color: var(--color-error);
+  font-weight: 400;
+}
+
 .form-group input,
 .form-group textarea {
   width: 100%;
