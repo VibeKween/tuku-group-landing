@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule a Conversation - TUKU GROUP</title>
+  <meta name="description" content="Book a 30-minute conversation with TUKU GROUP to discuss your project and see if we're the right fit.">
+  <meta name="author" content="Tuku Group">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://tukugroup.com/book/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tukugroup.com/book/">
+  <meta property="og:title" content="Schedule a Conversation - TUKU GROUP">
+  <meta property="og:description" content="Book a 30-minute conversation with TUKU GROUP.">
+  <meta property="og:image" content="https://tukugroup.com/images/tuku-group-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+  <!-- Cloud Background -->
+  <div id="cloud-bg"></div>
+
+  <main class="page">
+    <!-- Step 1: Landing -->
+    <section id="step-landing" class="step active">
+      <div class="step-content">
+        <h1>Schedule a conversation</h1>
+        <p class="subhead">A 30-minute call to understand what you're building and whether TUKU is the right fit.</p>
+        <button class="btn-primary" onclick="TUKUBooking.goToStep('calendar')">Select a date</button>
+      </div>
+    </section>
+
+    <!-- Step 2: Calendar -->
+    <section id="step-calendar" class="step">
+      <div class="step-content">
+        <button class="back-link" onclick="TUKUBooking.goToStep('landing')">&larr; Back</button>
+        <h2>Select a date</h2>
+        <div id="calendar-container">
+          <div class="calendar-header">
+            <button class="calendar-nav" id="prev-month" onclick="TUKUBooking.prevMonth()">&larr;</button>
+            <span id="calendar-month-year"></span>
+            <button class="calendar-nav" id="next-month" onclick="TUKUBooking.nextMonth()">&rarr;</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div id="calendar-days" class="calendar-days"></div>
+        </div>
+        <div id="no-availability" class="error-message" style="display: none;">
+          No times available in the next two weeks. Please check back later.
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Time -->
+    <section id="step-time" class="step">
+      <div class="step-content">
+        <button class="back-link" onclick="TUKUBooking.goToStep('calendar')">&larr; Back</button>
+        <h2>Select a time</h2>
+        <p id="selected-date-display" class="date-context"></p>
+        <div id="time-slots" class="time-slots"></div>
+      </div>
+    </section>
+
+    <!-- Step 4: Details -->
+    <section id="step-details" class="step">
+      <div class="step-content">
+        <button class="back-link" onclick="TUKUBooking.goToStep('time')">&larr; Back</button>
+        <h2>Your details</h2>
+        <form id="details-form" onsubmit="return TUKUBooking.submitDetails(event)">
+          <div class="form-group">
+            <label for="booking-name">Name</label>
+            <input type="text" id="booking-name" name="name" required autocomplete="name" placeholder="Your name">
+            <span class="field-error" id="name-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="booking-email">Email</label>
+            <input type="email" id="booking-email" name="email" required autocomplete="email" placeholder="you@example.com">
+            <span class="field-error" id="email-error"></span>
+            <span class="privacy-note">For calendar invite only. No mailing list.</span>
+          </div>
+          <div class="form-group">
+            <label for="booking-context">What would you like to discuss? <span class="optional">(optional)</span></label>
+            <textarea id="booking-context" name="context" rows="3" placeholder="Tell us about your project or what you'd like to explore..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Review booking</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Step 5: Confirm -->
+    <section id="step-confirm" class="step">
+      <div class="step-content">
+        <button class="back-link" onclick="TUKUBooking.goToStep('details')">&larr; Back</button>
+        <h2>Confirm your booking</h2>
+        <div class="booking-summary">
+          <div class="summary-row">
+            <span class="summary-label">Date</span>
+            <span id="confirm-date" class="summary-value"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Time</span>
+            <span id="confirm-time" class="summary-value"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Duration</span>
+            <span class="summary-value">25 minutes</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Name</span>
+            <span id="confirm-name" class="summary-value"></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Email</span>
+            <span id="confirm-email" class="summary-value"></span>
+          </div>
+        </div>
+        <p class="confirm-note">You'll receive a calendar invite with a Google Meet link.</p>
+        <button class="btn-primary" id="confirm-btn" onclick="TUKUBooking.confirmBooking()">Confirm booking</button>
+        <div id="confirm-error" class="error-message" style="display: none;"></div>
+      </div>
+    </section>
+
+    <!-- Step 6: Success -->
+    <section id="step-success" class="step">
+      <div class="step-content">
+        <h2>You're booked</h2>
+        <div class="success-icon">&#10003;</div>
+        <p class="success-message">A calendar invite has been sent to <strong id="success-email"></strong>.</p>
+        <div class="booking-details">
+          <p><strong id="success-date"></strong></p>
+          <p id="success-time"></p>
+        </div>
+        <a href="#" id="manage-link" class="btn-secondary">Manage booking</a>
+        <a href="/" class="link-home">Return to homepage</a>
+      </div>
+    </section>
+
+    <!-- Manage Booking -->
+    <section id="step-manage" class="step">
+      <div class="step-content">
+        <h2>Manage your booking</h2>
+        <div id="manage-loading" class="loading">Loading booking details...</div>
+        <div id="manage-content" style="display: none;">
+          <div class="booking-summary">
+            <div class="summary-row">
+              <span class="summary-label">Booking ID</span>
+              <span id="manage-id" class="summary-value"></span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Date</span>
+              <span id="manage-date" class="summary-value"></span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Time</span>
+              <span id="manage-time" class="summary-value"></span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Status</span>
+              <span id="manage-status" class="summary-value status-confirmed"></span>
+            </div>
+          </div>
+          <div id="manage-actions">
+            <a href="#" id="meet-link" class="btn-primary" target="_blank">Join Google Meet</a>
+            <button class="btn-cancel" id="cancel-btn" onclick="TUKUBooking.cancelBooking()">Cancel booking</button>
+          </div>
+          <div id="manage-past" style="display: none;">
+            <p class="past-note">This booking has already occurred.</p>
+          </div>
+        </div>
+        <div id="manage-error" class="error-message" style="display: none;"></div>
+        <a href="/" class="link-home">Return to homepage</a>
+      </div>
+    </section>
+
+    <!-- Cancelled -->
+    <section id="step-cancelled" class="step">
+      <div class="step-content">
+        <h2>Booking cancelled</h2>
+        <p>Your booking has been cancelled. The calendar invite has been removed.</p>
+        <button class="btn-primary" onclick="TUKUBooking.reset()">Book another time</button>
+        <a href="/" class="link-home">Return to homepage</a>
+      </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 Tuku Group, LLC</p>
+    </footer>
+  </main>
+
+  <script src="../cloud-system-static.js"></script>
+  <script src="booking.js"></script>
+</body>
+</html>

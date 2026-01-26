@@ -1,0 +1,24 @@
+name = "tuku-booking-api"
+main = "worker-bundled.js"
+compatibility_date = "2024-01-01"
+
+# Development
+[env.dev]
+vars = { ENVIRONMENT = "development" }
+
+# Production
+[env.production]
+vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "api.tukugroup.com/*", zone_name = "tukugroup.com" }
+]
+
+# KV Namespace for booking storage
+[[kv_namespaces]]
+binding = "BOOKINGS"
+id = "8ed5805026a643e99f50dff190f13d79"
+
+# Secrets (set via wrangler secret put):
+# - GOOGLE_SERVICE_ACCOUNT_KEY
+# - GOOGLE_CALENDAR_ID
+# - FALON_EMAIL

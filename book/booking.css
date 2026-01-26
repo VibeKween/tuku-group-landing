@@ -1,0 +1,558 @@
+/* ==========================================================================
+   TUKU Booking System Styles
+   Following TUKU design system: JetBrains Mono, blue accents, minimal UI
+   ========================================================================== */
+
+/* CSS Custom Properties */
+:root {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gold: #C19A4B;
+  --color-blue-light: #f0f9ff;
+  --color-blue-medium: #e0f2fe;
+  --color-blue-accent: #5691c8;
+  --color-blue-deep: #4a7ba7;
+  --color-grey: #666666;
+  --color-grey-light: #999999;
+  --color-error: #C19A4B;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  min-height: 100vh;
+}
+
+/* Cloud Background */
+#cloud-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Page Container */
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 20px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Step Sections */
+.step {
+  display: none;
+  flex: 1;
+}
+
+.step.active {
+  display: block;
+}
+
+.step-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Typography */
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.subhead {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-grey);
+  margin-bottom: 32px;
+}
+
+/* Back Link */
+.back-link {
+  display: inline-block;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--color-blue-accent);
+  cursor: pointer;
+  margin-bottom: 24px;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--color-blue-deep);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-white);
+  background-color: var(--color-blue-accent);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-blue-deep);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-grey-light);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-blue-accent);
+  background-color: transparent;
+  border: 1px solid var(--color-blue-accent);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-blue-light);
+}
+
+.btn-cancel {
+  display: inline-block;
+  width: 100%;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-grey);
+  background-color: transparent;
+  border: 1px solid var(--color-grey-light);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.btn-cancel:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.link-home {
+  display: block;
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: var(--color-blue-accent);
+  text-decoration: none;
+}
+
+.link-home:hover {
+  color: var(--color-blue-deep);
+}
+
+/* Calendar */
+#calendar-container {
+  margin-bottom: 24px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-header span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.calendar-nav {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 1.25rem;
+  color: var(--color-blue-accent);
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: color 0.2s ease;
+}
+
+.calendar-nav:hover {
+  color: var(--color-blue-deep);
+}
+
+.calendar-nav:disabled {
+  color: var(--color-grey-light);
+  cursor: not-allowed;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-grey-light);
+  padding: 8px 0;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  background: none;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.calendar-day.available {
+  cursor: pointer;
+  border-color: var(--color-blue-accent);
+  color: var(--color-blue-accent);
+}
+
+.calendar-day.available:hover {
+  background-color: var(--color-blue-light);
+}
+
+.calendar-day.selected {
+  background-color: var(--color-blue-accent);
+  color: var(--color-white);
+  border-color: var(--color-blue-accent);
+}
+
+.calendar-day.unavailable {
+  color: var(--color-grey-light);
+}
+
+.calendar-day.other-month {
+  color: var(--color-grey-light);
+  opacity: 0.5;
+}
+
+/* Time Slots */
+.date-context {
+  font-size: 0.875rem;
+  color: var(--color-grey);
+  margin-bottom: 20px;
+}
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.time-slot {
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  background: none;
+  border: 1px solid var(--color-blue-accent);
+  color: var(--color-blue-accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.time-slot:hover {
+  background-color: var(--color-blue-light);
+}
+
+.time-slot.selected {
+  background-color: var(--color-blue-accent);
+  color: var(--color-white);
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--color-black);
+}
+
+.form-group label .optional {
+  font-weight: 400;
+  color: var(--color-grey-light);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--color-grey-light);
+  background-color: var(--color-white);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-blue-accent);
+  background-color: var(--color-blue-light);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: var(--color-error);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.field-error {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-error);
+  margin-top: 4px;
+  min-height: 1.2em;
+}
+
+.privacy-note {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-grey-light);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* Booking Summary */
+.booking-summary {
+  background-color: var(--color-blue-light);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--color-grey);
+}
+
+.summary-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.status-confirmed {
+  color: var(--color-blue-accent);
+}
+
+.status-cancelled {
+  color: var(--color-error);
+}
+
+.confirm-note {
+  font-size: 0.875rem;
+  color: var(--color-grey);
+  margin-bottom: 24px;
+}
+
+/* Success */
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background-color: var(--color-blue-accent);
+  color: var(--color-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 24px;
+}
+
+.success-message {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.booking-details {
+  text-align: center;
+  background-color: var(--color-blue-light);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.booking-details p {
+  margin: 4px 0;
+}
+
+/* Manage */
+#manage-actions {
+  margin-top: 24px;
+}
+
+.past-note {
+  text-align: center;
+  color: var(--color-grey);
+  font-style: italic;
+}
+
+/* Error & Loading */
+.error-message {
+  color: var(--color-error);
+  font-size: 0.875rem;
+  padding: 12px;
+  background-color: rgba(193, 154, 75, 0.1);
+  margin-top: 16px;
+}
+
+.loading {
+  text-align: center;
+  color: var(--color-grey);
+  padding: 40px 0;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-blue-light);
+  border-top-color: var(--color-blue-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  padding-top: 60px;
+  text-align: center;
+}
+
+.footer p {
+  font-size: 0.75rem;
+  color: var(--color-grey-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: 40px 16px 30px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .time-slots {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-day {
+    font-size: 0.8rem;
+  }
+}
