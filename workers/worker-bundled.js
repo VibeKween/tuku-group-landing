@@ -120,7 +120,7 @@ async function getBusyTimes(accessToken, calendarId, timeMin, timeMax) {
 
 async function createCalendarEvent(accessToken, calendarId, eventDetails) {
   const response = await fetch(
-    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?sendUpdates=all&conferenceDataVersion=1`,
+    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?sendUpdates=none`,
     {
       method: 'POST',
       headers: {
@@ -138,7 +138,7 @@ async function createCalendarEvent(accessToken, calendarId, eventDetails) {
 
 async function deleteCalendarEvent(accessToken, calendarId, eventId) {
   const response = await fetch(
-    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${eventId}?sendUpdates=all`,
+    `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events/${eventId}?sendUpdates=none`,
     {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${accessToken}` },
@@ -388,16 +388,6 @@ async function handleBook(request, env) {
       description: `Booking ID: ${bookingId}\n\nName: ${name.trim()}\nEmail: ${email.trim()}${context ? `\n\nContext:\n${context.trim()}` : ''}\n\nManage booking: https://tukugroup.com/book/?id=${bookingId}`,
       start: { dateTime: slotStart, timeZone: BUSINESS_HOURS.timezone },
       end: { dateTime: slotEnd, timeZone: BUSINESS_HOURS.timezone },
-      attendees: [
-        { email: env.FALON_EMAIL },
-        { email: email.trim() },
-      ],
-      conferenceData: {
-        createRequest: {
-          requestId: bookingId,
-          conferenceSolutionKey: { type: 'hangoutsMeet' },
-        },
-      },
       reminders: {
         useDefault: false,
         overrides: [
