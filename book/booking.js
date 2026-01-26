@@ -449,7 +449,16 @@ const TUKUBooking = (function() {
       statusEl.className = `summary-value status-${data.booking.status}`;
 
       const meetLink = document.getElementById('meet-link');
-      meetLink.href = data.booking.meetLink;
+      const meetPending = document.getElementById('meet-pending');
+
+      if (data.booking.meetLink) {
+        meetLink.href = data.booking.meetLink;
+        meetLink.style.display = 'block';
+        meetPending.style.display = 'none';
+      } else {
+        meetLink.style.display = 'none';
+        meetPending.style.display = 'block';
+      }
 
       const manageActions = document.getElementById('manage-actions');
       const managePast = document.getElementById('manage-past');
