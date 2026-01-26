@@ -462,6 +462,14 @@ const TUKUBooking = (function() {
 
       const manageActions = document.getElementById('manage-actions');
       const managePast = document.getElementById('manage-past');
+      const cancelBtn = document.getElementById('cancel-btn');
+      const cancelViaCalendar = document.getElementById('cancel-via-calendar');
+
+      // Check if booking is older than 4 hours (disable cancel button)
+      const createdAt = new Date(data.booking.createdAt);
+      const now = new Date();
+      const hoursSinceCreation = (now - createdAt) / (1000 * 60 * 60);
+      const canCancelViaButton = hoursSinceCreation < 4;
 
       if (data.booking.isPast) {
         manageActions.style.display = 'none';
@@ -469,6 +477,15 @@ const TUKUBooking = (function() {
       } else {
         manageActions.style.display = 'block';
         managePast.style.display = 'none';
+
+        // Show/hide cancel button based on 4-hour window
+        if (canCancelViaButton) {
+          cancelBtn.style.display = 'block';
+          if (cancelViaCalendar) cancelViaCalendar.style.display = 'none';
+        } else {
+          cancelBtn.style.display = 'none';
+          if (cancelViaCalendar) cancelViaCalendar.style.display = 'block';
+        }
       }
 
       state.managingBookingId = bookingId;
