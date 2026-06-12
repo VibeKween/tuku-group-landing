@@ -1,76 +1,119 @@
-# 01-LANDING-PAGE - Tuku Group
+<div align="center">
 
-Main TUKU GROUP landing page with integrated private payment portal. Dual directory structure for development and production deployment.
+```
+  @@@@@@@       @@@@@@@
+ @@@@@@@@@     @@@@@@@@@
+@@@@@@@@@@@   @@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Craft over noise.
+@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@
+@@@@@@@@@
+@@@@@
+@
+```
 
-## Live Architecture
+</div>
 
-### Public Pages
-- **Homepage** (`/`) - Main manifesto-style landing page
-- **Approach** (`/approach.html`) - Methodology and philosophy page  
-- **Studio** (`/studio.html`) - Public work engagement page
+<div align="center">
+<h2>Independent creative house. Landing page and digital home for tukugroup.com.</h2>
+</div>
 
-### IDEAS Case Studies
-- **IDEAS Hub** (`/ideas/`) - Case studies overview with generative particle system
-- **OF THE CULTURE** (`/ideas/of-the-culture/`) - House brand case study with emergence visualization
-- **[REDACTED]** (`/ideas/redacted/`) - 400-page documentation case study with precision accumulation
-- **INVISIBLE SCAFFOLDING** (`/ideas/invisible-scaffolding/`) - Philosophy methodology with network emergence
+```
+//
+```
 
-### Private Payment Portal
-- **Location**: `/fewer-better-slower/` - Private payment portal with Stripe integration
-- **Public Access**: `/studio/` - Public engagement page (mirrors fewer-better-slower without payment)
-- **Purpose**: Private portal shared selectively, public studio page for general access
-- **Features**: Accordion-style service selection
+**what this is**
 
-## Folder Structure
+The primary web presence for TUKU GROUP - an independent creative house for ventures that matter. Pure HTML, CSS, and vanilla JavaScript. No frameworks. No build tools. No dependencies beyond Google Fonts.
 
-### Root Directory (Production)
-- `index.html` - Main landing page
-- `approach.html` - Philosophy and methodology page
-- `studio.html` - Public engagement page (mirrors fewer-better-slower without payment)
-- `css/` - Production styling
-- `images/` - Production assets and favicon
-- `cloud-system-static.js` - Cloud background system
-- `payment.css` - TUKU blue styling for studio/payment pages
-- `payment.js` - Accordion functionality (non-payment version)
-- `CNAME` - Custom domain configuration (legacy from GitHub Pages)
+What it is not - a template, a CMS-driven site, or a component library. Every page is hand-written and intentional.
 
-### Private Portal
-- `/fewer-better-slower/` - Private payment portal with Stripe integration
-- Accessible only via direct link sharing to qualified leads
-- Full service breakdown with secure payment processing
+```
+//
+```
 
-### Public Studio Page
-- `/studio.html` - Public engagement page accessible at tukugroup.com/studio
-- Mirrors `/fewer-better-slower/` functionality without payment processing
-- Uses same accordion interface and TUKU blue styling
+**site architecture**
 
-### Development Environment
-- `/website/` - Development mirror of root directory
-- Changes made here must be copied to root for production deployment
+The site has three layers - public pages, case studies with generative art, and a private payment portal.
 
-### Business Operations
-- `/operations/` - Business documents and templates
-- `/docs/` - Project documentation and session archives
-- `BRAND-GUIDELINES.txt` - Complete visual identity standards
-- `PROJECT-INSTRUCTIONS-COMPLETE.txt` - TUKU brand voice guidelines
-- `TUKU-PRICING-2025.txt` - Official pricing structure
-- `CLAUDE.md` - Development guidance and deployment process
+| path | purpose |
+|---|---|
+| `/` | manifesto-style homepage with cloud background and split-flap ticker |
+| `/approach.html` | methodology and philosophy |
+| `/studio.html` | public engagement page |
+| `/ideas/` | case studies hub with p5.js particle system |
+| `/ideas/of-the-culture/` | house brand case study - orbital emergence |
+| `/ideas/redacted/` | 400-page documentation case study - precision accumulation |
+| `/ideas/invisible-scaffolding/` | philosophy methodology - network emergence |
+| `/ideas/voyj-discovery/` | pillar discovery engagement |
+| `/fewer-better-slower/` | private payment portal with Stripe integration |
 
-## Deployment Process
+The private portal at `/fewer-better-slower/` is not linked from any public page. It exists for direct sharing to qualified leads only.
 
-**CRITICAL: Dual Directory Requirements**
-1. Make changes in `/website/` directory
-2. Copy changes to root directory for production
-3. Commit both locations to prevent discrepancies
+```
+//
+```
 
-**Hosting**: Cloudflare Pages
-- **Production URL**: https://tukugroup.com
-- **Preview URL**: https://tuku-group-landing.pages.dev
-- **Legacy URL**: https://vibekween.github.io/tuku-group-landing/ (deprecated)
-- **Deployment**: Automatic from main branch via Cloudflare Pages
-- **DNS**: Managed through Cloudflare with nameservers at GoDaddy
+**the stack**
 
-Quick deployment commands:
+```
+html/css/js        no frameworks, no preprocessors
+jetbrains mono     monospace typography via google fonts cdn
+p5.js              generative art on ideas case study pages
+stripe.js          payment processing on private portal
+cloudflare pages   hosting and deployment from main branch
+google analytics   GA4 tracking (G-5KTM9YBETS)
+```
+
+```
+//
+```
+
+**run it**
+
+Static site. Open `index.html` in a browser or use any local server.
+
+1. Clone the repository
+```bash
+git clone https://github.com/VibeKween/tuku-group-landing.git
+cd tuku-group-landing
+```
+
+2. Open locally
+```bash
+open index.html
+```
+
+3. Or use a static server for live reload
+```bash
+python3 -m http.server 8000
+```
+
+For payment portal development, the `/payment/` directory requires Node.js -
+
+```bash
+cd payment
+npm install
+cp .env.example .env
+npm run dev
+```
+
+```
+//
+```
+
+**deployment**
+
+Cloudflare Pages deploys automatically from the main branch.
+
+- Production - https://tukugroup.com
+- Preview - https://tuku-group-landing.pages.dev
+
+The repo has a dual directory structure. Development happens in `/website/`. Production serves from root. Every change requires syncing both locations -
+
 ```bash
 cp website/index.html .
 cp website/approach.html .
@@ -78,85 +121,33 @@ cp -r website/css .
 cp website/cloud-system-static.js .
 ```
 
-## Quick Access
+Commit both locations or the deploy will serve stale files.
 
-- **Live Site**: https://tukugroup.com
-- **Development**: Work in `/website/` then deploy to root
-- **Private Portal**: https://tukugroup.com/fewer-better-slower/
-- **Studio Page**: https://tukugroup.com/studio
-- **Brand Reference**: See brand guidelines and voice standards files
-
-## Key Features
-
-- **Ultra-minimal Design**: Manifesto-style content following "craft over noise"
-- **Cloud Background System**: Subtle animated cloud elements
-- **Split-Flap Display**: Terminal-style project ticker
-- **Enhanced Hero Images**: Object-fit canvas system with mobile-first reliability (Nov 2024)
-- **Generative Art System**: p5.js visualizations across 4 IDEAS case study pages
-- **Private Pricing**: Payment portal only accessible via direct link
-- **Mobile-First**: Responsive design with single breakpoint at 768px
-- **Pure Implementation**: No frameworks, optimal for performance
-- **Optimized Social Sharing**: Compact OG card design matching OF THE CULTURE aesthetic
-
-## Social Sharing (Open Graph)
-
-**OG Image**: `images/tuku-group-og-compact.png` (1200x630px)
-- Uses favicon cloud scaled appropriately for compact share cards
-- Aligned design without visible tail for clean iMessage/Slack presentation
-- Consistent with OF THE CULTURE's compact share card aesthetic
-- File size: ~1.3MB (optimized for social platforms)
-
-**Share Card Preview**:
-When shared on iMessage, Slack, or social media, displays:
-- Compact cloud image (top)
-- "Independent Creative House" (auto-added title)
-- "tukugroup.com" (auto-added URL)
-
-**Technical Details**:
-- Proper 1200x630px OG dimensions (not square like original)
-- Cloud positioned to hide left tail for alignment with text overlay
-- Light gradient background (#e8eef5 to #d8e4f0)
-- Meta tags include both OG and Twitter card support
-
-## Hero Image System (Nov 2024)
-
-### Enhanced Canvas Performance
-The IDEAS section uses an advanced hero image system with p5.js generative art that maintains perfect viewport coverage across all devices without mobile disappearing issues.
-
-**Technical Implementation:**
-```css
-/* Enhanced Hero Container */
-.hero {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100svh; /* Safe viewport height for iOS */
-    contain: layout style paint; /* Performance optimization */
-}
-
-/* Object-Fit Canvas System */
-#hero-art canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-    transform: translateZ(0); /* GPU acceleration */
-}
+```
+//
 ```
 
-**Key Improvements:**
-- ✅ **Mobile Reliability**: Safe viewport height (100svh) prevents iOS Safari issues
-- ✅ **Performance Optimization**: CSS containment and GPU acceleration  
-- ✅ **Cross-Device Consistency**: Object-fit ensures proper scaling
-- ✅ **No Disappearing Issues**: Robust viewport handling on all devices
+**design principles**
 
-### Generative Art Pages
-Each IDEAS case study features custom p5.js visualizations:
-- **IDEAS Hub** (`/ideas/`) - Particle system representing ideas in motion
-- **OF THE CULTURE** - Orbital emergence representing brand development
-- **[REDACTED]** - Precision accumulation for technical documentation
-- **INVISIBLE SCAFFOLDING** - Network connections for methodology philosophy
+```
+craft over noise       every element earns its place
+fewer better slower    restraint as methodology
+manifesto-driven       each section communicates one concept
+declarative tone       statements, not explanations
+massive whitespace     space is a design decision
+mobile-first           single breakpoint at 768px
+pure implementation    no abstractions between intent and output
+```
 
-**Benefits Over Traditional Hero Images:**
-- No background-attachment: fixed issues on mobile
-- Reliable full viewport coverage without layout shifts
-- Enhanced performance through proper canvas handling
-- Maintained generative art functionality with improved stability
+```
+//
+```
+
+**documentation**
+
+Project documentation lives in `/docs/`. Key references -
+
+- [Brand Guidelines](docs/BRAND-GUIDELINES.md) - wordmark, voice, color, positioning
+- [Technical Specs](docs/TECHNICAL-SPECS.md) - typography, layout, CSS architecture, deployment
+
+*A TUKU GROUP project - tukugroup.com*
