@@ -129,11 +129,16 @@
 
     <!-- Static Cloud System - External JS -->
     <script src="cloud-system-static.js"></script>
-    
+
     <script>
         // Cloud system is now handled by external cloud-system-static.js file
         console.log('✅ Main script loaded - static cloud system external');
     </script>
+
+    <!-- Balloon Overlay - Entry point to client archive -->
+    <script src="tuku-balloon.js" defer
+            data-image="images/balloon-smiley.png"
+            data-href="/clients/"></script>
 
     <!-- Main Content Layer -->
     <main class="page">
@@ -296,10 +301,12 @@
                     "OF THE CULTURE",
                     "VOYJ",
                     "SKATE IQ",
+                    "MFSP.IO",
+                    "FULL CHARGE",
+                    "[REDACTED]",
+                    "CRYPTOGAINS",
                     "FIELDBOTZ",
-                    "ISLE OF VERT PUBLISHING",
-                    "PLAIN VANILLE",
-                    "[REDACTED]"
+                    "PLAIN VANILLE"
                 ];
                 this.currentPhraseIndex = 0;
                 this.maxLength = Math.max(...this.phrases.map(phrase => phrase.length));
