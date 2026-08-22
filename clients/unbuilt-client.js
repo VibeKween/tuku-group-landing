@@ -32,6 +32,8 @@
     var adoptEl = document.getElementById('adopt');
     var oopsEl = document.getElementById('oopsLink');
     var footerHomeLink = document.getElementById('footerHomeLink');
+    var flipCardEl = document.getElementById('flipCard');
+    var controlsEl = document.getElementById('controls');
 
     var seed = Math.floor(Math.random() * 1e9);
     var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -76,17 +78,25 @@
     if (reduced) {
       typed1El.textContent = L1;
       typed2El.textContent = L2;
+      if (flipCardEl) flipCardEl.classList.add('flipped');
+      if (controlsEl) controlsEl.classList.add('visible');
       return;
     }
 
+    var typed1Text = document.createTextNode('');
+    var typed2Text = document.createTextNode('');
+    typed1El.appendChild(typed1Text);
+    typed2El.appendChild(typed2Text);
+
+    var flipped = false;
     var ti = 0;
     var timer = setInterval(function () {
       ti += 1;
       var i1 = ti - LEAD;
       var i2 = i1 - L1.length - PAUSE;
 
-      typed1El.textContent = i1 > 0 ? L1.slice(0, Math.min(i1, L1.length)) : '';
-      typed2El.textContent = i2 > 0 ? L2.slice(0, Math.min(i2, L2.length)) : '';
+      typed1Text.data = i1 > 0 ? L1.slice(0, Math.min(i1, L1.length)) : '';
+      typed2Text.data = i2 > 0 ? L2.slice(0, Math.min(i2, L2.length)) : '';
 
       var cursor1 = i1 >= 0 && i1 <= L1.length;
       var cursor2 = i1 > L1.length;
@@ -95,6 +105,14 @@
       if (!cursor1) { var c1 = typed1El.querySelector('.caret'); if (c1) c1.remove(); }
       if (cursor2 && !typed2El.querySelector('.caret')) typed2El.appendChild(makeCaret());
       if (!cursor2) { var c2 = typed2El.querySelector('.caret'); if (c2) c2.remove(); }
+
+      if (i2 === 9 && !flipped) {
+        flipped = true;
+        if (flipCardEl) flipCardEl.classList.add('flipped');
+        setTimeout(function () {
+          if (controlsEl) controlsEl.classList.add('visible');
+        }, 900);
+      }
 
       if (i2 >= L2.length) {
         avatarEl.classList.add('shake');

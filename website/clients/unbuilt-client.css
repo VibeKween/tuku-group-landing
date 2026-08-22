@@ -166,8 +166,43 @@ html, body {
     cursor: pointer;
 }
 
+.flip-card {
+    width: 100%;
+    aspect-ratio: 1;
+    perspective: 1200px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.4, 0.1, 0.2, 1);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-back,
+.flip-card-front {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+    background: #fff;
+}
+
+.flip-card-front {
+    transform: rotateY(180deg);
+}
+
 .avatar {
     width: 100%;
+    height: 100%;
     aspect-ratio: 1;
     line-height: 0;
     transform-origin: 50% 88%;
@@ -188,6 +223,14 @@ html, body {
     align-items: center;
     gap: 18px;
     font-size: 0.8125rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.controls.visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .control {
@@ -257,6 +300,12 @@ html, body {
     }
     .oops-emoji {
         animation: none;
+    }
+    .flip-card-inner {
+        transition: none;
+    }
+    .controls {
+        transition: none;
     }
     .caret {
         animation: none;

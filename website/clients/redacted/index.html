@@ -69,9 +69,16 @@
             </div>
 
             <div class="art">
-                <button type="button" class="avatar" id="avatar" aria-label="Reroll avatar"></button>
-                <div class="controls">
-                    <button type="button" class="control" id="tryAgain">try again</button>
+                <div class="flip-card" id="flipCard">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-back"></div>
+                        <div class="flip-card-front">
+                            <button type="button" class="avatar" id="avatar" aria-label="Reroll avatar"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls" id="controls">
+                    <button type="button" class="control" id="tryAgain">remix</button>
                     <span class="sep">/</span>
                     <button type="button" class="control adopt" id="adopt">adopt</button>
                 </div>
