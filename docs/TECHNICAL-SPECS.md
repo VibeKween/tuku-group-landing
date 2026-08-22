@@ -172,7 +172,9 @@ The field is `pointer-events: none` everywhere except the balloon and its label,
 
 The balloon's label links to `/clients/` - an index of client names, unlisted (`noindex`, not in `sitemap.xml`) but reachable by anyone who follows the balloon. Rows are real links to `/clients/<slug>/`.
 
-Each client slug currently serves the same placeholder page - a typing-animation gag ("You weren't supposed to find this page") paired with a generative animal-avatar toy. The avatar engine (`clients/avatar-gen.js`) is framework-free: a seeded PRNG drives independently-weighted trait layers (ears, snout, eyes, markings, horns, extras), rendered as hand-sketched SVG paths, exportable as a PNG with embedded metadata pointing back to the site. Clicking the avatar or "try again" rerolls it; "adopt" downloads it.
+Each client slug currently serves the same placeholder page - a typing-animation gag ("Oops. You weren't supposed to find this page") paired with a generative animal-avatar toy. The art area starts blank (a card, white on both faces) and flips over via a 3D `rotateY` transform once "Here's an" has been typed on the second line, with the reroll/download controls fading in after the flip completes - skipped entirely under reduced motion, which shows everything settled immediately.
+
+The avatar engine (`clients/avatar-gen.js`) is framework-free: a seeded PRNG drives independently-weighted trait layers (ears, snout, eyes, markings, horns, extras), rendered as hand-sketched SVG paths, exportable as a PNG with embedded metadata pointing back to the site. Clicking the avatar or "remix" rerolls it; "adopt" downloads it.
 
 ```
 slugs           of-the-culture, voyj, skate-iq, mfsp-io, full-charge, redacted, cryptogains
