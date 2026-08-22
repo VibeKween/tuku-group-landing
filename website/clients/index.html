@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Index - TUKU GROUP</title>
+    <meta name="description" content="TUKU Group client index.">
+    <meta name="author" content="Tuku Group">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://tukugroup.com/clients/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tukugroup.com/clients/">
+    <meta property="og:title" content="Client Index - TUKU GROUP">
+    <meta property="og:description" content="TUKU Group client index.">
+    <meta property="og:image" content="https://tukugroup.com/images/tuku-group-og-compact.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="TUKU GROUP">
+    <meta property="og:site_name" content="Tuku Group">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Client Index - TUKU GROUP">
+    <meta name="twitter:description" content="TUKU Group client index.">
+    <meta name="twitter:image" content="https://tukugroup.com/images/tuku-group-og-compact.png">
+    <meta name="twitter:image:alt" content="TUKU GROUP">
+
+    <!-- Theme & Performance -->
+    <meta name="theme-color" content="#000000">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="clients.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5KTM9YBETS');
+    </script>
+</head>
+<body>
+    <main class="page">
+        <section class="block">
+            <h1>Client Index</h1>
+        </section>
+
+        <section class="block">
+            <a class="client-row" href="of-the-culture/" data-client="of-the-culture"><span class="client-num">01</span><span class="client-name">OF THE CULTURE</span></a>
+            <a class="client-row" href="voyj/" data-client="voyj"><span class="client-num">02</span><span class="client-name">VOYJ</span></a>
+            <a class="client-row" href="skate-iq/" data-client="skate-iq"><span class="client-num">03</span><span class="client-name">SKATE IQ</span></a>
+            <a class="client-row" href="mfsp-io/" data-client="mfsp-io"><span class="client-num">04</span><span class="client-name">MFSP.IO</span></a>
+            <a class="client-row" href="full-charge/" data-client="full-charge"><span class="client-num">05</span><span class="client-name">FULL CHARGE</span></a>
+            <a class="client-row" href="redacted/" data-client="redacted"><span class="client-num">06</span><span class="client-name">[REDACTED]</span></a>
+            <a class="client-row" href="cryptogains/" data-client="cryptogains"><span class="client-num">07</span><span class="client-name">CRYPTOGAINS</span></a>
+        </section>
+
+        <footer class="footer">
+            <p>© 2026 <a href="/" id="footerHomeLink">Tuku Group, LLC</a><br>Independent and privately held.</p>
+        </footer>
+    </main>
+
+    <!-- Analytics Event Tracking -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientRows = document.querySelectorAll('.client-row');
+            clientRows.forEach(function(row) {
+                row.addEventListener('click', function() {
+                    gtag('event', 'client_row_click', {
+                        'event_category': 'navigation',
+                        'event_label': row.getAttribute('data-client'),
+                        'page_location': window.location.href
+                    });
+                });
+            });
+
+            const footerHomeLink = document.getElementById('footerHomeLink');
+            if (footerHomeLink) {
+                footerHomeLink.addEventListener('click', function() {
+                    gtag('event', 'nav_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'clients_to_home',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

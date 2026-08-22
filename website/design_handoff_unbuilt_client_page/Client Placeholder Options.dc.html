@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="./avatar-gen.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9e9e7; font-family: 'JetBrains Mono', 'Courier New', monospace; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.6; }
+    @keyframes blinkCursor { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+    @keyframes strobeFlip { 0%, 100% { filter: none; } 50% { filter: invert(1); } }
+    @keyframes spinRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes stripeShift { from { background-position: 0 0; } to { background-position: 0 64px; } }
+    @keyframes pulseRing { 0% { transform: scale(0.2); opacity: 0.9; } 100% { transform: scale(2.6); opacity: 0; } }
+    @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes driftBack { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  </style>
+</helmet>
+
+<div style="padding: 56px 48px 120px; display: flex; flex-direction: column; gap: 72px;">
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 09 — same joke, less machinery</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="9a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">9a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">one animal — no window, no grid, click it</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 0 72px; gap: 60px;">
+          <div style="display: flex; flex-direction: column; gap: 20px; max-width: 460px;">
+            <p style="margin: 0; font-size: 2.25rem; font-weight: 300; letter-spacing: -0.035em; line-height: 1.15; white-space: nowrap;">You weren't supposed<br>to find this page.</p>
+            <p style="margin: 0; font-size: 0.9375rem; line-height: 1.7; opacity: 0.6;">Something is happening back there, but it's not for you.</p>
+            <p style="margin: 0; font-size: 0.9375rem; line-height: 1.7; opacity: 0.6;">Here is an animal instead.</p>
+
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 18px;">
+            <div onClick="{{rerollBig}}" style="cursor: pointer;">{{bigAvatar}}</div>
+            <div style="display: flex; align-items: center; gap: 16px; font-size: 0.8125rem;">
+              <span onClick="{{rerollBig}}" style="cursor: pointer;" style-hover="opacity: 0.45;">try again</span>
+              <span style="opacity: 0.25;">/</span>
+              <span onClick="{{saveBig}}" style="cursor: pointer; opacity: 0.55;" style-hover="opacity: 1;">adopt</span>
+            </div>
+          </div>
+          <p style="position: absolute; left: 72px; bottom: 32px; margin: 0; font-size: 0.6875rem; opacity: 0.35;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+      <div id="9b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">9b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">it's already your profile picture — quiet, one card</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 0 72px; gap: 34px;">
+          <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.24em; opacity: 0.45;">CLIENT 07 — NOT OPEN</p>
+          <p style="margin: 0; font-size: 3rem; font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; max-width: 560px;">You weren't supposed to find this page.</p>
+          <div style="display: flex; align-items: center; gap: 26px;">
+            <div onClick="{{rerollSmall}}" style="cursor: pointer; border-radius: 50%; overflow: hidden; width: 148px; height: 148px; flex: none;">{{smallAvatar}}</div>
+            <div style="display: flex; flex-direction: column; gap: 10px; max-width: 340px;">
+              <p style="margin: 0; font-size: 0.9375rem; line-height: 1.7; opacity: 0.7;">Since you're here, take a face with you. Tap it until one of them is you.</p>
+              <span onClick="{{saveSmall}}" style="font-size: 0.8125rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.6); width: fit-content; padding-bottom: 2px;" style-hover="opacity: 0.6;">download</span>
+            </div>
+          </div>
+          <p style="position: absolute; right: 72px; bottom: 32px; margin: 0; font-size: 0.6875rem; opacity: 0.35;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 08 — the gate as one field · the peephole with something behind it</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="8a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">8a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">password gate, 7c layout — click in and type</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <p style="position: absolute; left: 56px; top: 44px; margin: 0; font-size: 0.75rem; letter-spacing: 0.24em; opacity: 0.55;">CLIENT 07 — RESTRICTED</p>
+          <p style="position: absolute; right: 56px; top: 44px; margin: 0; font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0.4;">ATTEMPTS {{gateCount}}</p>
+
+          <div style="position: absolute; left: 56px; right: 56px; top: 40%; transform: translateY(-50%); pointer-events: none;">
+            <p style="margin: 0 0 14px; font-size: 1.0625rem; letter-spacing: 0.01em; opacity: 0.55;">Say something true and I'll let you in.</p>
+            <p style="margin: 0; font-size: 4.5rem; font-weight: 300; letter-spacing: -0.045em; line-height: 1.1; white-space: nowrap; overflow: hidden;">{{gateText}}<span style="display: inline-block; width: 0.5em; height: 0.86em; background: #fff; vertical-align: -0.08em; margin-left: 0.06em; animation: blinkCursor 1s steps(1) infinite;"></span></p>
+          </div>
+
+          <form onSubmit="{{submitGate}}" style="position: absolute; inset: 0;">
+            <input type="text" value="{{gateText}}" onChange="{{onGate}}" autoFocus="{{true}}" style="position: absolute; left: 0; top: 0; width: 100%; height: 78%; border: none; background: transparent; outline: none; color: transparent; caret-color: transparent; font-family: 'JetBrains Mono', monospace; font-size: 4.5rem; padding: 0 56px; cursor: text;"></input>
+          </form>
+
+          <div style="position: absolute; left: 56px; right: 56px; bottom: 44px; display: flex; flex-direction: column-reverse; gap: 6px; max-height: 150px; overflow: hidden; pointer-events: none;">
+            <sc-for list="{{gateLog}}" as="g" hint-placeholder-count="0">
+              <div style="display: flex; gap: 18px; font-size: 0.8125rem; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 7px;">
+                <span style="opacity: 0.35;">{{g.n}}</span>
+                <span style="opacity: 0.5; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{g.q}}</span>
+                <span>{{g.a}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div id="8b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">8b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">peephole — static copy, something loud going on behind the wall</span>
+        </div>
+        <div onMouseMove="{{onLens}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: none;">
+          <div style="position: absolute; inset: 0; background: #000; overflow: hidden;">
+            <div style="position: absolute; left: 50%; top: 50%; width: 1600px; height: 1600px; margin: -800px 0 0 -800px; background: repeating-conic-gradient(from 0deg, #fff 0deg 6deg, #000 6deg 12deg); animation: spinRays 48s linear infinite;"></div>
+            <div style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,0.9) 0 8px, rgba(0,0,0,0.9) 8px 16px); mix-blend-mode: difference; animation: stripeShift 2.8s linear infinite;"></div>
+            <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.35), rgba(0,0,0,0.9) 62%);"></div>
+            <div style="position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border: 12px solid #fff; border-radius: 50%; animation: pulseRing 3.4s ease-out infinite;"></div>
+            <div style="position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border: 6px solid #fff; border-radius: 50%; animation: pulseRing 3.4s ease-out infinite 1.7s;"></div>
+          </div>
+          <div style="{{lensStyle}}"></div>
+          <div style="position: absolute; left: 60px; top: 68px; z-index: 3; color: #fff; mix-blend-mode: difference; max-width: 660px; display: flex; flex-direction: column; gap: 18px;">
+            <p style="margin: 0; font-size: 2.75rem; font-weight: 300; letter-spacing: -0.035em; line-height: 1.1;">You weren't supposed<br>to find this page.</p>
+            <p style="margin: 0; font-size: 1.125rem; line-height: 1.6; opacity: 0.85;">Something is happening back there,<br>but it's not for you.</p>
+          </div>
+          <div style="position: absolute; left: 60px; bottom: 62px; z-index: 3; color: #fff; mix-blend-mode: difference; max-width: 560px; display: flex; flex-direction: column; gap: 14px;">
+            <p style="margin: 0; font-size: 0.875rem; line-height: 1.65; opacity: 0.8;">But since you're here, here's a machine to play with.</p>
+            <span onClick="{{openToy}}" style="font-size: 1.0625rem; font-weight: 300; letter-spacing: -0.02em; cursor: pointer; width: fit-content; border-bottom: 2px solid #fff; padding-bottom: 3px;" style-hover="opacity: 0.6; letter-spacing: 0.01em;">make an animal ⟶</span>
+          </div>
+          <sc-if value="{{toyOpen}}" hint-placeholder-val="{{false}}">
+            <div style="position: absolute; left: 96px; top: 78px; width: 812px; height: 452px; z-index: 6; background: #fff; border: 1px solid #000; box-shadow: 0 30px 70px rgba(0,0,0,0.5); display: flex; flex-direction: column; clip-path: polygon(0 0, calc(100% - 46px) 0, 100% 46px, 100% 100%, 46px 100%, 0 calc(100% - 46px));">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-bottom: 1px solid #000; font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase;">
+                <span>avatar machine</span>
+                <span onClick="{{closeToy}}" style="cursor: pointer; border: 1px solid #000; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; line-height: 1;" style-hover="background: #000; color: #fff;">✕</span>
+              </div>
+              <iframe src="./Avatar Machine.html" style="flex: 1; width: 100%; border: none;"></iframe>
+            </div>
+          </sc-if>
+          <p style="position: absolute; right: 30px; bottom: 26px; margin: 0; font-size: 0.6875rem; color: #fff; mix-blend-mode: difference; opacity: 0.6; z-index: 3;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 07 — the browser is the material</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="7a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">7a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the page is a clock — the number is the whole design</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <p style="position: absolute; left: -30px; top: 300px; margin: 0; transform: translateY(-50%); font-family: 'Archivo Black', sans-serif; font-size: 23rem; line-height: 0.68; letter-spacing: -0.06em; white-space: nowrap;">{{cdBig}}</p>
+          <p style="position: absolute; right: 56px; top: 92px; margin: 0; font-size: 0.75rem; letter-spacing: 0.34em; text-transform: uppercase; text-align: right;">days</p>
+          <p style="position: absolute; right: 56px; top: 120px; margin: 0; font-size: 1.125rem; letter-spacing: 0.08em; text-align: right;">{{cdSmall}}</p>
+          <p style="position: absolute; right: 56px; bottom: 78px; margin: 0; width: 300px; text-align: right; font-size: 0.875rem; line-height: 1.65;">This opens when the number does.<br><span style="opacity: 0.5;">Not before, and not for asking.</span></p>
+          <p style="position: absolute; right: 56px; bottom: 36px; margin: 0; font-size: 0.6875rem; opacity: 0.4;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+      <div id="7b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">7b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the drop — scroll as far as you like (scroll inside it)</span>
+        </div>
+        <div onScroll="{{onScrollVoid}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow-y: auto; position: relative;">
+          <div style="position: relative; height: 6200px;">
+            <p style="position: absolute; left: 64px; top: 120px; margin: 0; font-size: 3rem; font-weight: 300; letter-spacing: -0.035em; line-height: 1.05; max-width: 620px;">There is nothing<br>below this.</p>
+            <sc-for list="{{voidMarks}}" as="m" hint-placeholder-count="5">
+              <p style="{{m.style}}">{{m.t}}</p>
+            </sc-for>
+            <p style="position: absolute; left: 64px; top: 6040px; margin: 0; font-size: 0.75rem; opacity: 0.4;">© 2026 Tuku Group, LLC.</p>
+          </div>
+          <div style="position: sticky; bottom: 0; float: right; margin-right: 26px; background: #fff; padding: 8px 10px; font-size: 0.6875rem; letter-spacing: 0.08em;">{{voidMeters}} travelled · 0 found</div>
+        </div>
+      </div>
+
+      <div id="7c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">7c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the whole page is one field — type and press enter</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <form onSubmit="{{submitGuess}}" style="position: absolute; inset: 0;">
+            <input type="text" value="{{guess}}" onChange="{{onGuess}}" placeholder="say the word" style="position: absolute; left: 0; top: 40%; transform: translateY(-50%); width: 100%; border: none; background: transparent; outline: none; color: #fff; font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 5.5rem; letter-spacing: -0.05em; padding: 0 56px; caret-color: #fff;"></input>
+          </form>
+          <div style="position: absolute; left: 56px; right: 56px; bottom: 48px; display: flex; flex-direction: column-reverse; gap: 6px; max-height: 190px; overflow: hidden;">
+            <sc-for list="{{attempts}}" as="a" hint-placeholder-count="0">
+              <div style="display: flex; gap: 18px; font-size: 0.8125rem; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 7px;">
+                <span style="opacity: 0.35;">{{a.n}}</span>
+                <span style="opacity: 0.55; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{a.q}}</span>
+                <span>{{a.a}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="position: absolute; right: 56px; top: 40px; margin: 0; font-size: 0.6875rem; letter-spacing: 0.2em; opacity: 0.5;">ATTEMPTS {{attemptCount}}</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 06 — same erase, off the slide grid</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="6a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">6a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">raked — text on a diagonal, cropped by the frame</span>
+        </div>
+        <div onMouseMove="{{onDiag}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; left: -30px; top: 690px; margin: 0; transform-origin: 0 0; transform: rotate(-90deg); font-size: 15rem; font-weight: 300; letter-spacing: -0.06em; line-height: 0.72; opacity: 0.07; white-space: nowrap;">PRIVATE</p>
+          <sc-for list="{{diagChars}}" as="g" hint-placeholder-count="180">
+            <span style="{{g.style}}">{{g.t}}</span>
+          </sc-for>
+          <p style="position: absolute; right: -8px; top: 40px; margin: 0; transform: rotate(90deg); transform-origin: 100% 0; font-size: 0.6875rem; letter-spacing: 0.32em; text-transform: uppercase;">careful — it does not come back</p>
+          <p onClick="{{resetDiag}}" style="position: absolute; left: 28px; bottom: 22px; margin: 0; font-size: 0.6875rem; opacity: 0.6; cursor: pointer; background: #fff; padding: 5px 9px;">{{diagPct}}% / restore</p>
+        </div>
+      </div>
+
+      <div id="6b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">6b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">seal — concentric rings you rub away</span>
+        </div>
+        <div onMouseMove="{{onRing}}" style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <sc-for list="{{ringChars}}" as="g" hint-placeholder-count="180">
+            <span style="{{g.style}}">{{g.t}}</span>
+          </sc-for>
+          <p style="position: absolute; left: 500px; top: 316px; margin: 0; transform: translate(-50%, -50%); font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase;">sealed</p>
+          <p style="position: absolute; left: 500px; top: 348px; margin: 0; transform: translate(-50%, -50%); font-size: 0.6875rem; opacity: 0.45;">{{ringPct}}% intact</p>
+          <p onClick="{{resetRing}}" style="position: absolute; right: 26px; bottom: 22px; margin: 0; font-size: 0.6875rem; opacity: 0.45; cursor: pointer;">re-seal</p>
+        </div>
+      </div>
+
+      <div id="6c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">6c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">margin — the page hides in its own gutter</span>
+        </div>
+        <div onMouseMove="{{onEdge}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; left: -44px; top: 300px; margin: 0; transform: translateY(-50%); font-size: 13rem; font-weight: 300; letter-spacing: -0.07em; line-height: 0.78; white-space: nowrap;">no.</p>
+          <div style="position: absolute; left: 40px; top: 470px; width: 320px; height: 1px; background: #000;"></div>
+          <p style="position: absolute; left: 40px; top: 494px; margin: 0; font-size: 0.8125rem; line-height: 1.7; max-width: 300px; opacity: 0.55;">The rest of it is over there, in the margin, going away as you reach for it.</p>
+          <sc-for list="{{edgeChars}}" as="g" hint-placeholder-count="180">
+            <span style="{{g.style}}">{{g.t}}</span>
+          </sc-for>
+          <p onClick="{{resetEdge}}" style="position: absolute; left: 40px; bottom: 26px; margin: 0; font-size: 0.6875rem; opacity: 0.5; cursor: pointer;">{{edgePct}}% / put it back</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 05 — 4a, three copy directions (no terminal voice)</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="5a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">5a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">plain warning</span>
+        </div>
+        <div onMouseMove="{{onEraseA}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; top: 52px; left: 60px; margin: 0; font-size: 1.75rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.15;">Careful.</p>
+          <p style="position: absolute; top: 104px; left: 60px; margin: 0; font-size: 0.8125rem; letter-spacing: 0.02em; opacity: 0.5;">Everything your cursor touches is gone for good.</p>
+          <p style="position: absolute; top: 210px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre;">{{wipeA}}</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.5;">
+            <span onClick="{{resetA}}" style="cursor: pointer;">restore — {{pctA}}%</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="5b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">5b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">house rule</span>
+        </div>
+        <div onMouseMove="{{onEraseB}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; top: 52px; left: 60px; margin: 0; font-size: 1.75rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.15;">This page keeps nothing.</p>
+          <p style="position: absolute; top: 104px; left: 60px; margin: 0; font-size: 0.8125rem; letter-spacing: 0.02em; opacity: 0.5;">Read what you can. It is not being saved for you.</p>
+          <p style="position: absolute; top: 210px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre;">{{wipeB}}</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.5;">
+            <span onClick="{{resetB}}" style="cursor: pointer;">start again — {{pctB}}%</span>
+            <span>Tuku Group, LLC. Independent and privately held.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="5c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">5c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">flat statement</span>
+        </div>
+        <div onMouseMove="{{onEraseC}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; top: 52px; left: 60px; margin: 0; font-size: 1.75rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.15;">You weren't supposed to find this.</p>
+          <p style="position: absolute; top: 104px; left: 60px; margin: 0; font-size: 0.8125rem; letter-spacing: 0.02em; opacity: 0.5;">So we are taking it back as you go.</p>
+          <p style="position: absolute; top: 210px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre;">{{wipeC}}</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.5;">
+            <span onClick="{{resetC}}" style="cursor: pointer;">undo — {{pctC}}%</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 04 — the erasure, four ways</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="4a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">4a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">you are the eraser — the cursor wipes what it touches</span>
+        </div>
+        <div onMouseMove="{{onErase}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: crosshair;">
+          <p style="position: absolute; top: 44px; left: 60px; margin: 0; font-size: 0.875rem;">{{typedJ}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="position: absolute; top: 150px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre; letter-spacing: 0;">{{wiped}}</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.5;">
+            <span onClick="{{resetWipe}}" style="cursor: pointer;">↺ put it back ({{wipePct}}% left)</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="4b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">4b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">redaction crawl — words become bars, top to bottom</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <p style="position: absolute; top: 44px; left: 60px; margin: 0; font-size: 0.875rem;">{{typedK}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="position: absolute; top: 150px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre;">{{redacted}}</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.5;">
+            <span>REDACTING — {{redactPct}}% CLEAR</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="4c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">4c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">last line standing — everything decays but the point</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <p style="position: absolute; top: 44px; left: 60px; margin: 0; font-size: 0.875rem; opacity: 0.75;">{{typedL}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="position: absolute; top: 140px; left: 60px; margin: 0; font-size: 20px; font-weight: 300; line-height: 32px; white-space: pre; opacity: 0.62;">{{noised}}</p>
+          <p style="position: absolute; left: 60px; bottom: 96px; margin: 0; font-size: 2.75rem; font-weight: 300; letter-spacing: -0.035em;">mind your business.</p>
+          <div style="position: absolute; left: 60px; right: 60px; bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.45;">
+            <span>everything else is temporary</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 03 — pushed further</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="3a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">3a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">self-erasing — the page eats itself while you read it</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: flex; flex-direction: column; padding: 56px 60px;">
+          <p style="margin: 0 0 40px; font-size: 0.875rem;">{{typedG}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="margin: 0; font-size: 1.5rem; font-weight: 300; line-height: 1.6; letter-spacing: -0.01em; white-space: pre; max-width: none; width: max-content; font-variant-ligatures: none;">{{eroded}}</p>
+          <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.45;">
+            <span>{{erodePct}}% remaining</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="3b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">3b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the only file here is yours</span>
+        </div>
+        <div onMouseMove="{{onWatch}}" onClick="{{onWatchClick}}" style="width: 1000px; height: 640px; background: #000; color: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: flex; flex-direction: column; padding: 56px 60px;">
+          <p style="margin: 0 0 auto; font-size: 0.875rem; opacity: 0.8;">{{typedH}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="margin: 0 0 34px; font-size: 2.75rem; font-weight: 300; letter-spacing: -0.035em; line-height: 1.05;">There's no file on this<br>client. There's one on you.</p>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px; max-width: 760px;">
+            <sc-for list="{{dossier}}" as="d" hint-placeholder-count="8">
+              <div style="display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.16); font-size: 0.8125rem;">
+                <span style="opacity: 0.5; letter-spacing: 0.06em;">{{d.k}}</span>
+                <span style="letter-spacing: 0.04em;">{{d.v}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin: 30px 0 0; font-size: 0.6875rem; opacity: 0.4;">Nothing above leaves this browser. That's more than we can say for most.</p>
+        </div>
+      </div>
+
+      <div id="3c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">3c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">flinch — the words move away from you</span>
+        </div>
+        <div onMouseMove="{{onFlinch}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative;">
+          <p style="position: absolute; top: 26px; left: 30px; margin: 0; font-size: 0.875rem; z-index: 2;">{{typedI}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <sc-for list="{{flinchWords}}" as="w" hint-placeholder-count="9">
+            <span style="{{w.style}}">{{w.t}}</span>
+          </sc-for>
+          <p style="position: absolute; bottom: 26px; left: 30px; margin: 0; font-size: 0.6875rem; opacity: 0.45;">Stop chasing it.</p>
+          <p style="position: absolute; bottom: 26px; right: 30px; margin: 0; font-size: 0.6875rem; opacity: 0.45;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <p style="margin: 0; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.45;">Turn 02 — interactive refusals (move your cursor / type)</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="2a" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">2a</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">peephole — the page is there, you just can't see it</span>
+        </div>
+        <div onMouseMove="{{onLens}}" style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; cursor: none;">
+          <div style="position: absolute; inset: 0; padding: 56px 60px; filter: blur(2.5px); user-select: none;">
+            <p style="margin: 0 0 40px; font-size: 0.75rem; letter-spacing: 0.2em;">CLIENT 07 / ENGAGEMENT BRIEF</p>
+            <p style="margin: 0 0 28px; font-size: 3rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1;">████████ ██████</p>
+            <sc-for list="{{ghostLines}}" as="g" hint-placeholder-count="12">
+              <p style="margin: 0 0 11px; font-size: 0.875rem; letter-spacing: 0.04em; color: rgba(0,0,0,0.82);">{{g.t}}</p>
+            </sc-for>
+          </div>
+          <div style="{{lensStyle}}"></div>
+          <p style="position: absolute; top: 26px; left: 30px; margin: 0; font-size: 0.875rem; color: #fff; mix-blend-mode: difference; z-index: 3;">{{typedD}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <p style="position: absolute; bottom: 26px; right: 30px; margin: 0; font-size: 0.6875rem; color: #fff; mix-blend-mode: difference; opacity: 0.7; z-index: 3;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+      <div id="2b" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">2b</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the wall — one sentence, ten thousand times</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: flex; flex-direction: column; justify-content: center; gap: 3px;">
+          <sc-for list="{{wallRows}}" as="row" hint-placeholder-count="26">
+            <div style="white-space: nowrap; overflow: hidden;">
+              <div style="{{row.style}}">{{row.t}}</div>
+            </div>
+          </sc-for>
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+            <div style="background: #fff; padding: 44px 52px; display: flex; flex-direction: column; gap: 14px; max-width: 560px;">
+              <p style="margin: 0; font-size: 0.875rem;">{{typedE}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+              <p style="margin: 0; font-size: 2.5rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.05;">Nothing here is<br>addressed to you.</p>
+            </div>
+          </div>
+          <p style="position: absolute; bottom: 20px; left: 24px; margin: 0; font-size: 0.6875rem; background: #fff; padding: 4px 8px; opacity: 0.6;">© 2026 Tuku Group, LLC.</p>
+        </div>
+      </div>
+
+      <div id="2c" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="font-size: 0.7rem; font-weight: 600; border: 1px solid #000; padding: 3px 7px;">2c</span>
+          <span style="font-size: 0.75rem; opacity: 0.55;">the bouncer — it argues back, then leaves</span>
+        </div>
+        <div style="width: 1000px; height: 640px; background: #fff; border: 1px solid rgba(0,0,0,0.16); overflow: hidden; position: relative; display: flex; flex-direction: column; padding: 56px 60px;">
+          <p style="margin: 0 0 44px; font-size: 0.875rem;">{{typedF}}<span style="animation: blinkCursor 0.85s steps(1) infinite;">_</span></p>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 20px; max-width: 620px;">
+            <sc-for list="{{convo}}" as="c" hint-placeholder-count="1">
+              <p style="margin: 0; font-size: 1.375rem; font-weight: 300; line-height: 1.45; letter-spacing: -0.01em; opacity: {{c.o}};">{{c.t}}</p>
+            </sc-for>
+            <sc-if value="{{stillOpen}}" hint-placeholder-val="{{true}}">
+              <form onSubmit="{{sendReply}}" style="display: flex; gap: 12px; align-items: center; margin-top: 8px;">
+                <span style="font-size: 1rem; opacity: 0.35;">you:</span>
+                <input type="text" value="{{reply}}" onChange="{{onReply}}" placeholder="try me" style="flex: 1; border: none; border-bottom: 1px solid #000; background: transparent; font-family: 'JetBrains Mono', monospace; font-size: 1rem; padding: 8px 0; outline: none; color: #000;"></input>
+              </form>
+            </sc-if>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.6875rem; opacity: 0.45;">
+            <span onClick="{{resetConvo}}" style="cursor: pointer;">↺ start over</span>
+            <span>© 2026 Tuku Group, LLC.</span>
+          </div>
+          <sc-if value="{{closed}}" hint-placeholder-val="{{false}}">
+            <div style="position: absolute; inset: 0; background: #000; color: #fff; display: flex; align-items: center; justify-content: center;">
+              <p onClick="{{resetConvo}}" style="margin: 0; font-size: 1.125rem; letter-spacing: 0.18em; cursor: pointer;">DOOR CLOSED.</p>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lineA&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&gt; checking your credentials ... none found.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typed lines&quot;},&quot;lineB&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;// this page is not for you.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typed lines&quot;},&quot;lineC&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;// entry located. access withheld.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Typed lines&quot;},&quot;typeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:55,&quot;min&quot;:20,&quot;max&quot;:160,&quot;step&quot;:5,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Typed lines&quot;}}">
+class Component extends DCLogic {
+  state = { i: 0, mx: 500, my: 320, reply: '', step: 0, e: 0, wx: 500, wy: 320, clicks: 0, secs: 0, fx: 500, fy: 320 };
+
+  static BODY = "This client hired us to make decisions\nin private and announce them later.\nThe page you were expecting will exist\nwhen the work is finished, and not one\nhour before. Until then, every sentence\nhere is scheduled to disappear —\nincluding this one.";
+
+  static REBUFFS = [
+    "You've reached a page that belongs to somebody else.",
+    "That's nice. Still no.",
+    "You're typing to a wall that was built on purpose.",
+    "Last one. Say goodnight."
+  ];
+
+  static FLINCH = [
+    { t: 'not', x: 16, y: 30, s: 5.5 }, { t: 'for', x: 46, y: 30, s: 5.5 },
+    { t: 'you', x: 70, y: 30, s: 5.5 }, { t: 'no', x: 20, y: 55, s: 3.2 },
+    { t: 'still no', x: 40, y: 58, s: 3.2 }, { t: 'go on', x: 68, y: 52, s: 2.2 },
+    { t: 'shoo', x: 30, y: 74, s: 2.2 }, { t: 'private', x: 55, y: 76, s: 2.6 },
+    { t: 'later', x: 78, y: 68, s: 2 }
+  ];
+
+  onLens = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const y = e.clientY - r.top;
+    if (y > r.height * 0.5) return;
+    this.setState({ mx: e.clientX - r.left, my: y });
+  };
+  onWatch = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    this.setState({ wx: Math.round(e.clientX - r.left), wy: Math.round(e.clientY - r.top) });
+  };
+  onWatchClick = () => this.setState(s => ({ clicks: s.clicks + 1 }));
+  onFlinch = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    this.setState({ fx: e.clientX - r.left, fy: e.clientY - r.top });
+  };
+  onReply = (e) => this.setState({ reply: e.target.value });
+  sendReply = (e) => { e.preventDefault(); this.setState(s => ({ step: s.step + 1, reply: '' })); };
+  resetConvo = () => this.setState({ step: 0, reply: '' });
+
+  wiped = new Set();
+  sets = { a: new Set(), b: new Set(), c: new Set() };
+  eraseAt(set, e, y0) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const lines = Component.BODY.split('\n');
+    const cw = 12.02, lh = 32, x0 = 60;
+    let hit = false, k = 0;
+    lines.forEach((ln, li) => {
+      const cy = y0 + li * lh + lh / 2;
+      for (let ci = 0; ci < ln.length; ci++, k++) {
+        if (ln[ci] === ' ' || set.has(k)) continue;
+        const cx = x0 + ci * cw + cw / 2;
+        if (Math.hypot(cx - x, cy - y) < 34) { set.add(k); hit = true; }
+      }
+      k++;
+    });
+    if (hit) this.forceUpdate();
+  }
+  onErase = (e) => this.eraseAt(this.wiped, e, 150);
+  onEraseA = (e) => this.eraseAt(this.sets.a, e, 210);
+  onEraseB = (e) => this.eraseAt(this.sets.b, e, 210);
+  onEraseC = (e) => this.eraseAt(this.sets.c, e, 210);
+  resetWipe = () => { this.wiped = new Set(); this.forceUpdate(); };
+  resetA = () => { this.sets.a = new Set(); this.forceUpdate(); };
+  resetB = () => { this.sets.b = new Set(); this.forceUpdate(); };
+  resetC = () => { this.sets.c = new Set(); this.forceUpdate(); };
+  wipeOf(set) {
+    const chars = Component.BODY.split('');
+    const live = chars.map((c, n) => n).filter(n => chars[n] !== '\n' && chars[n] !== ' ');
+    return {
+      text: chars.map((c, n) => (set.has(n) ? ' ' : c)).join(''),
+      pct: Math.round((live.filter(n => !set.has(n)).length / live.length) * 100)
+    };
+  }
+
+  variants() {
+    const body = Component.BODY;
+    const chars = body.split('');
+    const live = chars.map((c, n) => n).filter(n => chars[n] !== '\n' && chars[n] !== ' ');
+    const wipe = chars.map((c, n) => (this.wiped.has(n) ? ' ' : c)).join('');
+    const wipeLeft = live.filter(n => !this.wiped.has(n)).length;
+
+    const e = this.state.e;
+    const seqLimit = Math.min(e, live.length);
+    let seen = 0;
+    const red = chars.map((c, n) => {
+      if (c === '\n') return c;
+      if (c === ' ') return c;
+      seen++;
+      return seen <= seqLimit ? '\u2588' : c;
+    }).join('');
+
+    const noiseGlyphs = '#%&$@*/\\|=+-~';
+    const nz = chars.map((c, n) => {
+      if (c === '\n' || c === ' ') return c;
+      const phase = (n * 37 + e * 3) % 260;
+      if (phase < 40) return noiseGlyphs[(n + e) % noiseGlyphs.length];
+      if (phase < 70) return ' ';
+      return c;
+    }).join('');
+
+    return {
+      wiped: wipe,
+      wipePct: Math.round((wipeLeft / live.length) * 100),
+      redacted: red,
+      redactPct: Math.max(0, Math.round(((live.length - seqLimit) / live.length) * 100)),
+      noised: nz,
+      diagChars: this.glyphList('diag', this.charSets.d), diagPct: this.glyphPct('diag', this.charSets.d),
+      ringChars: this.glyphList('ring', this.charSets.e2), ringPct: this.glyphPct('ring', this.charSets.e2),
+      edgeChars: this.glyphList('edge', this.charSets.f), edgePct: this.glyphPct('edge', this.charSets.f),
+      onDiag: this.onDiag, onRing: this.onRing, onEdge: this.onEdge,
+      resetDiag: this.resetDiag, resetRing: this.resetRing, resetEdge: this.resetEdge,
+      cdBig: this.countdown().big, cdSmall: this.countdown().small,
+      guess: this.guess, onGuess: this.onGuess, submitGuess: this.submitGuess,
+      attempts: this.attempts.map((a, n) => ({ q: a.q, a: a.a, n: String(this.attempts.length - n).padStart(2, '0') })),
+      attemptCount: String(this.attempts.length).padStart(2, '0'),
+      ...this.voidVals(),
+      onScrollVoid: this.onScrollVoid,
+      gateText: this.gateText, onGate: this.onGate, submitGate: this.submitGate,
+      gateLog: this.gateLog.map((g, n) => ({ q: g.q, a: g.a, n: String(this.gateLog.length - n).padStart(2, '0') })),
+      gateCount: String(this.gateLog.length).padStart(2, '0'),
+      toyOpen: this.toyOpen, openToy: this.openToy, closeToy: this.closeToy,
+      bigAvatar: this.svgEl(this.bigSeed, 380), smallAvatar: this.svgEl(this.smallSeed, 148),
+      rerollBig: this.rerollBig, rerollSmall: this.rerollSmall,
+      saveBig: this.savePng(this.bigSeed), saveSmall: this.savePng(this.smallSeed),
+      onErase: this.onErase,
+      resetWipe: this.resetWipe,
+      onEraseA: this.onEraseA, onEraseB: this.onEraseB, onEraseC: this.onEraseC,
+      resetA: this.resetA, resetB: this.resetB, resetC: this.resetC,
+      wipeA: this.wipeOf(this.sets.a).text, pctA: this.wipeOf(this.sets.a).pct,
+      wipeB: this.wipeOf(this.sets.b).text, pctB: this.wipeOf(this.sets.b).pct,
+      wipeC: this.wipeOf(this.sets.c).text, pctC: this.wipeOf(this.sets.c).pct
+    };
+  }
+
+  charSets = { d: new Set(), e2: new Set(), f: new Set() };
+  layouts = {};
+  buildLayout(kind) {
+    if (this.layouts[kind]) return this.layouts[kind];
+    const lines = Component.BODY.split('\n');
+    const out = [];
+    let k = 0;
+    if (kind === 'diag') {
+      const a = -19 * Math.PI / 180, cw = 10.6, lh = 40;
+      const ux = Math.cos(a), uy = Math.sin(a), px = -Math.sin(a), py = Math.cos(a);
+      lines.forEach((ln, li) => {
+        for (let ci = 0; ci < ln.length; ci++, k++) {
+          if (ln[ci] === ' ') continue;
+          out.push({ k, t: ln[ci], size: 19, rot: -19,
+            x: 74 + ux * ci * cw + px * li * lh,
+            y: 268 + uy * ci * cw + py * li * lh });
+        }
+        k++;
+      });
+    } else if (kind === 'ring') {
+      lines.forEach((ln, li) => {
+        const r = 292 - li * 33;
+        const cw = 11.6;
+        const start = -Math.PI / 2 - (ln.length * cw) / (2 * r);
+        for (let ci = 0; ci < ln.length; ci++, k++) {
+          if (ln[ci] === ' ') continue;
+          const th = start + (ci * cw) / r;
+          out.push({ k, t: ln[ci], size: 17, rot: (th * 180) / Math.PI + 90,
+            x: 500 + r * Math.cos(th), y: 330 + r * Math.sin(th) });
+        }
+        k++;
+      });
+    } else {
+      lines.forEach((ln, li) => {
+        for (let ci = 0; ci < ln.length; ci++, k++) {
+          if (ln[ci] === ' ') continue;
+          out.push({ k, t: ln[ci], size: 15, rot: 0,
+            x: 962 - li * 34, y: 600 - ci * 15 });
+        }
+        k++;
+      });
+    }
+    this.layouts[kind] = out;
+    return out;
+  }
+  eraseChars(kind, set, e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const glyphs = this.buildLayout(kind);
+    let hit = false;
+    for (const g of glyphs) {
+      if (set.has(g.k)) continue;
+      if (Math.hypot(g.x - x, g.y - y) < 30) { set.add(g.k); hit = true; }
+    }
+    if (hit) this.forceUpdate();
+  }
+  onDiag = (e) => this.eraseChars('diag', this.charSets.d, e);
+  onRing = (e) => this.eraseChars('ring', this.charSets.e2, e);
+  onEdge = (e) => this.eraseChars('edge', this.charSets.f, e);
+  resetDiag = () => { this.charSets.d = new Set(); this.forceUpdate(); };
+  resetRing = () => { this.charSets.e2 = new Set(); this.forceUpdate(); };
+  resetEdge = () => { this.charSets.f = new Set(); this.forceUpdate(); };
+  glyphList(kind, set) {
+    return this.buildLayout(kind).filter(g => !set.has(g.k)).map(g => ({
+      t: g.t,
+      style: `position:absolute;left:${g.x.toFixed(1)}px;top:${g.y.toFixed(1)}px;font-size:${g.size}px;font-weight:300;line-height:1;transform:translate(-50%,-50%) rotate(${g.rot.toFixed(1)}deg);pointer-events:none;`
+    }));
+  }
+  glyphPct(kind, set) {
+    const n = this.buildLayout(kind).length;
+    return Math.round(((n - set.size) / n) * 100);
+  }
+
+  attempts = [];
+  guess = '';
+  scrollTop = 0;
+  now = Date.now();
+  onGuess = (e) => { this.guess = e.target.value; this.forceUpdate(); };
+  submitGuess = (e) => {
+    e.preventDefault();
+    const replies = ['no.', 'not that either.', 'colder.', 'you are guessing.', 'the door has not moved.', 'still no.'];
+    if (this.guess.trim()) this.attempts.unshift({ q: this.guess.trim(), a: replies[this.attempts.length % replies.length] });
+    this.guess = '';
+    this.forceUpdate();
+  };
+  onScrollVoid = (e) => { this.scrollTop = e.currentTarget.scrollTop; this.forceUpdate(); };
+  countdown() {
+    const target = new Date(this.props.openDate ?? '2026-12-01T09:00:00').getTime();
+    let s = Math.max(0, Math.floor((target - this.now) / 1000));
+    const d = Math.floor(s / 86400); s -= d * 86400;
+    const h = Math.floor(s / 3600); s -= h * 3600;
+    const m = Math.floor(s / 60); s -= m * 60;
+    const p = n => String(n).padStart(2, '0');
+    return { big: String(d), small: p(h) + ':' + p(m) + ':' + p(s) };
+  }
+  voidVals() {
+    const px = this.scrollTop;
+    const meters = (px / 3780).toFixed(2);
+    const marks = [
+      { at: 700, t: 'still nothing.' },
+      { at: 1600, t: 'you are very committed to this.' },
+      { at: 2700, t: 'the page is not further down. it is not anywhere.' },
+      { at: 4000, t: 'go on then. keep going.' },
+      { at: 5200, t: 'that is the end. it was the same as the start.' }
+    ];
+    return {
+      voidMeters: meters + ' m',
+      voidMarks: marks.map(mk => ({ t: mk.t, style: 'position:absolute;left:64px;top:' + mk.at + 'px;margin:0;font-size:0.9375rem;opacity:' + (px > mk.at - 520 ? 0.75 : 0.06) + ';transition:opacity 0.5s ease;' }))
+    };
+  }
+
+  toyOpen = false;
+  openToy = () => { this.toyOpen = true; this.forceUpdate(); };
+  closeToy = () => { this.toyOpen = false; this.forceUpdate(); };
+  gateText = '';
+  gateLog = [];
+  onGate = (e) => { this.gateText = e.target.value; this.forceUpdate(); };
+  submitGate = (e) => {
+    e.preventDefault();
+    const replies = ['that is not true.', 'nearly. no.', 'try being honest.', 'the door disagrees.', 'no.'];
+    const v = this.gateText.trim();
+    if (v) this.gateLog.unshift({ q: v, a: replies[this.gateLog.length % replies.length] });
+    this.gateText = '';
+    this.forceUpdate();
+  };
+
+  bigSeed = Math.floor(Math.random() * 1e9);
+  smallSeed = Math.floor(Math.random() * 1e9);
+  rerollBig = () => { this.bigSeed = Math.floor(Math.random() * 1e9); this.forceUpdate(); };
+  rerollSmall = () => { this.smallSeed = Math.floor(Math.random() * 1e9); this.forceUpdate(); };
+  svgEl(seed, size) {
+    const gen = window.AvatarGen;
+    const html = gen ? gen.avatar(seed) : '';
+    return React.createElement('div', {
+      style: { width: size, height: size, lineHeight: 0 },
+      dangerouslySetInnerHTML: { __html: html }
+    });
+  }
+  savePng = (seed) => () => {
+    if (window.AvatarGen && window.AvatarGen.download) window.AvatarGen.download(seed, 1024);
+  };
+
+  lines() {
+    return [
+      this.props.lineA ?? '> checking your credentials ... none found.',
+      this.props.lineB ?? '// this page is not for you.',
+      this.props.lineC ?? '// entry located. access withheld.'
+    ];
+  }
+  componentDidMount() {
+    const max = Math.max(...this.lines().map(l => l.length));
+    this.t = setInterval(() => {
+      this.setState(s => ({ i: s.i > max + 26 ? 0 : s.i + 1 }));
+    }, this.props.typeSpeed ?? 55);
+    const body = Component.BODY;
+    this.order = body.split('').map((ch, n) => n).filter(n => body[n] !== '\n');
+    for (let n = this.order.length - 1; n > 0; n--) {
+      const j = Math.floor(Math.random() * (n + 1));
+      [this.order[n], this.order[j]] = [this.order[j], this.order[n]];
+    }
+    this.t2 = setInterval(() => {
+      this.setState(s => ({ e: s.e >= this.order.length + 30 ? 0 : s.e + 2 }));
+    }, 70);
+    this.t3 = setInterval(() => { this.now = Date.now(); this.setState(s => ({ secs: s.secs + 1 })); }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.t); clearInterval(this.t2); clearInterval(this.t3); }
+  erosion() {
+    const body = Component.BODY;
+    if (!this.order) return { eroded: body, erodePct: 100 };
+    const gone = new Set(this.order.slice(0, Math.min(this.state.e, this.order.length)));
+    const chars = body.split('').map((ch, n) => (gone.has(n) ? ' ' : ch));
+    const left = this.order.length - gone.size;
+    return { eroded: chars.join(''), erodePct: Math.round((left / this.order.length) * 100) };
+  }
+  dossier() {
+    const { wx, wy, clicks, secs } = this.state;
+    const pad = n => String(n).padStart(2, '0');
+    return [
+      { k: 'CURSOR', v: wx + ' × ' + wy },
+      { k: 'TIME ON PAGE', v: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60) },
+      { k: 'CLICKS SPENT HERE', v: String(clicks).padStart(3, '0') },
+      { k: 'LOCAL TIME', v: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) },
+      { k: 'LANGUAGE', v: (navigator.language || '—').toUpperCase() },
+      { k: 'SCREEN', v: window.screen.width + ' × ' + window.screen.height },
+      { k: 'PATIENCE', v: secs > 20 ? 'CONSIDERABLE' : secs > 8 ? 'HOLDING' : 'UNTESTED' },
+      { k: 'CLEARANCE', v: 'NONE' }
+    ];
+  }
+  flinch() {
+    const { fx, fy } = this.state;
+    return Component.FLINCH.map(w => {
+      const px = (w.x / 100) * 1000, py = (w.y / 100) * 640;
+      const dx = px - fx, dy = py - fy;
+      const d = Math.hypot(dx, dy) || 1;
+      const push = Math.max(0, 1 - d / 300) * 190;
+      const tx = (dx / d) * push, ty = (dy / d) * push;
+      const op = 1 - Math.max(0, 1 - d / 300) * 0.75;
+      return {
+        t: w.t,
+        style: `position:absolute;left:${w.x}%;top:${w.y}%;font-size:${w.s}rem;font-weight:300;letter-spacing:-0.03em;line-height:1;white-space:nowrap;opacity:${op.toFixed(2)};transform:translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px);transition:transform 0.45s cubic-bezier(0.2,0.8,0.2,1), opacity 0.45s ease;pointer-events:none;`
+      };
+    });
+  }
+  renderVals() {
+    const [a, b, c] = this.lines();
+    const i = this.state.i;
+    const widths = ['62%', '41%', '78%', '54%', '69%', '35%'];
+    const { mx, my, step } = this.state;
+    const ghost = ['████ ███████ ██ ████████ ████ ██████ ███', '██████ ████ ███████████ ██ ████ ████████ █████',
+      '███ ██████████ ████ ██ █████ ███████', '█████████ ███ ████ ████████ ██ ███████ ████ ███',
+      '██ ████████ █████ ███████ ████████', '████████ ██ ████ █████████ ███ ██████ ██ ████',
+      '███████ ████ ██ ████████ ███████ █████', '██ ███ ████████ ████████ ██ ███',
+      '█████ ███████ ████ ██████ █████████ ██ ████', '███████ ██ █████ ████ ████████',
+      '████ █████████ ███ ████ ██ ███████ ████', '██████ ███ ████████ █████ ██'];
+    const wall = (this.props.wallPhrase ?? 'MIND YOUR BUSINESS').toUpperCase();
+    const unit = wall + '  ·  ';
+    const conv = [{ t: Component.REBUFFS[0], o: 1 }];
+    for (let n = 1; n <= Math.min(step, 3); n++) conv.push({ t: Component.REBUFFS[n], o: 1 });
+
+    return {
+      typedA: a.slice(0, i),
+      typedB: b.slice(0, i),
+      typedC: c.slice(0, i),
+      typedD: (this.props.lineD ?? '// you may look. you may not enter.').slice(0, i),
+      typedE: (this.props.lineE ?? '// read it as many times as you like.').slice(0, i),
+      typedF: (this.props.lineF ?? '// someone is at the door.').slice(0, i),
+      rows: widths.map((w, n) => ({ num: String(n + 1).padStart(2, '0'), w })),
+      ghostLines: ghost.map(t => ({ t })),
+      lensStyle: `position:absolute;inset:0;z-index:2;background:#fff;-webkit-mask-image:radial-gradient(circle 86px at ${mx}px ${my}px, transparent 0%, transparent 62%, #000 100%);mask-image:radial-gradient(circle 86px at ${mx}px ${my}px, transparent 0%, transparent 62%, #000 100%);`,
+      wallRows: Array.from({ length: 26 }, (_, n) => ({
+        t: unit.repeat(14),
+        style: `display:inline-block;font-size:${n % 3 === 0 ? 13 : 11}px;letter-spacing:0.08em;opacity:${n % 4 === 0 ? 0.9 : 0.42};animation:${n % 2 ? 'driftBack' : 'drift'} ${34 + (n % 7) * 9}s linear infinite;`
+      })),
+      typedG: (this.props.lineG ?? '// this page is on a timer.').slice(0, i),
+      typedH: (this.props.lineH ?? '// observation begins on arrival.').slice(0, i),
+      typedI: (this.props.lineI ?? '// come closer. see what happens.').slice(0, i),
+      ...this.erosion(),
+      dossier: this.dossier(),
+      flinchWords: this.flinch(),
+      onWatch: this.onWatch,
+      onWatchClick: this.onWatchClick,
+      onFlinch: this.onFlinch,
+      typedJ: (this.props.lineJ ?? '// careful. you delete what you touch.').slice(0, i),
+      typedK: (this.props.lineK ?? '// legal has been through it.').slice(0, i),
+      typedL: (this.props.lineL ?? '// signal degrading.').slice(0, i),
+      ...this.variants(),
+      convo: conv,
+      reply: this.state.reply,
+      stillOpen: step < 4,
+      closed: step >= 4,
+      onLens: this.onLens,
+      onReply: this.onReply,
+      sendReply: this.sendReply,
+      resetConvo: this.resetConvo
+    };
+  }
+}
+</script>
+</body>
+</html>

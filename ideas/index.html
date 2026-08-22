@@ -695,7 +695,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 <a href="/">Tuku Group, LLC</a>.<br>Independent and privately held.</p>
+        <p>© 2026 <a href="/" id="footerHomeLink">Tuku Group, LLC</a><br>Independent and privately held.</p>
     </footer>
 
     <script>
@@ -1367,5 +1367,21 @@
 
     </script>
 
+
+    <!-- Footer Home Link Analytics -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var footerHomeLink = document.getElementById('footerHomeLink');
+            if (footerHomeLink && typeof gtag === 'function') {
+                footerHomeLink.addEventListener('click', function() {
+                    gtag('event', 'nav_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'ideas_to_home',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

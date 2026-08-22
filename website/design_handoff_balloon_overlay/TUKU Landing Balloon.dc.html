@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #FFFFFF; }
+    a { color: #000000; }
+    a:hover { opacity: 0.7; }
+    @keyframes tkBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes tkSway { 0%, 100% { transform: rotate(-3.4deg); } 50% { transform: rotate(3.6deg); } }
+    @keyframes tkGradientFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  </style>
+</helmet>
+
+<div style="position: relative; width: 100%; height: 100vh; height: 100dvh; overflow: hidden; background: #FFFFFF;">
+
+  <iframe src="site/index.html" title="tukugroup.com" style="position: absolute; inset: 0; width: 100%; height: 100%; border: none;"></iframe>
+
+  <div ref="{{fieldRef}}" style="position: absolute; inset: 0; z-index: 40; pointer-events: none; overflow: hidden;">
+    <div ref="{{balloonRef}}" style="position: absolute; left: 0; top: 0; will-change: transform;">
+      <div style="animation: tkBob 5.6s ease-in-out infinite;">
+        <div style="position: relative; transform-origin: 50% 12%; animation: tkSway 7.2s ease-in-out infinite alternate;">
+          <img ref="{{imgRef}}" src="balloon-smiley.png" alt="" draggable="{{false}}" onPointerDown="{{onGrab}}" style="{{imgStyle}}" />
+          <a href="Client Archive.dc.html" style="{{linkStyle}}" style-hover="opacity: 0.75;">clients only!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;riseDelay&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:8,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Balloon&quot;},&quot;riseDuration&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:43,&quot;min&quot;:4,&quot;max&quot;:60,&quot;step&quot;:1,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Balloon&quot;},&quot;balloonSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:248,&quot;min&quot;:100,&quot;max&quot;:320,&quot;step&quot;:4,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Balloon&quot;},&quot;breeze&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:6,&quot;min&quot;:0,&quot;max&quot;:40,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Balloon&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.fieldRef = React.createRef();
+    this.balloonRef = React.createRef();
+    this.imgRef = React.createRef();
+    this.phase = 'wait';
+  }
+
+  renderVals() {
+    const size = this.props.balloonSize ?? 248;
+    return {
+      fieldRef: this.fieldRef,
+      balloonRef: this.balloonRef,
+      imgRef: this.imgRef,
+      imgStyle: `display: block; width: min(${size}px, 44vw); height: auto; filter: drop-shadow(0 14px 26px rgba(20,30,50,0.16)); pointer-events: auto; cursor: grab; touch-action: none; user-select: none; -webkit-user-drag: none;`,
+      linkStyle: "position: absolute; left: calc(62% + 6px); bottom: " + Math.round(size * 0.06) + "px; width: 4.6em; line-height: 1.25; pointer-events: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 600; background: linear-gradient(90deg, #D63FB8, #A855F7, #F472B6, #A855F7, #D63FB8); background-size: 300% 100%; background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: underline; text-decoration-color: #D63FB8; text-decoration-thickness: 1px; text-underline-offset: 2px; text-decoration-skip-ink: none; animation: tkGradientFlow 1.5s ease-in-out infinite;",
+      onGrab: (e) => this.grab(e),
+    };
+  }
+
+  componentDidMount() {
+    this.start = performance.now();
+    this.last = this.start;
+    this.seed = [Math.random() * 100, Math.random() * 100, Math.random() * 100];
+    this.vel = { x: 0, y: 0 };
+    this.pos = null;
+    this.onUp = (e) => this.release(e);
+    this.onMove = (e) => this.dragMove(e);
+    window.addEventListener('pointermove', this.onMove);
+    window.addEventListener('pointerup', this.onUp);
+    window.addEventListener('pointercancel', this.onUp);
+    this.loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('pointermove', this.onMove);
+    window.removeEventListener('pointerup', this.onUp);
+    window.removeEventListener('pointercancel', this.onUp);
+  }
+
+  metrics() {
+    const f = this.fieldRef.current;
+    const img = this.imgRef.current;
+    return {
+      W: f ? f.clientWidth : window.innerWidth,
+      H: f ? f.clientHeight : window.innerHeight,
+      bw: img && img.offsetWidth ? img.offsetWidth : (this.props.balloonSize ?? 248),
+      bh: img && img.offsetHeight ? img.offsetHeight : 340,
+    };
+  }
+
+  grab(e) {
+    const m = this.metrics();
+    if (!this.pos) return;
+    this.phase = 'drag';
+    this.grabOff = { x: e.clientX - this.pos.x, y: e.clientY - this.pos.y };
+    this.vel = { x: 0, y: 0 };
+    this.pointerId = e.pointerId;
+    const img = this.imgRef.current;
+    if (img) {
+      img.style.cursor = 'grabbing';
+      try { img.setPointerCapture(e.pointerId); } catch (err) {}
+      img.addEventListener('pointermove', this.onMove);
+      img.addEventListener('pointerup', this.onUp);
+      img.addEventListener('lostpointercapture', this.onUp);
+    }
+    const frame = document.querySelector('iframe');
+    if (frame) frame.style.pointerEvents = 'none';
+    e.preventDefault();
+  }
+
+  dragMove(e) {
+    if (this.phase !== 'drag' || !this.pos) return;
+    const nx = e.clientX - this.grabOff.x;
+    const ny = e.clientY - this.grabOff.y;
+    this.vel.x = (nx - this.pos.x) * 12;
+    this.vel.y = (ny - this.pos.y) * 12;
+    this.pos.x = nx;
+    this.pos.y = ny;
+    this.apply();
+  }
+
+  release() {
+    if (this.phase !== 'drag') return;
+    this.phase = 'parked';
+    this.vel = { x: 0, y: 0 };
+    const img = this.imgRef.current;
+    if (img) {
+      img.style.cursor = 'grab';
+      try { if (this.pointerId != null) img.releasePointerCapture(this.pointerId); } catch (err) {}
+      img.removeEventListener('pointermove', this.onMove);
+      img.removeEventListener('pointerup', this.onUp);
+      img.removeEventListener('lostpointercapture', this.onUp);
+    }
+    this.pointerId = null;
+    const frame = document.querySelector('iframe');
+    if (frame) frame.style.pointerEvents = '';
+  }
+
+  loop(now) {
+    this.raf = requestAnimationFrame(this.loop);
+    const { W, H, bw, bh } = this.metrics();
+    if (!bw || !H) return;
+
+    const pad = 24;
+    const minX = pad;
+    const maxX = Math.max(pad, W - bw - pad - (W < 640 ? 46 : 58));
+    const maxY = H - bh - pad;
+    const restY = pad + 6;
+    const delayMs = (this.props.riseDelay ?? 2) * 1000;
+    const riseMs = (this.props.riseDuration ?? 43) * 1000;
+    const t = now - this.start;
+    const dt = Math.min(0.05, (now - this.last) / 1000);
+    this.last = now;
+
+    if (!this.pos) {
+      this.startX = Math.min(maxX, W * 0.74);
+      this.startY = H + 80;
+      this.pos = { x: this.startX, y: this.startY };
+      this.apply();
+    }
+
+    if (this.phase === 'drag' || this.phase === 'parked') return;
+
+    if (this.phase === 'wait' || this.phase === 'rise') {
+      if (t < delayMs) { this.apply(); return; }
+      this.phase = 'rise';
+      const p = Math.min(1, (t - delayMs) / riseMs);
+      const e = 1 - Math.pow(1 - p, 2.2);
+      const sway = Math.sin(p * Math.PI * 2.4 + this.seed[0]) * (W * 0.045);
+      const prev = { x: this.pos.x, y: this.pos.y };
+      this.pos.y = this.startY + (restY - this.startY) * e;
+      this.pos.x = Math.max(minX, Math.min(maxX, this.startX + sway));
+      if (dt > 0) { this.vel.x = (this.pos.x - prev.x) / dt; this.vel.y = (this.pos.y - prev.y) / dt; }
+      if (p >= 1) { this.phase = 'float'; this.vel.y = 0; }
+      this.apply();
+      return;
+    }
+
+    // float: light breeze around the top band and left side
+    const s = this.seed;
+    const time = t / 1000;
+    const strength = this.props.breeze ?? 6;
+    const bx = Math.sin(time * 0.14 + s[0]) * 0.7 + Math.sin(time * 0.053 + s[1]) * 1.0;
+    const by = Math.sin(time * 0.11 + s[1]) * 0.4 + Math.sin(time * 0.041 + s[2]) * 0.5;
+    this.vel.x += bx * strength * dt;
+    this.vel.y += by * strength * 0.6 * dt;
+
+    // buoyancy holds it near the ceiling
+    this.vel.y -= (this.pos.y - restY) * 0.9 * dt;
+
+    const topBand = H * 0.34;
+    const leftCol = W * 0.3;
+    if (this.pos.y > topBand && this.pos.x > leftCol) {
+      this.vel.y -= (this.pos.y - topBand) * 1.2 * dt;
+      this.vel.x -= (this.pos.x - leftCol) * 0.4 * dt;
+    }
+
+    this.vel.x *= Math.pow(0.5, dt);
+    this.vel.y *= Math.pow(0.5, dt);
+    this.pos.x += this.vel.x * dt;
+    this.pos.y += this.vel.y * dt;
+
+    const bounce = 0.5;
+    if (this.pos.x < minX) { this.pos.x = minX; this.vel.x = Math.abs(this.vel.x) * bounce; }
+    if (this.pos.x > maxX) { this.pos.x = maxX; this.vel.x = -Math.abs(this.vel.x) * bounce; }
+    if (this.pos.y < pad) { this.pos.y = pad; this.vel.y = Math.abs(this.vel.y) * bounce; }
+    if (this.pos.y > maxY) { this.pos.y = maxY; this.vel.y = -Math.abs(this.vel.y) * bounce; }
+
+    this.apply();
+  }
+
+  apply() {
+    const el = this.balloonRef.current;
+    if (el && this.pos) el.style.transform = `translate3d(${this.pos.x.toFixed(1)}px, ${this.pos.y.toFixed(1)}px, 0)`;
+  }
+}
+</script>
+</body>
+</html>

@@ -176,7 +176,7 @@
     </section>
 
     <section class="block footer">
-      <p>© 2026 Tuku Group, LLC.<br>Independent and privately held.</p>
+      <p>© 2026 <a href="/" id="footerHomeLink">Tuku Group, LLC</a><br>Independent and privately held.</p>
       <p style="margin-top: 40px; font-size: 0.85rem; color: #666;">Updated January 2026</p>
     </section>
 
@@ -257,5 +257,21 @@
       });
     });
   </script>
+
+    <!-- Footer Home Link Analytics -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var footerHomeLink = document.getElementById('footerHomeLink');
+            if (footerHomeLink && typeof gtag === 'function') {
+                footerHomeLink.addEventListener('click', function() {
+                    gtag('event', 'nav_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'studio_to_home',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

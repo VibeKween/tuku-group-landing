@@ -196,7 +196,7 @@
         </section>
 
         <section class="block footer">
-            <p>© 2026 Tuku Group, LLC.<br>Independent and privately held.</p>
+            <p>© 2026 Tuku Group, LLC<br>Independent and privately held.</p>
         </section>
 
     </main>
@@ -458,7 +458,19 @@
                     });
                 });
             }
-            
+
+            // Track balloon "clients only!" link clicks
+            const balloonLink = document.querySelector('.tk-balloon-link');
+            if (balloonLink) {
+                balloonLink.addEventListener('click', function() {
+                    gtag('event', 'balloon_link_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'clients_only',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+
             // Track scroll depth milestones
             let scrollDepthTracked = [];
             window.addEventListener('scroll', function() {

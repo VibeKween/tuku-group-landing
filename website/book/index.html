@@ -33,6 +33,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="booking.css">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5KTM9YBETS');
+    </script>
 </head>
 <body>
   <!-- Cloud Background -->
@@ -210,11 +219,27 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2026 Tuku Group, LLC</p>
+      <p>© 2026 <a href="/" id="footerHomeLink">Tuku Group, LLC</a><br>Independent and privately held.</p>
     </footer>
   </main>
 
   <script src="../cloud-system-static.js"></script>
   <script src="booking.js"></script>
+
+    <!-- Footer Home Link Analytics -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var footerHomeLink = document.getElementById('footerHomeLink');
+            if (footerHomeLink && typeof gtag === 'function') {
+                footerHomeLink.addEventListener('click', function() {
+                    gtag('event', 'nav_click', {
+                        'event_category': 'navigation',
+                        'event_label': 'book_to_home',
+                        'page_location': window.location.href
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
