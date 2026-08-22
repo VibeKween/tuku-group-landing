@@ -12,6 +12,7 @@ html, body {
 .unbuilt-page a {
     color: #000;
     text-decoration: none;
+    touch-action: manipulation;
 }
 
 @keyframes blinkCursor {
@@ -164,6 +165,7 @@ html, body {
     color: inherit;
     text-align: inherit;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .flip-card {
