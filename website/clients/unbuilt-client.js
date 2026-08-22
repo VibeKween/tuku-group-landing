@@ -3,9 +3,9 @@
 
   var L1 = "Something is happening back there, but it's not for you.";
   var L2 = "Here's an animal instead.";
-  var LEAD = 56;
-  var PAUSE = 78;
-  var TICK_MS = 34;
+  var LEAD = 35;
+  var PAUSE = 48;
+  var TICK_MS = 55;
 
   function makeCaret() {
     var c = document.createElement('span');
