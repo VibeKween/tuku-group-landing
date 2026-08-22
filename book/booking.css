@@ -556,6 +556,15 @@ h2 {
   color: var(--color-grey-light);
 }
 
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .page {

@@ -2,8 +2,8 @@
   'use strict';
 
   var L1 = "Something is happening back there, but it's not for you.";
-  var L2 = 'Here is an animal instead.';
-  var LEAD = 26;
+  var L2 = "Here's an animal instead.";
+  var LEAD = 56;
   var PAUSE = 78;
   var TICK_MS = 34;
 
@@ -89,7 +89,7 @@
       typed2El.textContent = i2 > 0 ? L2.slice(0, Math.min(i2, L2.length)) : '';
 
       var cursor1 = i1 >= 0 && i1 <= L1.length;
-      var cursor2 = i1 > L1.length && i2 < L2.length;
+      var cursor2 = i1 > L1.length;
 
       if (cursor1 && !typed1El.querySelector('.caret')) typed1El.appendChild(makeCaret());
       if (!cursor1) { var c1 = typed1El.querySelector('.caret'); if (c1) c1.remove(); }

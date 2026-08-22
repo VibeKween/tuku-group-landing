@@ -150,6 +150,42 @@ This component lives in the main `index.html` and is self-contained.
 //
 ```
 
+**balloon overlay**
+
+`tuku-balloon.js` mounts a fixed-position overlay on the homepage - a smiley balloon that rises from below the fold after a short delay, drifts near the top-right on a soft physics-based breeze, and can be dragged and left wherever the visitor drops it. Dependency-free, framework-free, ~6KB.
+
+```
+rise           2s delay, then 43s ease from below the fold to a 30px top rest
+float          layered sine breeze + spring pull toward rest + edge bounce
+bob / sway     5.6s vertical bob, 7.2s rotational sway, both CSS keyframes
+label          "clients only!" - animated gradient text-fill, links to /clients/
+reduced motion respected - static resting position, no physics, no drag
+```
+
+The field is `pointer-events: none` everywhere except the balloon and its label, so the rest of the page stays fully interactive. Mounts via `TukuBalloon.mount({...})` or auto-mounts from `data-*` attributes on its own `<script>` tag - see the tag in `index.html` for the current configuration.
+
+```
+//
+```
+
+**client archive**
+
+The balloon's label links to `/clients/` - an index of client names, unlisted (`noindex`, not in `sitemap.xml`) but reachable by anyone who follows the balloon. Rows are real links to `/clients/<slug>/`.
+
+Each client slug currently serves the same placeholder page - a typing-animation gag ("You weren't supposed to find this page") paired with a generative animal-avatar toy. The avatar engine (`clients/avatar-gen.js`) is framework-free: a seeded PRNG drives independently-weighted trait layers (ears, snout, eyes, markings, horns, extras), rendered as hand-sketched SVG paths, exportable as a PNG with embedded metadata pointing back to the site. Clicking the avatar or "try again" rerolls it; "adopt" downloads it.
+
+```
+slugs           of-the-culture, voyj, skate-iq, mfsp-io, full-charge, redacted, cryptogains
+shared assets   clients/avatar-gen.js, unbuilt-client.css, unbuilt-client.js
+per-client      clients/<slug>/index.html - identical body, unique metadata/canonical
+```
+
+As real client rooms get built, each slug's placeholder is replaced with actual content - the URL doesn't change.
+
+```
+//
+```
+
 **generative art system**
 
 The IDEAS case study pages use p5.js for full-viewport generative visualizations. Each page has a unique system -
@@ -242,6 +278,9 @@ cp website/index.html .
 cp website/approach.html .
 cp -r website/css .
 cp website/cloud-system-static.js .
+cp website/tuku-balloon.js .
+cp website/images/balloon-smiley.png images/
+cp -r website/clients .
 ```
 
 Failing to sync means Cloudflare deploys stale root files while `/website/` has the current code.

@@ -256,6 +256,12 @@ a:hover {
   font-size: 0.75rem;
 }
 
+.footer a {
+  font-size: inherit;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .page {

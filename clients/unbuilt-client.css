@@ -215,6 +215,7 @@ html, body {
     align-self: flex-start;
     font-size: 0.6875rem;
     line-height: 1.6;
+    white-space: nowrap;
     opacity: 0.35;
 }
 

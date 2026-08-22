@@ -37,21 +37,24 @@ What it is not - a template, a CMS-driven site, or a component library. Every pa
 
 **site architecture**
 
-The site has three layers - public pages, case studies with generative art, and a private payment portal.
+The site has four layers - public pages, case studies with generative art, an unlisted client archive, and a private payment portal.
 
 | path | purpose |
 |---|---|
-| `/` | manifesto-style homepage with cloud background and split-flap ticker |
+| `/` | manifesto-style homepage with cloud background, split-flap ticker, and the balloon overlay entry point |
 | `/approach.html` | methodology and philosophy |
 | `/studio.html` | public engagement page |
+| `/book/` | scheduling flow for a conversation |
 | `/ideas/` | case studies hub with p5.js particle system |
 | `/ideas/of-the-culture/` | house brand case study - orbital emergence |
 | `/ideas/redacted/` | 400-page documentation case study - precision accumulation |
 | `/ideas/invisible-scaffolding/` | philosophy methodology - network emergence |
 | `/ideas/voyj-discovery/` | pillar discovery engagement |
+| `/clients/` | client archive index - unlisted, `noindex`, not in the sitemap |
+| `/clients/<slug>/` | one page per client; currently all serve a placeholder "unbuilt" gag page with a generative animal-avatar toy, swapped for real content as each room is built |
 | `/fewer-better-slower/` | private payment portal with Stripe integration |
 
-The private portal at `/fewer-better-slower/` is not linked from any public page. It exists for direct sharing to qualified leads only.
+A smiley balloon rises on the homepage after a short delay and drifts near the top-right, carrying a small animated-gradient "clients only!" label that links to `/clients/`. The private portal at `/fewer-better-slower/` is not linked from any public page - it exists for direct sharing to qualified leads only. The client archive is different: it's reachable by anyone who follows the balloon, just not indexed or listed anywhere.
 
 ```
 //

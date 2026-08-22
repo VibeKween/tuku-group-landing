@@ -37,7 +37,7 @@
     '.tk-balloon{position:absolute;left:0;top:0;will-change:transform}',
     '.tk-balloon-bob{animation:tkBob 5.6s ease-in-out infinite}',
     '.tk-balloon-sway{position:relative;transform-origin:50% 12%;animation:tkSway 7.2s ease-in-out infinite alternate}',
-    '.tk-balloon img{display:block;height:auto;filter:drop-shadow(0 14px 26px rgba(20,30,50,.16));pointer-events:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none}',
+    '.tk-balloon img{display:block;height:auto;filter:drop-shadow(0 14px 26px rgba(20,30,50,.16));pointer-events:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-drag:none;transform:translateZ(0);backface-visibility:hidden}',
     '.tk-balloon-link{position:absolute;pointer-events:auto;border-bottom:none;padding-bottom:0;font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;line-height:1.25;width:4.6em;letter-spacing:.06em;font-weight:600;',
     'background:linear-gradient(90deg,#D63FB8,#A855F7,#F472B6,#A855F7,#D63FB8);background-size:300% 100%;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;',
     'text-decoration:underline;text-decoration-color:#D63FB8;text-decoration-thickness:1px;text-underline-offset:2px;text-decoration-skip-ink:none;animation:tkGradientFlow 1.5s ease-in-out infinite}',

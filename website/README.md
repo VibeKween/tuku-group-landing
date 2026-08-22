@@ -1,25 +1,32 @@
 # Website Files - tukugroup.com
 
-Core website files for the live Tuku Group landing page.
+Core website files for the live Tuku Group landing page. This is the **development** tree - see the root-level `CLAUDE.md` for the dual-directory deployment process (changes here must be synced to the repo root before they go live).
 
 ## Files
 
-- `index.html` - Main landing page with manifesto content
-- `cloud-system-static.js` - Static cloud background system with mobile optimizations  
-- `CNAME` - GitHub Pages custom domain configuration
+- `index.html` - Main landing page with manifesto content, split-flap ticker, and the balloon overlay entry point
+- `cloud-system-static.js` - Static cloud background system with mobile optimizations
+- `tuku-balloon.js` - Standalone balloon overlay script (dependency-free) - rises on the homepage and links to `/clients/`
+- `approach.html`, `studio.html`, `services.html` - Public pages
+- `CNAME` - Custom domain configuration
 
 ## Directories
 
-- `css/` - Complete styling system (main.css)
-- `images/` - Site assets, favicon, and visual elements
-- `signals/` - Signals subpage with content management
+- `css/` - Complete styling system (`main.css`)
+- `images/` - Site assets, favicon, balloon artwork, and visual elements
 - `fonts/` - Typography assets (currently empty - using Google Fonts CDN)
+- `signals/` - Signals subpage with content management
+- `book/` - Scheduling flow for a conversation
+- `ideas/` - Case studies hub and individual case study pages (generative art via p5.js)
+- `clients/` - Unlisted client archive (index + per-client placeholder pages) - see `docs/TECHNICAL-SPECS.md` for details
+- `payment/` - Node.js/Express backend for Stripe integration
+- `fewer-better-slower/` - Private payment portal frontend
 
 ## Development
 
-**Local Testing:** Open `index.html` in browser or use live server
-**Live Deployment:** Main branch auto-deploys to https://tukugroup.com
-**CSS System:** JetBrains Mono typography with custom properties
+**Local Testing:** Open `index.html` in browser or use a local static server
+**Live Deployment:** Main branch auto-deploys to https://tukugroup.com via Cloudflare Pages
+**CSS System:** JetBrains Mono typography with custom properties in `css/main.css`
 
 ## Mobile Optimization
 
@@ -31,8 +38,7 @@ Core website files for the live Tuku Group landing page.
 
 ## Important Notes
 
-- Work in dev branch for development
-- Test locally before production deployment  
+- Test locally before production deployment
 - Maintain mobile-first responsive design
 - Preserve ultra-minimal manifesto aesthetic
-- Mobile cloud system automatically optimizes for device performance
+- Every change here must be copied to the repo root and committed alongside it - see `CLAUDE.md` for the exact sync commands

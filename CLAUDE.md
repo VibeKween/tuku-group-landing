@@ -30,6 +30,9 @@ cp website/cloud-system-static.js .
 cp website/favicon.ico .
 cp -r website/fewer-better-slower .
 cp -r website/ideas .
+cp website/tuku-balloon.js .
+cp website/images/balloon-smiley.png images/
+cp -r website/clients .
 ```
 
 ## Site Architecture
@@ -44,6 +47,13 @@ cp -r website/ideas .
 - **OF THE CULTURE** (`/ideas/of-the-culture/`): House brand case study with emergence visualization
 - **[REDACTED]** (`/ideas/redacted/`): 400-page documentation case study with precision accumulation
 - **INVISIBLE SCAFFOLDING** (`/ideas/invisible-scaffolding/`): Philosophy methodology with network emergence
+
+### Client Archive
+- **Entry point**: Balloon overlay on the homepage (`tuku-balloon.js`) — a smiley balloon rises from below the fold, drifts near the top-right, and carries an animated-gradient "clients only!" label linking to `/clients/`
+- **Client Index** (`/clients/`): List of client names, each row a real link to its own permanent slug (`/clients/<slug>/`). `noindex, nofollow`, not in `sitemap.xml` — unlisted-but-public, matching the "clients only!" framing
+- **Client pages** (`/clients/<slug>/`): Currently all serve the same "unbuilt" placeholder — a generative animal-avatar toy (`avatar-gen.js`, framework-free, reused as-is) with a typing-animation gag ("You weren't supposed to find this page") and an "Oops." link back to the index. Real per-client content will replace individual placeholders as those rooms are built
+- **Current client slugs**: `of-the-culture`, `voyj`, `skate-iq`, `mfsp-io`, `full-charge`, `redacted`, `cryptogains`
+- **No gate**: no passphrase or auth on any of this — the passphrase/rooms/"Full Charge" board seen in early design prototypes are explicitly out of scope until built
 
 ### Private Payment Portal
 - **Location**: `/fewer-better-slower/` (non-discoverable URL for qualified leads)
