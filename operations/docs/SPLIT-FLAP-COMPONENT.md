@@ -29,13 +29,18 @@ Phase separation: 40ms pause between clearing and building
 ### Phrases Configuration
 ```javascript
 this.phrases = [
-  "ISLE OF VERT PUBLISHING",  // 23 characters (longest)
-  "OF THE CULTURE",           // 14 characters
-  "PLAIN VANILLE",            // 13 characters
-  "FIELDBOTZ",                // 9 characters
-  "[REDACTED]"                // 10 characters
+  "OF THE CULTURE",
+  "VOYJ",
+  "SKATE IQ",
+  "MFSP.IO",
+  "FULL CHARGE",
+  "[REDACTED]",
+  "CRYPTOGAINS",
+  "FIELDBOTZ",
+  "PLAIN VANILLE"
 ];
 ```
+*Current as of August 21, 2026 - Isle of Vert Publishing removed; MFSP.IO, Full Charge, and Cryptogains added. See `index.html` for the live array (source of truth).*
 
 ### ✨ Scalability for Growing Client Lists
 The component automatically scales to accommodate:
