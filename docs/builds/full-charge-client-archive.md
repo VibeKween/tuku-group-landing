@@ -2,21 +2,24 @@
 
 **Feature:** Private per-client archive (`/clients/full-charge/`)
 **Spec:** `website/design_handoff_full_charge/README.md`
-**Branch:** `dev` — pushed to `origin/dev`, not merged to `main`
+**Branch:** merged to `main`, live on `tukugroup.com` (2026-08-25)
 **Adding another client to this system?** See
 `client-archive-worker/ONBOARDING-NEW-CLIENT.md` — that's the runbook; this
 document is a status/decisions log, not a process to follow.
 
 ## Current state
 
-- **Backend is live on Cloudflare**: D1, R2, and KV are provisioned, migrated,
-  and seeded with the real `full-charge` client. Deployed to
-  `https://tuku-client-archive-api.falonbahal.workers.dev`. Verified
-  end-to-end against real infrastructure (unlock, board, artifact streaming,
-  admin upload, append-only versioning).
-- **Frontend (gate, field, reader) is built and tested, but not deployed
-  anywhere real** — it only exists on `dev`. Cloudflare Pages deploys
-  `main`, so merging is what would actually put it on `tukugroup.com`.
+**Fully live and verified end-to-end directly against `https://tukugroup.com`**:
+unlock (wrong passphrase rejected, correct passphrase succeeds) → field
+renders real data → reader streams real R2 content → lock clears the
+session → admin dashboard works with the real token. Confirmed zero
+regression on every other client page and the homepage.
+
+- **Backend**: D1, R2, KV provisioned, migrated, seeded with the real
+  `full-charge` client, deployed to production with the real route mounted.
+- **Frontend (gate, field, reader)**: merged to `main`, synced to the repo
+  root (Pages deploys from root, not `website/` — see the dual-directory
+  note in `CLAUDE.md`), and live at `/clients/full-charge/`.
 - **Admin dashboard** (`/admin`) is a central, multi-client tool — client
   picker, per-client version history, drag-and-drop upload — styled to
   match tukugroup.com's real design system (JetBrains Mono, black/white/gold,
@@ -207,6 +210,17 @@ merged to `main` yet, so Pages hasn't published the new gate/field pages).
 
 ## Still open
 
-- **Merging `dev` to `main`** — needed for the static frontend
-  (gate/field/reader) to actually deploy via Cloudflare Pages. The backend
-  is fully live; only the client-facing pages are still pending.
+Nothing blocking - the system is fully live. Lower-priority follow-ups:
+
+- True narrow-viewport (375/414/768) and `prefers-reduced-motion` checks
+  were only verified statically/by code inspection during this build, not
+  against a real constrained viewport or OS-level reduced-motion setting
+  (see "Not fully verified" above).
+- Lighthouse / formal a11y audit — not run.
+- The `board_x`/`board_y`/`connector_color` naming in the shared
+  `artifacts` table is Full-Charge-specific (see "Key decisions") -
+  generalize to a flexible column if a future client's portal needs
+  meaningfully different per-artifact metadata.
+- A dedicated repo/local-folder structure audit is planned separately (see
+  memory), including the dual-directory deploy pattern this build's
+  production push nearly tripped over.
