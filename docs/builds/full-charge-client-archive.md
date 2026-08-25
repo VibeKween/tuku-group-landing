@@ -22,6 +22,13 @@
 
 ## Key decisions
 
+- **Each client has its own login page and its own password** — not a
+  shared gate or a shared passphrase. `access_grants` is keyed per
+  `client_id` with an independent `passphrase_hash` per row; the gate/field
+  pages themselves reference their client directly rather than being a
+  generic templated portal. Onboarding a new client is a new `clients` row,
+  a new `access_grants` row, and a new set of gate/field/reader files for
+  that client — no schema or backend changes.
 - Separate Worker (`client-archive-worker/`), not an extension of `workers/`
   (`tuku-booking-api`) — isolates blast radius.
 - Admin auth is a distinct `ADMIN_TOKEN` secret; a client passphrase leak
@@ -81,13 +88,43 @@
   confirmed in a live reduced-motion session.
 - Lighthouse / formal a11y audit — not run.
 
+## Route mounting decision (2026-08-25)
+
+Decided and wired into `wrangler.toml`'s `[env.production].routes` (see
+`client-archive-worker/README.md` for the full rationale): one route
+pattern per exact endpoint this worker implements
+(`/clients/*/unlock`, `/lock`, `/board`, `/artifact/*`, `/admin`,
+`/admin/*`), not a single blanket `tukugroup.com/clients/*`.
+
+Why not the blanket pattern: `tukugroup.com` is served by Cloudflare Pages,
+which hosts every client's static gate/field HTML - not just `full-charge`,
+but the other 6 client-archive slugs too (`voyj`, `skate-iq`, etc.), plus
+the client index itself. A blanket `/clients/*` route would intercept every
+one of those page loads at the Cloudflare routing layer before Pages ever
+saw them, and this worker has no static assets to serve in response - it
+would 404 pages that work fine today. Scoping to the worker's actual
+endpoint shapes means a plain page load never matches any pattern and
+reaches Pages unchanged, while only genuine API calls (unlock/lock/board/
+artifact/admin) reach the worker - for any client slug, not just
+full-charge, since the pattern uses `*` for the slug position.
+
+This is config only so far - `wrangler.toml` has the routes, but the worker
+has not been re-deployed with them, and `dev` has not been merged to `main`.
+Both remain held for explicit approval before anything on tukugroup.com
+actually changes.
+
+Caught via `wrangler deploy --dry-run --env production` before it mattered:
+wrangler does not inherit top-level `d1_databases`/`r2_buckets`/
+`kv_namespaces` into named environments. Without env-scoped copies of all
+three, a production deploy would have shipped a worker with no database,
+storage, or rate-limit access at all. Added
+`[[env.production.d1_databases]]` etc., kept in sync with the top-level
+bindings; dry-run now shows all three present for `--env production`.
+
 ## Still open
 
-- **Route mounting under tukugroup.com** — deliberately deferred. Whatever
-  pattern is chosen must pass through to the static gate/field pages and
-  only intercept the worker's own API-shaped paths (a blanket `/clients/*`
-  route would 404 every static client page).
+- **Deploy the worker with the new production route** (`wrangler deploy --env production`) — config is in place, not yet applied.
 - **Merging `dev` to `main`** — needed for the static frontend to actually
   deploy via Cloudflare Pages.
-- **Production deploy of the worker to the real domain** — requires explicit
-  approval per `CLAUDE.md`'s workflow.
+- **Production deploy approval** — per `CLAUDE.md`'s workflow, both of the
+  above need an explicit go-ahead before anything on tukugroup.com changes.

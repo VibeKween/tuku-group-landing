@@ -2,21 +2,35 @@ name = "tuku-client-archive-api"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
 
-# Route mounting is not finalized yet. This worker expects to sit in front of
-# (or alongside) the static Pages site so that /clients/:client/* paths reach
-# it for the unlock/board/artifact/admin endpoints. Confirm the exact pattern
-# (e.g. "tukugroup.com/clients/*") and add it below before deploying:
+# Route mounting: tukugroup.com is served by Cloudflare Pages (the static
+# site, including every client's gate/field HTML - full-charge and the other
+# 6 client slugs alike). This worker must intercept ONLY its own API-shaped
+# paths and let everything else fall through to Pages untouched.
 #
-# [env.production]
-# routes = [
-#   { pattern = "tukugroup.com/clients/*", zone_name = "tukugroup.com" }
-# ]
-
+# Deliberately NOT a single blanket "tukugroup.com/clients/*" route - that
+# would swallow every static client page (full-charge's own gate/field, plus
+# voyj/, skate-iq/, etc.) and 404 them, since this worker has no static
+# assets to serve. Instead, one route per exact endpoint shape this worker
+# actually implements (see src/index.js's matchRoute): a request for
+# /clients/<any-slug>/unlock|lock|board|artifact/* or /admin* reaches this
+# worker; a plain page load like /clients/full-charge/ or /clients/voyj/
+# never matches any of these patterns and goes straight to Pages, unchanged.
+#
+# Scoped to [env.production] only - local/dev testing (wrangler dev, the
+# local proxy) never touches the real zone, so no route is needed there.
 [env.dev]
 vars = { ENVIRONMENT = "development" }
 
 [env.production]
 vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "tukugroup.com/clients/*/unlock", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/*/lock", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/*/board", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/*/artifact/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/admin", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/admin/*", zone_name = "tukugroup.com" },
+]
 
 # D1 database for clients/sessions/artifacts/access_grants/access_log.
 # Provisioned 2026-08-25.
@@ -34,6 +48,24 @@ bucket_name = "tuku-client-artifacts"
 # KV for unlock-attempt rate limiting (same pattern as workers/ BOOKINGS KV).
 # Provisioned 2026-08-25.
 [[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "7568d2bd396743feb0d38e034d703225"
+
+# wrangler does NOT inherit top-level bindings into named environments -
+# without these, `wrangler deploy --env production` would ship a worker with
+# no database/storage/rate-limit access at all (confirmed via
+# `wrangler deploy --dry-run --env production`, which warns exactly this).
+# Must be kept in sync with the top-level bindings above.
+[[env.production.d1_databases]]
+binding = "CLIENT_ARCHIVE_DB"
+database_name = "tuku-client-archive"
+database_id = "b2e5201c-6b0d-47e4-81a3-02c3837135e9"
+
+[[env.production.r2_buckets]]
+binding = "ARTIFACTS"
+bucket_name = "tuku-client-artifacts"
+
+[[env.production.kv_namespaces]]
 binding = "RATE_LIMIT"
 id = "7568d2bd396743feb0d38e034d703225"
 
