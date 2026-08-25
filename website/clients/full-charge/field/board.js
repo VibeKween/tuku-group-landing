@@ -13,12 +13,12 @@ const WORDS = ['purpose', 'clarity', 'craft', 'intention', 'candor', 'collaborat
 const WORD_HOLD = 1350;
 const MARK_DELAY = 620;
 const TICKS = [300, 980, 1660, 2340]; // fixed decorative timeline slots, always drawn regardless of data
+const CAPTION_HEIGHT = 46; // .fc-caption's own height + margin - see index.html
 // Static hand-drawn chrono line — decorative, not data-driven (board.fixture.json carries the
 // same literal path; the /clients/:client/board API does not return one, so this is the fallback
 // and, in practice, the only source used today).
 const CHRONO_PATH = 'M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 2470 197';
 
-const GA_ID = 'G-5KTM9YBETS';
 function gaEvent(name, params) {
   if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
 }
@@ -56,7 +56,7 @@ export class FullChargeBoard {
     this.t0 = Date.now();
     this.tilt = { x: 0, y: 0 };
     this.nearCard = null;
-    this.cards = []; // { el, x, y, w, h }
+    this.cards = []; // { wrap, cardEl, cardX, cardY, tickX, hasCaption }
     this.wordIx = 0;
     this.slot = 'a';
     this.marked = false;
@@ -144,7 +144,8 @@ export class FullChargeBoard {
       const cardX = artifact.board_x != null ? artifact.board_x : tickX - 170;
       const cardY = artifact.board_y != null ? artifact.board_y : 360;
 
-      this._drawConnector(connectorsSvg, tickX, cardX, cardY, i);
+      const hasCaption = !!(session && session.label);
+      this._drawConnector(connectorsSvg, tickX, cardY, i);
 
       if (session) {
         const dateLabel = document.createElement('div');
@@ -157,7 +158,6 @@ export class FullChargeBoard {
 
       const card = this._buildCard(artifact, session, cardX, cardY);
       layer.appendChild(card.wrap);
-      const hasCaption = !!(session && session.label);
       this.cards.push({ ...card, cardX, cardY, tickX, hasCaption });
     });
 
@@ -179,7 +179,7 @@ export class FullChargeBoard {
     if (nextTick == null) return;
 
     const last = this.cards[this.cards.length - 1];
-    const CARD_WIDTH = 520, CAPTION_HEIGHT = 46, PREVIEW_HEIGHT = 300;
+    const CARD_WIDTH = 520, PREVIEW_HEIGHT = 300;
     const boxTop = last.cardY + (last.hasCaption ? CAPTION_HEIGHT : 0);
     const startX = last.cardX + CARD_WIDTH + 12;
     const startY = boxTop + PREVIEW_HEIGHT * 0.71;
@@ -203,17 +203,22 @@ export class FullChargeBoard {
     return `${parseInt(m, 10)}.${parseInt(d, 10)}.${y.slice(2)}`;
   }
 
-  _drawConnector(svg, tickX, cardX, cardY, index) {
+  _drawConnector(svg, tickX, cardY, index) {
     // First artifact gets the orange solid stroke straight from its tick (matches the
     // hand-authored path in the design file exactly when at the default position).
     // Every artifact after the first gets a dashed plum connector, alternating with any
     // future connector-color data the API supplies (see client-archive-worker README).
+    // Deliberately a short decorative mark - it does not reach the card.
     const color = index === 0 ? '#E8542A' : '#8B7BB5';
     const dashed = index !== 0;
     const startY = 228;
     const endY = cardY - 24;
-    const midX = tickX + (cardX - tickX) * 0.5;
-    const d = `M${tickX} ${startY} C${midX} ${startY + (endY - startY) * 0.35}, ${cardX + (tickX - cardX) * 0.1} ${startY + (endY - startY) * 0.75}, ${cardX + 3} ${endY}`;
+    // Matches the design's hand-authored path (Full Charge Field.dc.html:
+    // "M300 228 C305 272, 299 304, 303 336") almost exactly - a near-vertical
+    // wobble straight below the tick. It does NOT interpolate toward the
+    // card's x-position; card placement is independent of this mark's shape.
+    const span = endY - startY;
+    const d = `M${tickX} ${startY} C${tickX + 5} ${startY + span * 0.39}, ${tickX - 1} ${startY + span * 0.7}, ${tickX + 3} ${endY}`;
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', d);
@@ -225,7 +230,11 @@ export class FullChargeBoard {
       path.setAttribute('stroke-dasharray', '14 12');
       path.style.animation = 'fcFade 0.6s ease both 2s';
     } else {
-      const len = 140;
+      // Measure the real path length rather than a fixed guess - a hardcoded
+      // value shorter than the actual path silently clips the tail of the
+      // stroke, since stroke-dasharray repeats "on/off" for that length
+      // across the whole path rather than scaling to it.
+      const len = path.getTotalLength();
       path.setAttribute('stroke-dasharray', String(len));
       path.style.strokeDashoffset = String(len);
       path.style.animation = 'fcDraw 0.6s ease-out forwards 1.5s';

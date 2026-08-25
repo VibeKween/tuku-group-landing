@@ -19,24 +19,23 @@ vars = { ENVIRONMENT = "development" }
 vars = { ENVIRONMENT = "production" }
 
 # D1 database for clients/sessions/artifacts/access_grants/access_log.
-# Provision with: wrangler d1 create tuku-client-archive
-# then paste the returned database_id below.
+# Provisioned 2026-08-25.
 [[d1_databases]]
 binding = "CLIENT_ARCHIVE_DB"
 database_name = "tuku-client-archive"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "b2e5201c-6b0d-47e4-81a3-02c3837135e9"
 
 # R2 bucket for self-contained artifact HTML files.
-# Provision with: wrangler r2 bucket create tuku-client-artifacts
+# Provisioned 2026-08-25.
 [[r2_buckets]]
 binding = "ARTIFACTS"
 bucket_name = "tuku-client-artifacts"
 
 # KV for unlock-attempt rate limiting (same pattern as workers/ BOOKINGS KV).
-# Provision with: wrangler kv:namespace create RATE_LIMIT
+# Provisioned 2026-08-25.
 [[kv_namespaces]]
 binding = "RATE_LIMIT"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "7568d2bd396743feb0d38e034d703225"
 
 # Secrets (set via `wrangler secret put <NAME>`, never committed):
 # - COOKIE_SECRET   HMAC key for signing the access cookie
