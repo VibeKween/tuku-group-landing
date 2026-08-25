@@ -172,7 +172,7 @@ The field is `pointer-events: none` everywhere except the balloon and its label,
 
 The balloon's label links to `/clients/` - an index of client names, unlisted (`noindex`, not in `sitemap.xml`) but reachable by anyone who follows the balloon. Rows are real links to `/clients/<slug>/`.
 
-Each client slug currently serves the same placeholder page - a typing-animation gag ("Oops. You weren't supposed to find this page") paired with a generative animal-avatar toy. The art area starts blank (a card, white on both faces) and flips over via a 3D `rotateY` transform once "Here's an" has been typed on the second line, with the reroll/download controls fading in after the flip completes - skipped entirely under reduced motion, which shows everything settled immediately.
+Most client slugs still serve the same placeholder page - a typing-animation gag ("Oops. You weren't supposed to find this page") paired with a generative animal-avatar toy. The art area starts blank (a card, white on both faces) and flips over via a 3D `rotateY` transform once "Here's an" has been typed on the second line, with the reroll/download controls fading in after the flip completes - skipped entirely under reduced motion, which shows everything settled immediately.
 
 The avatar engine (`clients/avatar-gen.js`) is framework-free: a seeded PRNG drives independently-weighted trait layers (ears, snout, eyes, markings, horns, extras), rendered as hand-sketched SVG paths, exportable as a PNG with embedded metadata pointing back to the site. Clicking the avatar or "remix" rerolls it; "adopt" downloads it.
 
@@ -182,7 +182,7 @@ shared assets   clients/avatar-gen.js, unbuilt-client.css, unbuilt-client.js
 per-client      clients/<slug>/index.html - identical body, unique metadata/canonical
 ```
 
-As real client rooms get built, each slug's placeholder is replaced with actual content - the URL doesn't change.
+As real client rooms get built, each slug's placeholder is replaced with actual content - the URL doesn't change. `full-charge` is the first: a passphrase gate over a spatial "field" board of session artifacts with an in-page reader, backed by its own Cloudflare Worker + D1 + R2 (`client-archive-worker/`, separate from the booking API worker). Built and integration-tested locally as of 2026-08-24; not yet deployed - see `CLAUDE.md`'s Client Archive section and `website/design_handoff_full_charge/README.md` for the full spec.
 
 ```
 //

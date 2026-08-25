@@ -51,9 +51,15 @@ cp -r website/clients .
 ### Client Archive
 - **Entry point**: Balloon overlay on the homepage (`tuku-balloon.js`) — a smiley balloon rises from below the fold, drifts near the top-right, and carries an animated-gradient "clients only!" label linking to `/clients/`
 - **Client Index** (`/clients/`): List of client names, each row a real link to its own permanent slug (`/clients/<slug>/`). `noindex, nofollow`, not in `sitemap.xml` — unlisted-but-public, matching the "clients only!" framing
-- **Client pages** (`/clients/<slug>/`): Currently all serve the same "unbuilt" placeholder — a generative animal-avatar toy (`avatar-gen.js`, framework-free, reused as-is) with a typing-animation gag ("You weren't supposed to find this page") and an "Oops." link back to the index. Real per-client content will replace individual placeholders as those rooms are built
+- **Client pages** (`/clients/<slug>/`): Most slugs still serve the "unbuilt" placeholder — a generative animal-avatar toy (`avatar-gen.js`, framework-free, reused as-is) with a typing-animation gag ("You weren't supposed to find this page") and an "Oops." link back to the index. `full-charge` is now a real build (see below), not the placeholder; the rest are replaced one at a time as their rooms get built, URL unchanged
 - **Current client slugs**: `of-the-culture`, `voyj`, `skate-iq`, `mfsp-io`, `full-charge`, `redacted`, `cryptogains`
-- **No gate**: no passphrase or auth on any of this — the passphrase/rooms/"Full Charge" board seen in early design prototypes are explicitly out of scope until built
+- **No gate on the placeholders**: no passphrase or auth on the still-unbuilt slugs — `full-charge` is the exception, see below
+
+#### Full Charge client archive (`/clients/full-charge/`)
+- **Spec**: `website/design_handoff_full_charge/README.md` — passphrase gate over a spatial "field" board of session artifacts, with an in-page reader.
+- **Status (2026-08-24)**: Built and integration-tested locally (gate, field, reader, and the backing Worker/D1/R2 all pass a full auth → board → artifact → lock round-trip via Miniflare). **Not deployed** — real D1/R2/KV/secrets have not been provisioned in Cloudflare, final route mounting under tukugroup.com is still undecided, and nothing has been pushed past the `dev` branch.
+- **Backend**: `client-archive-worker/` — a second, separate Cloudflare Worker (own D1 database, R2 bucket, KV rate-limit namespace) from `workers/` (`tuku-booking-api`), so the two can't take each other down. See `client-archive-worker/README.md` for the provisioning checklist before this can go live.
+- **Frontend**: `website/clients/full-charge/index.html` (gate) and `website/clients/full-charge/field/` (board + reader, `index.html` + `board.js` + `reader.js`/`reader.css`). The passphrase only gates board *viewing* — artifact upload/versioning goes through a separate admin credential, never the client passphrase.
 
 ### Private Payment Portal
 - **Location**: `/fewer-better-slower/` (non-discoverable URL for qualified leads)
