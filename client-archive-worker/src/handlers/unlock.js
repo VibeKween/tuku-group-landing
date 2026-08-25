@@ -37,9 +37,15 @@ export async function handleUnlock(request, env, clientId) {
 
   const expiresAtMs = Date.now() + COOKIE_TTL_MS;
   const cookieValue = await signAccessCookie(clientId, expiresAtMs, env.COOKIE_SECRET);
+  // Path is /clients (not /clients/<clientId>) because the API paths this
+  // cookie needs to reach (/clients/board/<slug> etc.) no longer share a
+  // /clients/<slug> prefix - the slug moved to the end of the path (see
+  // src/index.js). Safe to share across clients: the cookie NAME is still
+  // per-client (tuku_access_<clientId>), and verifyAccessCookie rejects a
+  // cookie whose signed clientId doesn't match the one being requested.
   const cookie = [
     `tuku_access_${clientId}=${cookieValue}`,
-    'Path=/clients/' + clientId,
+    'Path=/clients',
     'HttpOnly',
     'Secure',
     'SameSite=Lax',
@@ -52,7 +58,7 @@ export async function handleUnlock(request, env, clientId) {
 export async function handleLock(request, env, clientId) {
   const cookie = [
     `tuku_access_${clientId}=`,
-    'Path=/clients/' + clientId,
+    'Path=/clients',
     'HttpOnly',
     'Secure',
     'SameSite=Lax',

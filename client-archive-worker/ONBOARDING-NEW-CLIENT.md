@@ -44,9 +44,12 @@ What can be reused as-is, because it's already generic:
 
 What must be built new for this client:
 - A gate page (`website/clients/<slug>/index.html`) - the password prompt,
-  calling `/clients/<slug>/unlock` and `/clients/<slug>/lock`.
+  calling `/clients/unlock/<slug>` and `/clients/lock/<slug>`. Note the
+  slug is the LAST path segment, not embedded in the middle - see
+  `client-archive-worker/README.md`'s Route mounting section for why
+  (Cloudflare route pattern constraint, not a style choice).
 - A field page (`website/clients/<slug>/field/index.html` +
-  a `board.js` or equivalent) - calling `/clients/<slug>/board` and
+  a `board.js` or equivalent) - calling `/clients/board/<slug>` and
   rendering whatever visual concept this client's portal uses. It does not
   have to be a spatial "board" like Full Charge's - it just has to render
   the `{client, sessions, artifacts, board}` shape documented in

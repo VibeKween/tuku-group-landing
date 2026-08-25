@@ -44,23 +44,42 @@ If provisioning this from scratch again (e.g. a second environment):
 ## Route mounting
 
 `wrangler.toml`'s `[env.production].routes` lists one pattern per exact
-endpoint this worker implements (`/clients/*/unlock`, `/lock`, `/board`,
-`/artifact/*`, `/admin`, `/admin/*`) rather than a single blanket
-`tukugroup.com/clients/*`. The reason: `tukugroup.com` is served by
-Cloudflare Pages, including every client's static gate/field HTML - not
-just `full-charge`, but the other 6 client-archive slugs too. A blanket
-`/clients/*` route would intercept *all* of those page loads and 404 them,
-since this worker has no static assets to serve. The narrow patterns match
-only this worker's actual API shapes; a plain page load like
+endpoint this worker implements (`/clients/unlock/*`, `/clients/lock/*`,
+`/clients/board/*`, `/clients/artifact/*`, `/admin`, `/admin/*`) rather than
+a single blanket `tukugroup.com/clients/*`. The reason: `tukugroup.com` is
+served by Cloudflare Pages, including every client's static gate/field HTML
+- not just `full-charge`, but the other 6 client-archive slugs too. A
+blanket `/clients/*` route would intercept *all* of those page loads and
+404 them, since this worker has no static assets to serve. The narrow
+patterns match only this worker's actual API shapes; a plain page load like
 `/clients/full-charge/` or `/clients/voyj/` never matches any of them and
 reaches Pages exactly as it does today.
 
+**Why the client slug comes last in every path** (`/clients/unlock/:client`,
+not `/clients/:client/unlock`): Cloudflare Workers Routes only allow a
+wildcard at the very start of the hostname or the very end of the path,
+never in the middle. A first attempt at `tukugroup.com/clients/*/unlock`
+etc. was rejected live with error code 10022 ("Route pattern may only
+contain wildcards at the beginning of the hostname and the end of the
+path"). Putting the slug last means every route pattern only needs a
+trailing wildcard - and that PUT request replaces the worker's entire route
+set atomically, so even the routes that *were* valid (`/admin`, `/admin/*`)
+failed to apply alongside the 4 that weren't. Confirm any future route
+change with `wrangler deploy --dry-run --env production` before relying on
+it, and verify live with a real request afterward - a successful upload
+doesn't guarantee the routes actually took effect.
+
 ## Routes
 
-- `POST /clients/:client/unlock` — `{ passphrase }` → sets the signed access cookie.
-- `POST /clients/:client/lock` — clears it.
-- `GET /clients/:client/board` — requires the cookie; returns the same shape as `board.fixture.json`.
-- `GET /clients/:client/artifact/:id` — requires the cookie; streams the R2 object. `?download=1` adds `Content-Disposition`.
+- `POST /clients/unlock/:client` — `{ passphrase }` → sets the signed access cookie.
+- `POST /clients/lock/:client` — clears it.
+- `GET /clients/board/:client` — requires the cookie; returns the same shape as `board.fixture.json`.
+- `GET /clients/artifact/:client/:id` — requires the cookie; streams the R2 object. `?download=1` adds `Content-Disposition`.
+
+The client slug is always the LAST path segment in every route above, not
+embedded in the middle (`/clients/unlock/:client`, not
+`/clients/:client/unlock`). This isn't stylistic - see "Route mounting"
+below for why it's structurally required.
 - `GET /admin` — the dashboard: client picker, per-client artifact/version history, drag-and-drop upload panel. Gated by `ADMIN_TOKEN`, entered client-side and sent as a Bearer token on every request below.
 - `GET /admin/clients` — list of clients with a doc count each, for the picker.
 - `GET /admin/clients/:id/artifacts` — full version history for one client (every version, not just latest - so the admin can see what a re-upload is about to supersede).

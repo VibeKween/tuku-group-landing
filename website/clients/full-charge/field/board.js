@@ -477,7 +477,7 @@ export class FullChargeBoard {
 
   async _lock() {
     try {
-      await fetch(`/clients/full-charge/lock`, { method: 'POST', credentials: 'same-origin' });
+      await fetch(`/clients/lock/full-charge`, { method: 'POST', credentials: 'same-origin' });
     } catch (err) { /* best-effort: navigate regardless */ }
     gaEvent('lock', {});
     window.location.href = '../';

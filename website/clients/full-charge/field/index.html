@@ -174,7 +174,7 @@
   async function loadPayload() {
     let res;
     try {
-      res = await fetch('/clients/full-charge/board', { credentials: 'same-origin' });
+      res = await fetch('/clients/board/full-charge', { credentials: 'same-origin' });
     } catch (err) {
       if (isStillPreview) return EMPTY_PAYLOAD;
       // The worker is unreachable (e.g. developing this page standalone without

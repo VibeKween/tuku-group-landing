@@ -11,9 +11,16 @@ compatibility_date = "2024-01-01"
 # would swallow every static client page (full-charge's own gate/field, plus
 # voyj/, skate-iq/, etc.) and 404 them, since this worker has no static
 # assets to serve. Instead, one route per exact endpoint shape this worker
-# actually implements (see src/index.js's matchRoute): a request for
-# /clients/<any-slug>/unlock|lock|board|artifact/* or /admin* reaches this
-# worker; a plain page load like /clients/full-charge/ or /clients/voyj/
+# actually implements (see src/index.js's matchRoute).
+#
+# Route patterns below have a wildcard ONLY at the end of the path, never in
+# the middle - Cloudflare rejects anything else (confirmed live: a first
+# attempt at "tukugroup.com/clients/*/unlock" etc. failed with error code
+# 10022, "Route pattern may only contain wildcards at the beginning of the
+# hostname and the end of the path"). This is why the client slug is the
+# LAST segment in every one of this worker's paths (/clients/unlock/:slug,
+# not /clients/:slug/unlock) - see src/index.js for the corresponding route
+# table. A plain page load like /clients/full-charge/ or /clients/voyj/
 # never matches any of these patterns and goes straight to Pages, unchanged.
 #
 # Scoped to [env.production] only - local/dev testing (wrangler dev, the
@@ -24,10 +31,10 @@ vars = { ENVIRONMENT = "development" }
 [env.production]
 vars = { ENVIRONMENT = "production" }
 routes = [
-  { pattern = "tukugroup.com/clients/*/unlock", zone_name = "tukugroup.com" },
-  { pattern = "tukugroup.com/clients/*/lock", zone_name = "tukugroup.com" },
-  { pattern = "tukugroup.com/clients/*/board", zone_name = "tukugroup.com" },
-  { pattern = "tukugroup.com/clients/*/artifact/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/unlock/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/lock/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/board/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/artifact/*", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/admin", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/admin/*", zone_name = "tukugroup.com" },
 ]

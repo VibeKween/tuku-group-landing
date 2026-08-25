@@ -102,8 +102,11 @@ document is a status/decisions log, not a process to follow.
 Decided and wired into `wrangler.toml`'s `[env.production].routes` (see
 `client-archive-worker/README.md` for the full rationale): one route
 pattern per exact endpoint this worker implements
-(`/clients/*/unlock`, `/lock`, `/board`, `/artifact/*`, `/admin`,
-`/admin/*`), not a single blanket `tukugroup.com/clients/*`.
+(`/clients/unlock/*`, `/clients/lock/*`, `/clients/board/*`,
+`/clients/artifact/*`, `/admin`, `/admin/*`), not a single blanket
+`tukugroup.com/clients/*`. (The URL shape shown here reflects the reshape
+below - the client slug had to move from the middle to the end of each
+path once the middle-wildcard constraint surfaced during actual deploy.)
 
 Why not the blanket pattern: `tukugroup.com` is served by Cloudflare Pages,
 which hosts every client's static gate/field HTML - not just `full-charge`,
@@ -129,6 +132,44 @@ three, a production deploy would have shipped a worker with no database,
 storage, or rate-limit access at all. Added
 `[[env.production.d1_databases]]` etc., kept in sync with the top-level
 bindings; dry-run now shows all three present for `--env production`.
+
+## Route URL reshape (2026-08-25)
+
+The first real production deploy attempt (`wrangler deploy --env
+production`) surfaced something `--dry-run` couldn't have caught, because
+route validation only happens against the real API: all 4
+`/clients/*/unlock|lock|board|artifact/*` patterns were rejected with error
+code 10022 - Cloudflare Workers Routes only allow a wildcard at the start
+of the hostname or the end of the path, never in the middle. A pattern with
+the client slug in the middle of the path (`/clients/*/unlock`) is
+structurally invalid, not just a syntax slip.
+
+Worse: the route-set PUT is atomic. Because 4 of the 6 patterns were
+invalid, **none** of the 6 were created - including `/admin` and
+`/admin/*`, which were individually valid on their own. Confirmed nothing
+was actually live by testing `https://tukugroup.com/admin` directly (it
+returned the homepage - Cloudflare Pages' own fallback for an unmatched
+path, not this worker). No unintended exposure happened, but it was closer
+than a `--dry-run` alone would have suggested; **verify routes with a real
+request after deploying, don't just trust an error-free CLI output.**
+
+Fix: reshaped every client-facing endpoint so the slug is the LAST path
+segment - `/clients/unlock/:slug`, `/clients/lock/:slug`,
+`/clients/board/:slug`, `/clients/artifact/:slug/:id` (was
+`/clients/:slug/unlock` etc.). This makes every route pattern a simple
+trailing wildcard, which Cloudflare allows, without losing the "any client
+slug works, no wrangler.toml changes per client" property. Touched:
+`src/index.js` (route table), `src/services/db.js` (generated artifact
+`url`/`download_url`), `src/handlers/unlock.js` (cookie `Path` widened from
+`/clients/<slug>` to `/clients`, since the API paths no longer share that
+literal prefix - safe, because the cookie's signed `clientId` is still
+checked server-side regardless of how broad the browser's Path scoping is),
+and both frontend files (`website/clients/full-charge/index.html`,
+`field/index.html`, `field/board.js`) plus the local test proxy's patterns.
+Re-verified the entire flow locally (unlock → board → artifact → reader →
+lock, plus a fresh admin upload) against the new shape before
+redeploying - see the note above about not trusting dry-run/deploy success
+alone.
 
 ## Still open
 

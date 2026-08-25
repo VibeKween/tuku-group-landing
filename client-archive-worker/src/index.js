@@ -3,9 +3,15 @@
  * Cloudflare Workers entry point for the private per-client archive
  * (Full Charge et al.) - see website/design_handoff_full_charge/README.md.
  *
- * Route mounting under tukugroup.com is not finalized (see wrangler.toml) -
- * these paths are the logical contract the field/reader/gate pages and the
- * admin UI are built against.
+ * Route shape: the client slug is always the LAST path segment
+ * (/clients/unlock/:slug, not /clients/:slug/unlock). This isn't
+ * stylistic - Cloudflare Workers Routes only allow a wildcard at the very
+ * start of the hostname or the very end of the path, never in the middle
+ * (confirmed live: a route like "tukugroup.com/clients/*\/unlock" is
+ * rejected with error code 10022). Putting the slug last means the
+ * corresponding route pattern ("tukugroup.com/clients/unlock/*") only
+ * needs a trailing wildcard, so it works for any client without touching
+ * wrangler.toml again. See wrangler.toml for the actual route list.
  */
 
 import { handleUnlock, handleLock } from './handlers/unlock.js';
@@ -16,10 +22,10 @@ import { ADMIN_PAGE_HTML } from './admin-page.js';
 
 function matchRoute(pathname, method) {
   const routes = [
-    { pattern: /^\/clients\/([a-z0-9-]+)\/unlock$/, method: 'POST', handler: 'unlock' },
-    { pattern: /^\/clients\/([a-z0-9-]+)\/lock$/, method: 'POST', handler: 'lock' },
-    { pattern: /^\/clients\/([a-z0-9-]+)\/board$/, method: 'GET', handler: 'board' },
-    { pattern: /^\/clients\/([a-z0-9-]+)\/artifact\/([a-zA-Z0-9-]+)$/, method: 'GET', handler: 'artifact' },
+    { pattern: /^\/clients\/unlock\/([a-z0-9-]+)$/, method: 'POST', handler: 'unlock' },
+    { pattern: /^\/clients\/lock\/([a-z0-9-]+)$/, method: 'POST', handler: 'lock' },
+    { pattern: /^\/clients\/board\/([a-z0-9-]+)$/, method: 'GET', handler: 'board' },
+    { pattern: /^\/clients\/artifact\/([a-z0-9-]+)\/([a-zA-Z0-9-]+)$/, method: 'GET', handler: 'artifact' },
     { pattern: /^\/admin\/artifacts$/, method: 'POST', handler: 'adminUpload' },
     { pattern: /^\/admin\/clients$/, method: 'GET', handler: 'adminClients' },
     { pattern: /^\/admin\/clients\/([a-z0-9-]+)\/artifacts$/, method: 'GET', handler: 'adminClientArtifacts' },

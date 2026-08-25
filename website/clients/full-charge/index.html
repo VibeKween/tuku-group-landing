@@ -338,12 +338,12 @@
             msgEl.style.color = color;
         }
 
-        // Single entry point for the real unlock flow - hits Track A's
-        // /clients/full-charge/unlock endpoint. Route mounting under
-        // tukugroup.com is still being finalized (see the build plan); this
-        // uses a same-origin relative path so it resolves once that lands.
+        // Single entry point for the real unlock flow. Path shape is
+        // /clients/unlock/<slug>, not /clients/<slug>/unlock - the slug has
+        // to be the last path segment for Cloudflare's route pattern
+        // (see client-archive-worker/wrangler.toml) to work at all.
         async function unlock(passphrase) {
-            var res = await fetch('/clients/full-charge/unlock', {
+            var res = await fetch('/clients/unlock/full-charge', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ passphrase: passphrase }),
