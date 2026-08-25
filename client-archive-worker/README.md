@@ -20,18 +20,20 @@ Current build status (what's live, what's tested, what's still open):
 
 ## Provisioning status (2026-08-25)
 
-D1, R2, KV, both secrets, and the real `full-charge` client + passphrase
-grant are all provisioned in Cloudflare and populated with real data.
-Deployed to `https://tuku-client-archive-api.falonbahal.workers.dev` and
-verified end-to-end against that live deployment (unlock, board, artifact
-streaming, admin upload, append-only versioning all confirmed working on
-real infrastructure, not just local Miniflare).
+D1, R2, KV, both secrets (set separately for the default AND `production`
+environments - see the callout after the checklist below on why that's not
+automatic), and the real `full-charge` client + passphrase grant are all
+provisioned in Cloudflare with real data. Deployed to production with the
+real route live - verified directly against `https://tukugroup.com`
+(unlock, board, artifact streaming, admin dashboard, lock all confirmed
+working against the real domain, not just `workers.dev` or local
+Miniflare).
 
-**Not yet done**: the production route (see `[env.production].routes`
-below) is configured in `wrangler.toml` but the worker has not been
-re-deployed with it, and `dev` has not been merged to `main` — so nothing
-is reachable on `tukugroup.com` yet. Both are held for explicit approval
-per the workspace's production-deploy workflow, not a technical blocker.
+**Not yet done**: `dev` has not been merged to `main`, so Cloudflare Pages
+hasn't published the actual gate/field/reader pages yet -
+`/clients/full-charge/` still serves the old placeholder. The backend is
+fully live; only the client-facing frontend is still pending, held for
+explicit approval per the workspace's production-deploy workflow.
 
 If provisioning this from scratch again (e.g. a second environment):
 1. `wrangler d1 create tuku-client-archive` → paste the `database_id` into `wrangler.toml`.
@@ -40,6 +42,15 @@ If provisioning this from scratch again (e.g. a second environment):
 4. `wrangler kv:namespace create RATE_LIMIT` → paste the id into `wrangler.toml`.
 5. `wrangler secret put COOKIE_SECRET` and `wrangler secret put ADMIN_TOKEN` — two independent values. `ADMIN_TOKEN` must never equal or derive from any client's passphrase.
 6. Insert the client's row into `clients`, and one `access_grants` row with a PBKDF2 hash (use `hashPassphrase` from `src/services/crypto.js` — don't hand-roll a hash).
+
+**Secrets are scoped per named environment, same as bindings.**
+`wrangler secret put NAME` without a flag sets it only on the *default*
+environment. If `wrangler.toml` deploys to `--env production` (this one
+does, for the real domain), that's a different underlying Worker script
+with its own secrets - run `wrangler secret put NAME --env production`
+too, or the production deploy will have `env.ADMIN_TOKEN`/`env.COOKIE_SECRET`
+silently `undefined`. `wrangler secret list --env production` shows what's
+actually set there.
 
 ## Route mounting
 

@@ -171,10 +171,42 @@ lock, plus a fresh admin upload) against the new shape before
 redeploying - see the note above about not trusting dry-run/deploy success
 alone.
 
+## Production deploy (2026-08-25)
+
+Worker deployed with `wrangler deploy --env production`; all 6 routes
+accepted this time (the reshaped, trailing-wildcard-only patterns above).
+
+One more environment-scoping gap surfaced immediately after, same class as
+the D1/R2/KV bindings issue: **secrets are also scoped per named
+environment**, and `wrangler secret put ADMIN_TOKEN`/`COOKIE_SECRET`
+(without `--env production`) had only ever set them on the *default*
+environment - the one actually deployed to `tukugroup.com` had neither.
+`wrangler secret list --env production` showed `[]` where the default
+environment showed both. `/admin/clients` with the correct token was
+returning `unauthorized` because `env.ADMIN_TOKEN` was simply undefined in
+production. Fixed by running `wrangler secret put <NAME> --env production`
+for both secrets (fresh random value for `COOKIE_SECRET` - no live sessions
+existed yet to preserve; same value as before for `ADMIN_TOKEN` so the
+credential in `credentials.local.txt` stays correct).
+
+**General lesson from this whole session, worth restating**: for this
+worker, `--dry-run` only validates config shape (bindings, vars) - it does
+not validate routes against Cloudflare's actual API, and it says nothing
+about which named environment secrets live in. Every deploy needs a real,
+live request against the actual production behavior afterward, not just a
+clean CLI exit code.
+
+Full verification performed directly against `https://tukugroup.com` after
+both fixes: unlock (wrong passphrase rejected, correct passphrase
+succeeds) → board (real D1 data) → artifact (real R2 content streamed) →
+lock (cookie cleared) → admin dashboard (token-gated, real client list).
+Confirmed zero collateral impact: `/clients/voyj/` still serves its own
+unrelated static placeholder untouched, and `/clients/full-charge/` itself
+still serves the OLD static placeholder (expected - `dev` hasn't been
+merged to `main` yet, so Pages hasn't published the new gate/field pages).
+
 ## Still open
 
-- **Deploy the worker with the new production route** (`wrangler deploy --env production`) — config is in place, not yet applied.
-- **Merging `dev` to `main`** — needed for the static frontend to actually
-  deploy via Cloudflare Pages.
-- **Production deploy approval** — per `CLAUDE.md`'s workflow, both of the
-  above need an explicit go-ahead before anything on tukugroup.com changes.
+- **Merging `dev` to `main`** — needed for the static frontend
+  (gate/field/reader) to actually deploy via Cloudflare Pages. The backend
+  is fully live; only the client-facing pages are still pending.
