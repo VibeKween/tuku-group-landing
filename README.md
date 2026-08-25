@@ -51,10 +51,16 @@ The site has four layers - public pages, case studies with generative art, an un
 | `/ideas/invisible-scaffolding/` | philosophy methodology - network emergence |
 | `/ideas/voyj-discovery/` | pillar discovery engagement |
 | `/clients/` | client archive index - unlisted, `noindex`, not in the sitemap |
-| `/clients/<slug>/` | one page per client; currently all serve a placeholder "unbuilt" gag page with a generative animal-avatar toy, swapped for real content as each room is built |
+| `/clients/<slug>/` | one page per client; most still serve a placeholder "unbuilt" gag page with a generative animal-avatar toy, swapped for real content as each room is built - `full-charge` is the first real build (passphrase-gated archive, see below) |
 | `/fewer-better-slower/` | private payment portal with Stripe integration |
 
 A smiley balloon rises on the homepage after a short delay and drifts near the top-right, carrying a small animated-gradient "clients only!" label that links to `/clients/`. The private portal at `/fewer-better-slower/` is not linked from any public page - it exists for direct sharing to qualified leads only. The client archive is different: it's reachable by anyone who follows the balloon, just not indexed or listed anywhere.
+
+The `full-charge` client archive is backed by its own Cloudflare Worker,
+D1, and R2 (`client-archive-worker/`, separate from the booking API
+worker). To add another client to this same system, follow
+`client-archive-worker/ONBOARDING-NEW-CLIENT.md` end to end - it's written
+as a runbook, not background reading.
 
 ```
 //

@@ -182,7 +182,7 @@ shared assets   clients/avatar-gen.js, unbuilt-client.css, unbuilt-client.js
 per-client      clients/<slug>/index.html - identical body, unique metadata/canonical
 ```
 
-As real client rooms get built, each slug's placeholder is replaced with actual content - the URL doesn't change. `full-charge` is the first: a passphrase gate over a spatial "field" board of session artifacts with an in-page reader, backed by its own Cloudflare Worker + D1 + R2 (`client-archive-worker/`, separate from the booking API worker). Built and integration-tested locally as of 2026-08-24; not yet deployed - see `CLAUDE.md`'s Client Archive section and `website/design_handoff_full_charge/README.md` for the full spec.
+As real client rooms get built, each slug's placeholder is replaced with actual content - the URL doesn't change. `full-charge` is the first: a passphrase gate over a spatial "field" board of session artifacts with an in-page reader, backed by its own Cloudflare Worker + D1 + R2 (`client-archive-worker/`, separate from the booking API worker). The backend is live on Cloudflare and provisioned with real data; the frontend is built and tested but only lives on the `dev` branch so far - see `CLAUDE.md`'s Client Archive section and `docs/builds/full-charge-client-archive.md` for current status. To add another client to this same system, follow `client-archive-worker/ONBOARDING-NEW-CLIENT.md`.
 
 ```
 //

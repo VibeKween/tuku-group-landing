@@ -1,9 +1,8 @@
 # tuku-client-archive-api
 
-Track A of the Full Charge client archive build (see
-`website/design_handoff_full_charge/README.md` and the approved plan in
-`/Users/falonbahal/.claude/plans/cryptic-sprouting-garden.md`). Backs the
-private per-client archive: auth, the board data payload, artifact
+Backend for the private per-client archive system (see
+`website/design_handoff_full_charge/README.md` for the original Full Charge
+spec this was built from): auth, the board data payload, artifact
 streaming, and a central admin dashboard for uploading/versioning artifacts
 across every client (not scattered per-client controls - built this way
 deliberately so it scales to many clients, each with their own artifact
@@ -11,6 +10,13 @@ history, from one place).
 
 Kept as its own worker, separate from `../workers/` (`tuku-booking-api`),
 so a bug here can't take down the booking flow and vice versa.
+
+**Adding a new client?** Follow `ONBOARDING-NEW-CLIENT.md` end to end - it's
+the runbook. Everything below is reference material for how this system
+works, not a checklist to follow in order.
+
+Current build status (what's live, what's tested, what's still open):
+`docs/builds/full-charge-client-archive.md` at the repo root.
 
 ## Provisioning status (2026-08-25)
 

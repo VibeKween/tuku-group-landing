@@ -57,9 +57,10 @@ cp -r website/clients .
 
 #### Full Charge client archive (`/clients/full-charge/`)
 - **Spec**: `website/design_handoff_full_charge/README.md` — passphrase gate over a spatial "field" board of session artifacts, with an in-page reader.
-- **Status (2026-08-24)**: Built and integration-tested locally (gate, field, reader, and the backing Worker/D1/R2 all pass a full auth → board → artifact → lock round-trip via Miniflare). **Not deployed** — real D1/R2/KV/secrets have not been provisioned in Cloudflare, final route mounting under tukugroup.com is still undecided, and nothing has been pushed past the `dev` branch.
-- **Backend**: `client-archive-worker/` — a second, separate Cloudflare Worker (own D1 database, R2 bucket, KV rate-limit namespace) from `workers/` (`tuku-booking-api`), so the two can't take each other down. See `client-archive-worker/README.md` for the provisioning checklist before this can go live.
+- **Status (2026-08-25)**: Backend is **live on Cloudflare** (D1/R2/KV provisioned and seeded, deployed to `https://tuku-client-archive-api.falonbahal.workers.dev`, verified end-to-end against real infrastructure). Frontend (gate/field/reader) is built and tested but only exists on the `dev` branch — Cloudflare Pages deploys `main`, so it isn't reachable on `tukugroup.com` yet. Production route is configured in `wrangler.toml` but not yet applied; both that and merging `dev` → `main` are held for explicit approval. Full status: `docs/builds/full-charge-client-archive.md`.
+- **Backend**: `client-archive-worker/` — a second, separate Cloudflare Worker (own D1 database, R2 bucket, KV rate-limit namespace) from `workers/` (`tuku-booking-api`), so the two can't take each other down. See `client-archive-worker/README.md`.
 - **Frontend**: `website/clients/full-charge/index.html` (gate) and `website/clients/full-charge/field/` (board + reader, `index.html` + `board.js` + `reader.js`/`reader.css`). The passphrase only gates board *viewing* — artifact upload/versioning goes through a separate admin credential, never the client passphrase.
+- **Adding another client to this system**: follow `client-archive-worker/ONBOARDING-NEW-CLIENT.md` — it's the runbook, written for an agent or a person to execute directly, not just background reading.
 
 ### Private Payment Portal
 - **Location**: `/fewer-better-slower/` (non-discoverable URL for qualified leads)
