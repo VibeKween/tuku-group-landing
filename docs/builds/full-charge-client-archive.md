@@ -29,6 +29,15 @@
   generic templated portal. Onboarding a new client is a new `clients` row,
   a new `access_grants` row, and a new set of gate/field/reader files for
   that client — no schema or backend changes.
+- **Building a new client's bespoke site must include making it admin-manageable
+  from day one** — not an afterthought bolted on later. Whenever a new
+  client's gate/field/reader gets built, that same piece of work has to
+  cover: the `clients` row, an `access_grants` row with that client's
+  passphrase, and confirming their artifacts show up correctly in `/admin`
+  (client picker, version history, drag-and-drop upload) exactly like
+  `full-charge`'s do today. The admin dashboard is already generic across
+  clients - the risk isn't backend capability, it's forgetting the step
+  when a new client's build happens.
 - Separate Worker (`client-archive-worker/`), not an extension of `workers/`
   (`tuku-booking-api`) — isolates blast radius.
 - Admin auth is a distinct `ADMIN_TOKEN` secret; a client passphrase leak
