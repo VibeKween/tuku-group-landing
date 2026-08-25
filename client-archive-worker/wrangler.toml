@@ -1,0 +1,44 @@
+name = "tuku-client-archive-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Route mounting is not finalized yet. This worker expects to sit in front of
+# (or alongside) the static Pages site so that /clients/:client/* paths reach
+# it for the unlock/board/artifact/admin endpoints. Confirm the exact pattern
+# (e.g. "tukugroup.com/clients/*") and add it below before deploying:
+#
+# [env.production]
+# routes = [
+#   { pattern = "tukugroup.com/clients/*", zone_name = "tukugroup.com" }
+# ]
+
+[env.dev]
+vars = { ENVIRONMENT = "development" }
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+# D1 database for clients/sessions/artifacts/access_grants/access_log.
+# Provision with: wrangler d1 create tuku-client-archive
+# then paste the returned database_id below.
+[[d1_databases]]
+binding = "CLIENT_ARCHIVE_DB"
+database_name = "tuku-client-archive"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# R2 bucket for self-contained artifact HTML files.
+# Provision with: wrangler r2 bucket create tuku-client-artifacts
+[[r2_buckets]]
+binding = "ARTIFACTS"
+bucket_name = "tuku-client-artifacts"
+
+# KV for unlock-attempt rate limiting (same pattern as workers/ BOOKINGS KV).
+# Provision with: wrangler kv:namespace create RATE_LIMIT
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Secrets (set via `wrangler secret put <NAME>`, never committed):
+# - COOKIE_SECRET   HMAC key for signing the access cookie
+# - ADMIN_TOKEN     bearer token for the admin upload endpoint only -
+#                    intentionally separate from any client passphrase

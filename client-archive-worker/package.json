@@ -1,0 +1,18 @@
+{
+  "name": "tuku-client-archive-api",
+  "version": "1.0.0",
+  "description": "TUKU GROUP private client archive (Full Charge et al.) - Cloudflare Workers + D1 + R2",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:production": "wrangler deploy --env production",
+    "migrate:local": "wrangler d1 execute CLIENT_ARCHIVE_DB --local --file=migrations/0001_init.sql",
+    "migrate:remote": "wrangler d1 execute CLIENT_ARCHIVE_DB --remote --file=migrations/0001_init.sql"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "private": true
+}
