@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Full Charge — Collaboration Field</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://tukugroup.com/clients/full-charge/field/">
+<link rel="icon" type="image/x-icon" href="../../../favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Geist+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5KTM9YBETS');
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #22201E; overflow: hidden; }
+  body { font-family: 'Archivo', system-ui, sans-serif; }
+  a { color: #F2EFE9; text-decoration: none; }
+  a:hover { color: #E8542A; }
+  button { font: inherit; }
+
+  @keyframes fcDraw { to { stroke-dashoffset: 0; } }
+  @keyframes fcRise { 0% { opacity: 0; transform: translateY(18px); } 100% { opacity: 1; transform: translateY(0); } }
+  @keyframes fcFade { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+  .fc-root {
+    position: fixed; inset: 0; overflow: hidden;
+    background: #22201E linear-gradient(178deg, rgba(58,122,79,0.32) 0%, rgba(58,122,79,0.16) 38%, rgba(58,122,79,0.04) 66%, rgba(58,122,79,0) 88%);
+  }
+  .fc-stage { position: absolute; inset: 0; cursor: grab; touch-action: none; }
+  .fc-board { position: absolute; left: 0; top: 0; width: 2600px; height: 1300px; transform-origin: 0 0; }
+  .fc-stripes {
+    position: absolute; inset: 0; opacity: 0.12;
+    background: repeating-linear-gradient(90deg, rgba(242,239,233,0.6) 0 1px, transparent 1px 96px);
+  }
+  .fc-glow {
+    position: absolute; left: -600px; top: -260px; width: 2200px; height: 1000px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(58,122,79,0.16), rgba(58,122,79,0) 78%); filter: blur(2px);
+  }
+  .fc-svg { position: absolute; inset: 0; width: 2600px; height: 1300px; pointer-events: none; }
+  .fc-chrono { fill: none; stroke: #F2EFE9; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 2600; stroke-dashoffset: 2600; animation: fcDraw 1.6s ease-out forwards 0.2s; }
+  .fc-tick-marks path { stroke: rgba(242,239,233,0.42); stroke-width: 3; stroke-linecap: round; animation: fcFade 0.6s ease both 1.5s; fill: none; }
+
+  .fc-date { position: absolute; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: rgba(242,239,233,0.72); }
+
+  .fc-card-wrap { position: absolute; width: 520px; }
+  .fc-caption { font-family: 'Permanent Marker', cursive; font-size: 30px; color: #F2EFE9; transform: rotate(-1.3deg); margin-bottom: 16px; }
+  .fc-card { position: relative; cursor: pointer; background: #FFFFFF; box-shadow: 0 22px 48px rgba(0,0,0,0.45); transform: perspective(1400px) rotate(-0.7deg); transition: box-shadow 0.4s ease; will-change: transform; }
+  .fc-card:focus-visible { outline: 2px solid #4FA3E3; outline-offset: 3px; }
+  .fc-tape { position: absolute; left: 50%; top: -14px; margin-left: -60px; width: 120px; height: 30px; background: rgba(79,163,227,0.9); transform: rotate(-2.6deg); z-index: 5; pointer-events: none; }
+  .fc-preview { position: relative; height: 300px; overflow: hidden; background: #E6E3DC; }
+  .fc-preview iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 1900px; border: 0; transform-origin: top left; transform: scale(0.3611); pointer-events: none; }
+  .fc-preview-fade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(34,32,30,0) 58%, rgba(34,32,30,0.9) 100%); pointer-events: none; }
+  .fc-card-footer { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; background: #F2EFE9; }
+  .fc-card-title { font-size: 14px; font-weight: 600; color: #22201E; font-family: 'Archivo', sans-serif; }
+  .fc-card-kind { font-family: 'Geist Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: #6E6A62; margin-top: 4px; }
+  .fc-card-version { color: #6E6A62; opacity: 0.75; margin-left: 8px; }
+  .fc-card-open { font-family: 'Geist Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: #E8542A; }
+
+  .fc-header {
+    position: absolute; left: 0; right: 0; top: 0; padding: 22px clamp(14px,3vw,30px) 30px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    pointer-events: none; z-index: 20; background: linear-gradient(180deg, #22201E 52%, rgba(34,32,30,0));
+  }
+  .fc-headline { font-family: 'Permanent Marker', cursive; font-size: clamp(24px,3.2vw,42px); line-height: 1.16; color: #F2EFE9; transform: rotate(-1.2deg); }
+  .fc-word-box { position: relative; display: inline-block; vertical-align: baseline; height: 1.05em; width: 0; transition: width 0.66s cubic-bezier(0.16,1,0.3,1); }
+  .fc-word-ghost { position: absolute; left: 0; top: 0; white-space: nowrap; visibility: hidden; pointer-events: none; }
+  .fc-word { position: absolute; left: 0; top: 0; white-space: nowrap; color: #E8542A; opacity: 0; transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), transform 0.66s cubic-bezier(0.16,1,0.3,1), filter 0.5s ease; will-change: opacity, transform, filter; }
+  .fc-squiggle { position: absolute; left: -3%; right: 0; bottom: -0.2em; width: 106%; height: 0.34em; overflow: visible; transition: opacity 0.2s ease; }
+  .fc-squiggle path { fill: none; stroke: #E8542A; stroke-linecap: round; }
+
+  .fc-byline { font-family: 'Geist Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; color: rgba(242,239,233,0.5); margin-top: 10px; }
+  .fc-byline a.fc-link-fc { color: #4FA3E3; pointer-events: auto; }
+  .fc-byline a.fc-link-tuku { color: #8FC7EA; pointer-events: auto; }
+
+  .fc-controls { display: flex; gap: clamp(14px,2.4vw,22px); flex-wrap: wrap; pointer-events: auto; }
+  .fc-control-btn { display: flex; align-items: center; gap: 9px; background: none; border: none; font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: rgba(242,239,233,0.72); padding: 4px 0; cursor: pointer; }
+  .fc-control-btn:hover { color: #F2EFE9; }
+  .fc-control-btn.fc-latest { color: #F2EFE9; }
+  .fc-control-btn.fc-latest:hover { color: #E8542A; }
+  .fc-control-btn svg { width: 15px; height: 15px; flex-shrink: 0; overflow: visible; }
+
+  .fc-footer {
+    position: absolute; left: clamp(18px,3vw,30px); right: clamp(18px,3vw,30px); bottom: 22px; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; pointer-events: none;
+  }
+  .fc-hint { font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: rgba(242,239,233,0.45); opacity: 0.9; transition: opacity 0.6s ease; }
+  .fc-lock { display: flex; align-items: center; gap: 9px; font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: rgba(242,239,233,0.55); pointer-events: auto; min-height: 44px; }
+  .fc-lock span { width: 7px; height: 7px; border: 1.5px solid rgba(242,239,233,0.55); }
+
+  @media (max-width: 640px) {
+    .fc-header, .fc-footer { padding-left: 14px; padding-right: 14px; }
+    .fc-controls { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="fc-root">
+    <div class="fc-stage" data-stage>
+      <div class="fc-board" data-board>
+        <div class="fc-stripes"></div>
+        <div class="fc-glow"></div>
+        <svg class="fc-svg">
+          <g><path class="fc-chrono" data-chrono-path d=""></path></g>
+          <g class="fc-tick-marks" data-tick-marks></g>
+          <g data-connectors></g>
+        </svg>
+        <div data-artifact-layer style="position: absolute; inset: 0;"></div>
+      </div>
+    </div>
+
+    <div class="fc-header" data-header data-chrome>
+      <div>
+        <div class="fc-headline">
+          Strategy with
+          <span class="fc-word-box" data-word-box>
+            <span class="fc-word-ghost" data-word-ghost></span>
+            <span class="fc-word" data-word-a></span>
+            <span class="fc-word" data-word-b></span>
+            <svg class="fc-squiggle" data-squiggle-wrap viewBox="0 0 240 22" preserveAspectRatio="none">
+              <g>
+                <path data-squiggle d="M4 13 C34 6, 62 17, 92 10 C122 3, 150 16, 180 9 C204 4, 222 12, 236 8" stroke-width="2.6" stroke-dasharray="300"></path>
+                <path data-squiggle-2 d="M8 18 C40 12, 70 21, 100 15 C130 9, 158 20, 188 14 C210 10, 226 16, 234 13" stroke-width="1.4" opacity="0.6" stroke-dasharray="300"></path>
+              </g>
+            </svg>
+          </span>.
+        </div>
+        <div class="fc-byline">
+          <a class="fc-link-fc" href="https://fullchargeapp.com" target="_blank" rel="noopener">FULL CHARGE</a> &times;
+          <a class="fc-link-tuku" href="https://tukugroup.com" target="_blank" rel="noopener">TUKU GROUP</a>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="fc-control-btn" data-fit type="button">
+          <svg viewBox="0 0 18 18"><g fill="none" stroke="#E8542A" stroke-width="1.7" stroke-linecap="round"><path d="M1.5 6 L1.5 2 L6 1.6"></path><path d="M12 1.6 L16.5 2 L16.4 6"></path><path d="M16.4 12 L16.5 16.4 L12 16.2"></path><path d="M6 16.2 L1.6 16.4 L1.5 12"></path></g></svg>
+          THE BIG PICTURE
+        </button>
+        <button class="fc-control-btn fc-latest" data-latest type="button">
+          <svg viewBox="0 0 18 18"><g fill="none" stroke="#4FA3E3" stroke-width="1.8" stroke-linecap="round"><circle cx="10.6" cy="6.2" r="4.1" fill="#4FA3E3" stroke="none"></circle><path d="M7.8 9.3 C6.2 11.2, 4.4 13.4, 2.6 16.2"></path></g></svg>
+          LATEST PIN
+        </button>
+      </div>
+    </div>
+
+    <div class="fc-footer" data-footer data-chrome>
+      <div class="fc-hint" data-hint>DRAG ACROSS THE FIELD</div>
+      <a class="fc-lock" href="../" data-lock><span></span>LOCK</a>
+    </div>
+
+    <div data-reader-mount></div>
+  </div>
+
+<script type="module">
+  import { FullChargeBoard } from './board.js';
+
+  const isStillPreview = new URLSearchParams(window.location.search).get('still') === '1';
+  // Empty-but-valid shape: same contract as a real payload, just nothing to show.
+  // Used only for the unauthenticated ?still=1 preview embedded in the gate's
+  // own page (see website/clients/full-charge/index.html) - it must render as
+  // inert texture, never real client data, and must never redirect (it's an
+  // iframe nested inside the gate; navigating it would nest the gate in itself).
+  const EMPTY_PAYLOAD = { client: {}, sessions: [], artifacts: [], board: { width: 2600, height: 1300, ticks: [] } };
+
+  async function loadPayload() {
+    let res;
+    try {
+      res = await fetch('/clients/board/full-charge', { credentials: 'same-origin' });
+    } catch (err) {
+      if (isStillPreview) return EMPTY_PAYLOAD;
+      // The worker is unreachable (e.g. developing this page standalone without
+      // it running) - fall back to the local fixture for offline convenience.
+      const fallback = await fetch('./board.fixture.json');
+      return fallback.json();
+    }
+
+    if (res.ok) return await res.json();
+
+    if (res.status === 401) {
+      if (isStillPreview) return EMPTY_PAYLOAD;
+      // A real server answered "you're not authenticated" - this must never
+      // fall back to the fixture, or an unlocked field would leak board
+      // layout to anyone who hits this URL directly. Send them to the gate.
+      window.location.href = '../';
+      return new Promise(() => {}); // never resolves - navigation is in flight
+    }
+
+    throw new Error('board request failed: ' + res.status);
+  }
+
+  loadPayload().then((payload) => {
+    const board = new FullChargeBoard(document.querySelector('.fc-root'));
+    board.load(payload);
+  }).catch((err) => {
+    document.body.innerHTML = '<div style="color:#F2EFE9;font-family:monospace;padding:40px;">Could not load the field. ' + (err && err.message ? err.message : '') + '</div>';
+  });
+</script>
+</body>
+</html>

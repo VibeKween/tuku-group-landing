@@ -1,0 +1,39 @@
+{
+  "client": {
+    "id": "full-charge",
+    "name": "Full Charge",
+    "site_url": "https://fullchargeapp.com",
+    "accent_hex": "#4FA3E3"
+  },
+  "sessions": [
+    {
+      "id": "fc-s1",
+      "seq": 1,
+      "occurred_on": "2026-08-19",
+      "label": "what are we asking?",
+      "tick_x": 300
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "fc-a1",
+      "session_id": "fc-s1",
+      "title": "Question Ownership: Full Charge",
+      "doc_name": "What are we asking",
+      "kind": "HTML",
+      "download_name": "Tuku Group_What are we asking_8.19.26.html",
+      "url": "/clients/full-charge/artifact/fc-a1",
+      "download_url": "/clients/full-charge/artifact/fc-a1?download=1",
+      "board_x": 130,
+      "board_y": 360,
+      "is_latest": true,
+      "connector": { "from_tick": 300, "color": "#E8542A", "style": "solid" }
+    }
+  ],
+  "board": {
+    "width": 2600,
+    "height": 1300,
+    "ticks": [300, 980, 1660, 2340],
+    "chrono_path": "M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 2470 197"
+  }
+}
