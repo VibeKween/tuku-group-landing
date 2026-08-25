@@ -39,10 +39,9 @@
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="noindex, nofollow">
 
-    <link rel="stylesheet" href="../unbuilt-client.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Geist+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5KTM9YBETS"></script>
@@ -52,43 +51,344 @@
       gtag('js', new Date());
       gtag('config', 'G-5KTM9YBETS');
     </script>
+
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; height: 100%; }
+        body {
+            background: #22201E;
+            font-family: 'Archivo', system-ui, sans-serif;
+        }
+        a { color: #F2EFE9; text-decoration: none; }
+        a:hover { color: #E8542A; }
+
+        @keyframes fcShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-7px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(2px); }
+        }
+        @keyframes fcRise {
+            0% { opacity: 0; transform: translateY(16px) rotate(-1.3deg); }
+            100% { opacity: 1; transform: translateY(0) rotate(-1.3deg); }
+        }
+
+        .gate {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+            background: #22201E linear-gradient(178deg, rgba(58,122,79,0.32) 0%, rgba(58,122,79,0.16) 38%, rgba(58,122,79,0.04) 66%, rgba(58,122,79,0) 88%);
+        }
+        .stripes {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background: repeating-linear-gradient(90deg, rgba(242,239,233,0.6) 0 1px, transparent 1px 96px);
+            pointer-events: none;
+        }
+        .field-still {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .field-still iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            pointer-events: none;
+        }
+        .vellum {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: rgba(238,234,222,0.11);
+            backdrop-filter: blur(5px) saturate(0.9);
+            -webkit-backdrop-filter: blur(5px) saturate(0.9);
+        }
+        .vignette {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.45;
+            background: radial-gradient(120% 90% at 50% 40%, rgba(238,234,222,0.12), rgba(34,32,30,0.36) 78%);
+        }
+        .header-row {
+            position: absolute;
+            left: 0; right: 0; top: 0;
+            padding: 22px clamp(18px, 3vw, 30px);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            font-family: 'Geist Mono', monospace;
+            font-size: 9.5px;
+            letter-spacing: 0.06em;
+            color: rgba(242,239,233,0.5);
+        }
+        .header-row a.full-charge { color: #4FA3E3; }
+        .header-row a.tuku-group { color: #8FC7EA; }
+        .header-row .private { letter-spacing: 0.2em; }
+
+        .card {
+            position: relative;
+            width: min(100%, 400px);
+            background: #FCFBF7;
+            box-shadow: 0 34px 70px rgba(0,0,0,0.5);
+            padding: 44px 36px 36px;
+            animation: fcRise 0.7s cubic-bezier(0.16,1,0.3,1) both 0.15s;
+        }
+        .card .tape {
+            position: absolute;
+            left: 50%;
+            top: -17px;
+            margin-left: -70px;
+            width: 140px;
+            height: 34px;
+            background: rgba(79,163,227,0.9);
+            transform: rotate(-2.2deg);
+        }
+        .card .ruled {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(rgba(34,32,30,0.07) 1px, transparent 1px);
+            background-size: 100% 34px;
+            background-position: 0 44px;
+        }
+        .card-inner { position: relative; }
+        .headline {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 40px;
+            line-height: 1.02;
+            color: #22201E;
+            margin: 0 0 34px;
+            transform: rotate(-0.8deg);
+        }
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(34,32,30,0.4);
+        }
+        .input-row input {
+            flex: 1;
+            min-width: 0;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: 'Geist Mono', monospace;
+            font-size: 16px;
+            letter-spacing: 0.14em;
+            color: #22201E;
+            padding: 8px 0;
+        }
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: 'Geist Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: #8B7BB5;
+            padding: 6px 0;
+        }
+        .toggle-btn:hover { color: #22201E; }
+
+        .submit-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 26px;
+            background: transparent;
+            border: none;
+            color: #22201E;
+            font-family: 'Geist Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            padding: 6px 2px 10px;
+            opacity: 0.3;
+            cursor: default;
+            transition: opacity 0.3s ease;
+        }
+        .submit-btn:hover { color: #E8542A; }
+        .submit-btn .arrow { font-size: 13px; }
+        .submit-btn svg {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            width: 100%;
+            height: 9px;
+            overflow: visible;
+        }
+        .submit-btn path {
+            stroke-dashoffset: 240;
+            transition: stroke-dashoffset 0.5s cubic-bezier(0.22,0.9,0.12,1);
+        }
+
+        .msg {
+            font-family: 'Geist Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            margin-top: 16px;
+            min-height: 15px;
+            color: #E8542A;
+        }
+
+        @media (max-width: 480px) {
+            .headline { font-size: 32px; }
+            .card { padding: 36px 24px 28px; }
+        }
+    </style>
 </head>
 <body data-client="full-charge">
-    <div class="unbuilt-page">
-        <div class="pair">
-            <div class="copy">
-                <p class="headline"><a href="../" id="oopsLink" class="oops-link">Oops.</a> You weren't supposed<br>to find this page.<sup class="oops-emoji">🙄</sup></p>
-                <p class="typed-line">
-                    <span class="ghost">Something is happening back there, but it's not for you.</span>
-                    <span class="typed" id="typed1"></span>
-                </p>
-                <p class="typed-line line2">
-                    <span class="ghost">Here's an animal instead.</span>
-                    <span class="typed" id="typed2"></span>
-                </p>
-            </div>
+    <div class="gate">
+        <div class="stripes"></div>
 
-            <div class="art">
-                <div class="flip-card" id="flipCard">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-back"></div>
-                        <div class="flip-card-front">
-                            <button type="button" class="avatar" id="avatar" aria-label="Reroll avatar"></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="controls" id="controls">
-                    <button type="button" class="control" id="tryAgain">remix</button>
-                    <span class="sep">/</span>
-                    <button type="button" class="control adopt" id="adopt">adopt</button>
-                </div>
-            </div>
+        <div class="field-still">
+            <iframe src="field/?still=1" title="the field, locked" scrolling="no" tabindex="-1"></iframe>
         </div>
 
-        <p class="copyright">© 2026 <a href="/" id="footerHomeLink">Tuku Group, LLC</a><br>Independent and privately held.</p>
+        <div class="vellum"></div>
+        <div class="vignette"></div>
+
+        <div class="header-row">
+            <span>
+                <a class="full-charge" href="https://fullchargeapp.com" target="_blank" rel="noopener">FULL CHARGE</a>
+                &times;
+                <a class="tuku-group" href="https://tukugroup.com" target="_blank" rel="noopener">TUKU GROUP</a>
+            </span>
+            <span class="private">PRIVATE</span>
+        </div>
+
+        <div class="card" id="card">
+            <div class="tape"></div>
+            <div class="ruled"></div>
+            <div class="card-inner">
+                <div class="headline">PASSWORD,<br>PLEASE.</div>
+                <form id="gateForm" autocomplete="off">
+                    <div class="input-row">
+                        <input type="password" id="pwInput" placeholder="&middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;" autofocus>
+                        <button type="button" class="toggle-btn" id="toggleBtn">SHOW</button>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        VIEW COLLABORATION <span class="arrow">&rarr;</span>
+                        <svg viewBox="0 0 220 12" preserveAspectRatio="none">
+                            <path d="M2 7 C52 3, 146 10, 218 4" fill="none" stroke="#E8542A" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="240" id="squigglePath"></path>
+                        </svg>
+                    </button>
+                </form>
+                <div class="msg" id="msg"></div>
+            </div>
+        </div>
     </div>
 
-    <script src="../avatar-gen.js"></script>
-    <script src="../unbuilt-client.js"></script>
+    <script>
+    (function () {
+        var form = document.getElementById('gateForm');
+        var input = document.getElementById('pwInput');
+        var toggleBtn = document.getElementById('toggleBtn');
+        var submitBtn = document.getElementById('submitBtn');
+        var squigglePath = document.getElementById('squigglePath');
+        var msgEl = document.getElementById('msg');
+        var cardEl = document.getElementById('card');
+
+        var show = false;
+        var submitting = false;
+
+        // The .dc.html prototype gates the CTA by comparing against the real
+        // passphrase client-side - that's explicitly a prototype-only shortcut
+        // (README section 5: "ships in the client bundle... not security").
+        // Real correctness can only be known server-side, so here the same
+        // visual states (inert -> active, squiggle undrawn -> drawn) are
+        // driven by "has the client typed something" instead of "is it right".
+        function updateCtaState() {
+            var active = input.value.trim().length > 0 && !submitting;
+            submitBtn.style.opacity = active ? '1' : '0.3';
+            submitBtn.style.cursor = active ? 'pointer' : 'default';
+            squigglePath.style.strokeDashoffset = active ? '0' : '240';
+        }
+
+        input.addEventListener('input', function () {
+            msgEl.textContent = '';
+            updateCtaState();
+        });
+
+        toggleBtn.addEventListener('click', function () {
+            show = !show;
+            input.type = show ? 'text' : 'password';
+            toggleBtn.textContent = show ? 'HIDE' : 'SHOW';
+        });
+
+        function shake() {
+            cardEl.style.animation = 'none';
+            void cardEl.offsetWidth; // force reflow so the animation restarts
+            cardEl.style.animation = 'fcShake 0.42s ease';
+        }
+
+        function setMsg(text, color) {
+            msgEl.textContent = text;
+            msgEl.style.color = color;
+        }
+
+        // Single entry point for the real unlock flow - hits Track A's
+        // /clients/full-charge/unlock endpoint. Route mounting under
+        // tukugroup.com is still being finalized (see the build plan); this
+        // uses a same-origin relative path so it resolves once that lands.
+        async function unlock(passphrase) {
+            var res = await fetch('/clients/full-charge/unlock', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ passphrase: passphrase }),
+            });
+            var data = {};
+            try { data = await res.json(); } catch (e) {}
+            return { ok: res.ok && data.ok === true, status: res.status, error: data.error };
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (submitting) return;
+            var pw = input.value.trim();
+            if (!pw) return;
+
+            submitting = true;
+            updateCtaState();
+
+            unlock(pw).then(function (result) {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'client_unlock_attempt', { client_id: 'full-charge', success: !!result.ok });
+                }
+
+                if (result.ok) {
+                    setMsg('LOADING…', '#3A7A4F');
+                    setTimeout(function () { window.location.href = 'field/'; }, 900);
+                } else {
+                    submitting = false;
+                    updateCtaState();
+                    if (result.status === 429) {
+                        setMsg('TOO MANY TRIES. WAIT A MOMENT.', '#E8542A');
+                    } else {
+                        setMsg('NOT THAT ONE.', '#E8542A');
+                        shake();
+                    }
+                }
+            }).catch(function () {
+                submitting = false;
+                updateCtaState();
+                setMsg('SOMETHING WENT WRONG.', '#E8542A');
+            });
+        });
+
+        updateCtaState();
+    })();
+    </script>
 </body>
 </html>
