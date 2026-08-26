@@ -110,6 +110,32 @@ regression on every other client page and the homepage.
   50% without erroring - still not a full fit at that extreme, but strictly
   better than the prior always-100%, and real one-pager artifacts are far
   narrower than 6000px).
+- **Fit-to-width zoom still wasn't enough on a real phone**: after the fix
+  above shipped, a real-device screenshot (not emulated) showed the same
+  artifact still opening at 100% and overflowing off-screen in the reader.
+  Root cause is more fundamental than the zoom math: mobile browsers only
+  apply their automatic "shrink non-responsive content to fit the screen"
+  treatment to top-level page loads that lack a viewport meta tag - an
+  iframe never gets that treatment, no matter what CSS width or transform
+  is applied to it from the parent page. Rather than continue chasing this
+  with more custom zoom logic inside the iframe, changed the actual open
+  behavior in `board.js`: below this page's own mobile breakpoint
+  (`max-width: 640px`, matching the breakpoint already used elsewhere on
+  this page), clicking an artifact card opens `artifact.url` as a real
+  top-level tab (`window.open(..., '_blank', 'noopener')`) instead of
+  invoking the in-page iframe reader. This hands the shrink-to-fit and
+  pinch-zoom behavior to the mobile browser itself - which already solves
+  exactly this problem natively - rather than reimplementing it. Desktop
+  (and the fit-to-width zoom fix above, which still has value there) is
+  unchanged; only the mobile branch changed. The `artifact_open` GA event
+  now carries a `surface: 'tab' | 'reader'` param so the two paths are
+  distinguishable in analytics. Verified: syntax-checked, and a live
+  regression check confirmed desktop card-click still opens the in-page
+  reader unchanged. Genuine narrow-viewport (real phone) confirmation of
+  the new tab-open path itself is still pending - the available browser
+  automation in this session couldn't force a true narrow CSS viewport
+  (see "Not fully verified" below), so this needs a real-device check
+  before considering it fully closed.
 
 ## Not fully verified
 

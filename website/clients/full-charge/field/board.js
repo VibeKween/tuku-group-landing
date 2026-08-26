@@ -301,8 +301,20 @@ export class FullChargeBoard {
 
     const openIt = () => {
       if (this.suppressClick) { this.suppressClick = false; return; }
-      this.reader.open(artifact);
-      gaEvent('artifact_open', { artifact_id: artifact.id });
+      // Below this page's own mobile breakpoint, open the artifact as a
+      // real top-level navigation instead of the in-page iframe reader.
+      // Iframes never get the "shrink non-responsive content to fit the
+      // screen" treatment mobile browsers apply to top-level page loads
+      // without a viewport meta tag - a fixed-width artifact just overflows
+      // sideways inside the reader's small iframe instead. A real tab gets
+      // native shrink-to-fit and pinch-zoom for free, no custom zoom math.
+      const isMobile = window.matchMedia('(max-width: 640px)').matches;
+      if (isMobile) {
+        window.open(artifact.url, '_blank', 'noopener');
+      } else {
+        this.reader.open(artifact);
+      }
+      gaEvent('artifact_open', { artifact_id: artifact.id, surface: isMobile ? 'tab' : 'reader' });
     };
     card.addEventListener('click', openIt);
     card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openIt(); } });

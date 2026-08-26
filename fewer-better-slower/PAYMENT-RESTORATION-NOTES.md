@@ -106,3 +106,33 @@ The core service selection functionality remains intact:
 - Email subjects and branding maintained for consistency
 
 **Restoration Estimate**: 2-3 hours development time once hosting platform selected.
+
+## Follow-up (2026-08-25)
+
+Found during an unrelated full-site walkthrough: `payment.js`'s
+`setupEventListeners()` still calls `document.getElementById('name')` /
+`'email'` / `'continue-btn'` / `'back-btn'` / `'payment-form')` -
+all elements this file's own removal list above says were deliberately
+stripped from the HTML. Since none of those IDs exist, the very first line
+throws an uncaught `TypeError` on every page load, which aborts the rest of
+that `DOMContentLoaded` handler - so `initStripe()` never runs either. This
+doesn't break anything currently visible (the live page only needs
+`renderServices()`, which runs *before* `setupEventListeners()` in that same
+handler and completes fine; the "Schedule your project" CTA is a plain
+`mailto:` link needing no JS), but it does throw a real console error on
+every load of this page.
+
+User's call: rather than patch `payment.js` in place, take the whole
+`/fewer-better-slower/` page off production until ready to restore full
+payment processing per the plan above - not a code fix, a page-availability
+decision. **Deferred to a future session, not started.**
+
+**Important gotcha for whoever picks this up**: the root-level
+`fewer-better-slower/` (the copy Cloudflare Pages actually serves) and this
+`website/fewer-better-slower/` copy have drifted - `payment.js` differs
+(root has newer, updated service names/descriptions/pricing display logic;
+`website/` is stale), and this very file
+(`PAYMENT-RESTORATION-NOTES.md`) only exists in the root copy, not here.
+Before taking anything down, diff root vs `website/` for this directory and
+reconcile `website/` to match root's more current content first - otherwise
+"preserve the source for later" ends up preserving the wrong version.
