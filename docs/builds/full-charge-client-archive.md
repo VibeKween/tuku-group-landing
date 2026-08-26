@@ -89,6 +89,27 @@ regression on every other client page and the homepage.
   `stroke-dasharray` length would silently clip a longer path (the dash
   pattern repeats "on/off" for that fixed length rather than scaling to the
   path); now measured via `getTotalLength()`.
+- **Reader overflows off-screen on mobile for non-responsive artifacts**:
+  the reader always opened at a hardcoded `zoom = 1`, which assumes the
+  artifact's own HTML reflows to whatever width the iframe is given. An
+  artifact authored with a fixed, non-responsive layout doesn't shrink -
+  it just overflows sideways inside `.fcr-scroll`, which on a narrow screen
+  reads as the document running off screen (no visual hint that it's
+  sideways-scrollable). Fixed in `reader.js`'s `_onFrameLoad` by comparing
+  the artifact's natural content width (`documentElement.scrollWidth`)
+  against what's actually available and, if wider, computing an initial
+  fit-to-width zoom - reusing the exact reflow-zoom mechanism the +/-
+  controls already use, not a new mechanism. Runs once per open, silently
+  (doesn't fire the `onZoomChange` GA callback, since it's automatic, not a
+  user action). Verified with a standalone local harness (`FullChargeReader`
+  opened directly against synthetic fixtures, bypassing the worker/auth
+  entirely) against three cases: a 1400px fixed-width fixture (auto-fit to
+  95% against a ~1330px container), an already-responsive fixture (stays at
+  100%, confirming no regression for artifacts that already reflow), and a
+  6000px extreme-width fixture (clamps to the existing `ZOOM_MIN` floor of
+  50% without erroring - still not a full fit at that extreme, but strictly
+  better than the prior always-100%, and real one-pager artifacts are far
+  narrower than 6000px).
 
 ## Not fully verified
 
@@ -207,6 +228,20 @@ Confirmed zero collateral impact: `/clients/voyj/` still serves its own
 unrelated static placeholder untouched, and `/clients/full-charge/` itself
 still serves the OLD static placeholder (expected - `dev` hasn't been
 merged to `main` yet, so Pages hasn't published the new gate/field pages).
+
+## Live admin workflow test (2026-08-25)
+
+Full round-trip re-verified directly against production after the merge to
+`main`: connected to `/admin` with the real `ADMIN_TOKEN`, selected Full
+Charge, uploaded a second version of the existing "What are we asking" doc
+through the drag-and-drop form. History table correctly showed `v2 LATEST`
+on top with `v1` preserved below, both still pinned to the original
+2026-08-25 session date. Then unlocked `/clients/full-charge/` with the
+real client passphrase and confirmed the new artifact renders live on the
+field board with its real content preview, chrono tick, and connector -
+proving the admin upload path and the client-facing read path are both
+correctly wired to the same production data, not just independently
+functional.
 
 ## Still open
 

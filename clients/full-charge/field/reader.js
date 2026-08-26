@@ -177,11 +177,13 @@ export class FullChargeReader {
     this.iframe.addEventListener('load', () => this._onFrameLoad());
   }
 
-  _setZoom(next) {
+  _setZoom(next, { silent = false } = {}) {
     const clamped = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, +next.toFixed(2)));
     if (clamped === this.zoom) return;
     this.zoom = clamped;
     this._applyZoom();
+
+    if (silent) return;
 
     const artifactId = this.artifact ? this.artifact.id : null;
     this._zoomCallbacks.forEach((cb) => {
@@ -218,6 +220,22 @@ export class FullChargeReader {
       this.iframe.style.height = h + 'px';
     };
     measure();
+
+    // Fit-to-width: an artifact authored with a fixed, non-responsive
+    // layout won't reflow to the 100%-width iframe - its content just
+    // overflows sideways inside .fcr-scroll instead, which on a narrow
+    // (mobile) screen reads as the document running off screen. Detect
+    // that by comparing the natural content width against what's actually
+    // available and, if it's wider, start at a lower zoom - reusing the
+    // same reflow-zoom mechanism the +/- controls use - so the artifact is
+    // visible in full on open instead of requiring a sideways scroll the
+    // toolbar never hints at. Only runs once, at open (load fires once per
+    // src set; changing zoom afterward doesn't re-trigger it).
+    const availableWidth = this.scrollEl.clientWidth;
+    const naturalWidth = doc.documentElement.scrollWidth;
+    if (availableWidth > 0 && naturalWidth > availableWidth + 2) {
+      this._setZoom(availableWidth / naturalWidth, { silent: true });
+    }
 
     if (this._resizeObserver) this._resizeObserver.disconnect();
     this._resizeObserver = new ResizeObserver(measure);
