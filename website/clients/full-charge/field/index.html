@@ -161,7 +161,14 @@
   </div>
 
 <script type="module">
-  import { FullChargeBoard } from './board.js';
+  // Cache-busting query param: board.js/reader.js/reader.css are served with
+  // Cache-Control: max-age=14400 (4h), but this HTML is max-age=0. Without a
+  // version bump here, a browser can keep running a stale cached JS module
+  // for up to 4h after a deploy even though it re-fetches this page fresh
+  // every load. Static import specifiers can't use a shared variable, so
+  // bump this same "?v=" string here, in board.js's import of reader.js, and
+  // in reader.js's reader.css link whenever any of the three files change.
+  import { FullChargeBoard } from './board.js?v=20260825b';
 
   const isStillPreview = new URLSearchParams(window.location.search).get('still') === '1';
   // Empty-but-valid shape: same contract as a real payload, just nothing to show.

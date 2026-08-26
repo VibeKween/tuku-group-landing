@@ -6,7 +6,10 @@
  * shipped here. Every timing/easing/coordinate constant below is lifted
  * directly from that file's <script type="text/x-dc"> Component class.
  */
-import { FullChargeReader } from './reader.js';
+// Cache-busting query param - see the matching comment in field/index.html.
+// Bump this same "?v=" string here, in index.html's board.js import, and in
+// reader.js's reader.css link whenever any of the three files change.
+import { FullChargeReader } from './reader.js?v=20260825b';
 
 const W = 2600, H = 1300, HDR = 180;
 const WORDS = ['purpose', 'clarity', 'craft', 'intention', 'candor', 'collaboration', 'thoughtfulness', 'momentum'];

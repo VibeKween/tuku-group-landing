@@ -39,7 +39,9 @@ function injectStylesheetOnce() {
   if (document.querySelector('link[data-fcr-css]')) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = new URL('./reader.css', import.meta.url).href;
+  // Cache-busting query param - see the matching comment in field/index.html.
+  // Bump this same "?v=" string here whenever reader.css changes.
+  link.href = new URL('./reader.css?v=20260825b', import.meta.url).href;
   link.setAttribute('data-fcr-css', '');
   document.head.appendChild(link);
 }
