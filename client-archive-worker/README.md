@@ -29,11 +29,9 @@ real route live - verified directly against `https://tukugroup.com`
 working against the real domain, not just `workers.dev` or local
 Miniflare).
 
-**Not yet done**: `dev` has not been merged to `main`, so Cloudflare Pages
-hasn't published the actual gate/field/reader pages yet -
-`/clients/full-charge/` still serves the old placeholder. The backend is
-fully live; only the client-facing frontend is still pending, held for
-explicit approval per the workspace's production-deploy workflow.
+`dev` has since been merged to `main` (2026-08-26) - Cloudflare Pages has
+published the real gate/field/reader pages, and `/clients/full-charge/` no
+longer serves the placeholder. Both backend and frontend are fully live.
 
 If provisioning this from scratch again (e.g. a second environment):
 1. `wrangler d1 create tuku-client-archive` → paste the `database_id` into `wrangler.toml`.

@@ -139,10 +139,13 @@ regression on every other client page and the homepage.
 
 ## Not fully verified
 
-- True narrow-viewport rendering (375/414/768) — available browser
-  automation couldn't force a genuine narrow CSS viewport; verified
-  statically instead (correct `@media` breakpoints with real layout changes
-  exist for gate/field/reader).
+- True narrow-viewport rendering (375/414/768) for the gate/field/reader
+  pages themselves — still verified statically only (browser automation
+  still can't force the real OS window narrower than ~614px). The
+  `what-are-we-asking` artifact's own `.lane-tabs` mobile layout *was*
+  verified at a genuine 390px width using the same-origin iframe technique
+  (see the 2026-08-26 section above) — that technique is available for the
+  gate/field/reader pages too, just not yet applied to them.
 - `prefers-reduced-motion` — code path matches spec intent, not visually
   confirmed in a live reduced-motion session.
 - Lighthouse / formal a11y audit — not run.
@@ -268,6 +271,79 @@ field board with its real content preview, chrono tick, and connector -
 proving the admin upload path and the client-facing read path are both
 correctly wired to the same production data, not just independently
 functional.
+
+## Mobile cache-staleness + artifact content fix (2026-08-26)
+
+Following the mobile-reader fixes above (`window.open` on mobile instead of
+the in-page reader), a real-device screenshot still showed the artifact
+overflowing off-screen. Investigation and fix, in order:
+
+1. **Confirmed the `window.open` fix itself was correctly live** - `curl`
+   against production showed the current `board.js` with the `isMobile`
+   branch, `cf-cache-status: REVALIDATED`. Ruled out Cloudflare's edge cache.
+2. **Root cause was a browser-local cache mismatch, not the code**:
+   `field/index.html` is `Cache-Control: max-age=0, must-revalidate`, but
+   its static-imported `board.js`/`reader.js` (and `reader.js`'s
+   dynamically-injected `reader.css` link) carry `max-age=14400` (4h) with
+   no cache-busting query string on the import specifiers. A phone that
+   loaded the field page any time in the preceding 4h could keep executing
+   the pre-fix `board.js` from its own local HTTP cache even after a fresh
+   page load, since revalidating the HTML doesn't force revalidation of
+   resources it merely imports. Fixed by adding a versioned `?v=20260825b`
+   query string to all three imports; since static `import` specifiers
+   can't reference a shared JS constant, the same string has to be bumped
+   by hand in all three files whenever any of them changes (each file has a
+   comment saying so). Committed (`681d711`), merged `dev` → `main`
+   (fast-forward), pushed live (2026-08-26).
+3. **The remaining overflow was a separate, pre-existing bug in the
+   uploaded artifact content itself**, not the delivery pipeline - confirmed
+   by pulling the actual R2-stored bytes directly via `wrangler r2 object
+   get` (bypassing the worker entirely) and inspecting them: in
+   `full-charge/what-are-we-asking/v2.html`, `.lane-tabs` (the five-tab A-E
+   navigation) was a plain `display:flex` row with `white-space:nowrap` and
+   no wrap/scroll handling, so it overflowed the whole page at phone widths
+   despite the document otherwise having a correct `<meta viewport>` tag and
+   an existing `@media (max-width:720px)` breakpoint. The worker's
+   `handleArtifact` streams R2 bytes unmodified (confirmed by reading
+   `src/handlers/artifact.js` and the admin upload path) - there is no
+   wrapping/stripping anywhere in the pipeline that could have caused this.
+4. **Fixed the artifact directly**: at `max-width:720px`, `.lane-tabs` now
+   stacks into a full-width vertical list instead of staying a horizontal,
+   non-wrapping row - and instead of an initial internal-scroll fix
+   (`overflow-x:auto` on the tab row), which the user correctly flagged as a
+   worse mobile interaction than stacking. The folder-tab visual treatment
+   (rounded top corners, hidden bottom border merging into the panel below)
+   was swapped for plain list-row borders/corners at that breakpoint, since
+   it only reads correctly side-by-side.
+5. **Verification technique worth reusing**: this session's browser
+   automation, like the prior one (see "Not fully verified" below), could
+   not force the real OS browser window narrower than ~614px CSS width via
+   the resize tool. Worked around it by loading the artifact inside a
+   same-origin `<iframe style="width:390px">` on a local wrapper page - the
+   iframe gets its own genuine layout viewport regardless of the outer
+   window's floor, so `@media` queries evaluate exactly as they would on a
+   real 390px phone. Confirmed at true 390px: the tab stack has zero
+   overflow; a full-page scan of every element's bounding rect against the
+   viewport (excluding descendants of any ancestor with `overflow-x:auto`,
+   since some content - the plan/schedule table - is deliberately
+   self-scrolling) found no real page-level overflow beyond a 2px sub-pixel
+   bleed on a decorative highlight span. Reusable for future mobile-viewport
+   checks in this environment without real-device access.
+6. **Also revised, at the user's direction (unrelated to the bug)**: sheet
+   head metadata row tightened (dropped "Drawing / Question section",
+   "Prepared by" now reads "MFSP & Tuku Group"), headline and subhead copy
+   rewritten twice for concision, "compliance readiness" → "readiness" in
+   Falon's row. Per user preference, no em dashes in any of this copy (see
+   memory).
+7. **Uploaded the fixed file as `v3`** through the same append-only
+   versioning contract `finalizeArtifactVersion` implements, replicated
+   manually via `wrangler r2 object put` + `wrangler d1 execute` (the
+   `ADMIN_TOKEN` needed for the real `/admin/artifacts` HTTP endpoint wasn't
+   available in this session, and reading it from
+   `credentials.local.txt` was correctly refused): new row `v3` (id
+   `79f72639-2098-4612-bc42-3918465da625`), `is_latest=1`, pinned to the
+   same session as `v1`/`v2` (revisions never move the chrono tick), then
+   flipped `v2`'s `is_latest` to 0. Verified via a follow-up `SELECT`.
 
 ## Still open
 
