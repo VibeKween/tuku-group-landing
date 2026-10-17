@@ -1,6 +1,6 @@
 # Deploy runbook: client guide route (`/clients/guide/<slug>/`)
 
-Ships the Full Charge team on-site guide at `https://tukugroup.com/clients/guide/full-charge/`, behind the existing Full Charge passphrase, opened from a "Team on-site guide" card on `/clients/full-charge/field/`.
+Ships the Full Charge team on-site guide at `https://tukugroup.com/clients/guide/full-charge/`, behind the existing Full Charge passphrase, opened from a "On-site guide" card on `/clients/full-charge/field/`.
 
 Three production changes, in this order. Each step is safe on its own, so a stop between steps leaves nothing broken.
 
@@ -55,7 +55,7 @@ Changes ready for production:
 - Worker tuku-client-archive-api (env production): new route
   tukugroup.com/clients/guide/* serving those files behind the Full Charge cookie,
   with byte ranges for the films
-- Static site (dev -> main): "Team on-site guide" card on /clients/full-charge/field/,
+- Static site (dev -> main): "On-site guide" card on /clients/full-charge/field/,
   opening /clients/guide/full-charge/ in a new tab; the gate returns to ?next= after unlock
 - Local testing: test/guide-local.sh against the staged guide: [N passed, 0 failed]
 - Quality checks: team scan [0], stage.py [Stage OK], check-guide-links.py [Links OK],
@@ -99,7 +99,7 @@ git push origin dev
 git push origin dev:main            # refuses if main moved; then merge in the main worktree instead
 ```
 
-Cloudflare Pages publishes `main` in about a minute. `field/index.html` loads `board.js?v=20261017a`, so browsers fetch the new card code at once.
+Cloudflare Pages publishes `main` in about a minute. `field/index.html` loads `board.js?v=20261017b`, so browsers fetch the new card code at once.
 
 ## Post-deploy checks
 
@@ -120,7 +120,7 @@ curl -s -o /dev/null -w '%{http_code} gate\n'  https://tukugroup.com/clients/ful
 
 Signed in, on a laptop:
 
-1. Open `https://tukugroup.com/clients/full-charge/field/` and unlock. The "Team on-site guide" card sits at the next free tick.
+1. Open `https://tukugroup.com/clients/full-charge/field/` and unlock. The "On-site guide" card sits at the next free tick.
 2. Click it. The guide opens in a new tab, signed in.
 3. Walk the rail. Open the films page and play and seek each film.
 

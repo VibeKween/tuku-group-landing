@@ -9,7 +9,7 @@
 // Cache-busting query param - see the matching comment in field/index.html.
 // Bump this same "?v=" string here, in index.html's board.js import, and in
 // reader.js's reader.css link whenever any of the three files change.
-import { FullChargeReader } from './reader.js?v=20261017a';
+import { FullChargeReader } from './reader.js?v=20261017b';
 
 const W = 2600, H = 1300, HDR = 180;
 const WORDS = ['purpose', 'clarity', 'craft', 'intention', 'candor', 'collaboration', 'thoughtfulness', 'momentum'];
@@ -24,7 +24,7 @@ const CHRONO_PATH = 'M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 
 // The team on-site guide is a multi-page site, not a board artifact: it is
 // served by the archive worker's /clients/guide/<slug>/ route (same access
 // cookie) and always opens in its own tab, never in the in-page reader.
-const GUIDE = { url: '/clients/guide/full-charge/', title: 'Team on-site guide', kind: 'GUIDE' };
+const GUIDE = { url: '/clients/guide/full-charge/', title: 'On-site guide', kind: 'Oct 19 to 21 · From today to tomorrow' };
 
 function gaEvent(name, params) {
   if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
@@ -215,7 +215,7 @@ export class FullChargeBoard {
           <div class="fc-card-title">${escapeHtml(GUIDE.title)}</div>
           <div class="fc-card-kind">${escapeHtml(GUIDE.kind)}</div>
         </div>
-        <div class="fc-card-open">NEW TAB &nearr;</div>
+        <div class="fc-card-open">OPEN &nearr;</div>
       </div>
     `;
     card.addEventListener('click', (e) => {
