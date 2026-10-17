@@ -17,6 +17,7 @@
 import { handleUnlock, handleLock } from './handlers/unlock.js';
 import { handleBoard } from './handlers/board.js';
 import { handleArtifact } from './handlers/artifact.js';
+import { handleGuide } from './handlers/guide.js';
 import { handleAdminUpload, handleAdminClients, handleAdminClientArtifacts } from './handlers/admin.js';
 import { ADMIN_PAGE_HTML } from './admin-page.js';
 
@@ -26,6 +27,11 @@ function matchRoute(pathname, method) {
     { pattern: /^\/clients\/lock\/([a-z0-9-]+)$/, method: 'POST', handler: 'lock' },
     { pattern: /^\/clients\/board\/([a-z0-9-]+)$/, method: 'GET', handler: 'board' },
     { pattern: /^\/clients\/artifact\/([a-z0-9-]+)\/([a-zA-Z0-9-]+)$/, method: 'GET', handler: 'artifact' },
+    // The one route where the slug is NOT last: a guide is a folder of
+    // relatively-linked files, so the file path has to follow the slug. The
+    // route pattern ("tukugroup.com/clients/guide/*") still only needs a
+    // trailing wildcard, because the slug sits after a fixed prefix.
+    { pattern: /^\/clients\/guide\/([a-z0-9-]+)(\/.*)?$/, method: ['GET', 'HEAD'], handler: 'guide' },
     { pattern: /^\/admin\/artifacts$/, method: 'POST', handler: 'adminUpload' },
     { pattern: /^\/admin\/clients$/, method: 'GET', handler: 'adminClients' },
     { pattern: /^\/admin\/clients\/([a-z0-9-]+)\/artifacts$/, method: 'GET', handler: 'adminClientArtifacts' },
@@ -34,7 +40,7 @@ function matchRoute(pathname, method) {
 
   for (const route of routes) {
     const match = pathname.match(route.pattern);
-    if (match && route.method === method) {
+    if (match && [].concat(route.method).includes(method)) {
       return { handler: route.handler, params: match.slice(1) };
     }
   }
@@ -60,6 +66,8 @@ export default {
           return await handleBoard(request, env, match.params[0]);
         case 'artifact':
           return await handleArtifact(request, env, match.params[0], match.params[1]);
+        case 'guide':
+          return await handleGuide(request, env, match.params[0], match.params[1]);
         case 'adminUpload':
           return await handleAdminUpload(request, env);
         case 'adminClients':

@@ -54,7 +54,7 @@ actually set there.
 
 `wrangler.toml`'s `[env.production].routes` lists one pattern per exact
 endpoint this worker implements (`/clients/unlock/*`, `/clients/lock/*`,
-`/clients/board/*`, `/clients/artifact/*`, `/admin`, `/admin/*`) rather than
+`/clients/board/*`, `/clients/artifact/*`, `/clients/guide/*`, `/admin`, `/admin/*`) rather than
 a single blanket `tukugroup.com/clients/*`. The reason: `tukugroup.com` is
 served by Cloudflare Pages, including every client's static gate/field HTML
 - not just `full-charge`, but the other 6 client-archive slugs too. A
@@ -84,6 +84,7 @@ doesn't guarantee the routes actually took effect.
 - `POST /clients/lock/:client` — clears it.
 - `GET /clients/board/:client` — requires the cookie; returns the same shape as `board.fixture.json`.
 - `GET /clients/artifact/:client/:id` — requires the cookie; streams the R2 object. `?download=1` adds `Content-Disposition`.
+- `GET|HEAD /clients/guide/:client/<path>` — a multi-file guide (pages, images, films) served from R2 under `guides/:client/`, for clients listed in `GUIDE_CLIENTS` in `src/handlers/guide.js` (today `full-charge`). Requires the cookie on every file: a signed-out page load gets a 302 to `/clients/:client/?next=<path>`, anything else a 401. Answers byte ranges (206) so Safari can play and seek the films. The one route where the slug is not last; its pattern still needs only a trailing wildcard. Deploy steps: `DEPLOY-RUNBOOK-guide.md`. Local test: `test/guide-local.sh`.
 
 The client slug is always the LAST path segment in every route above, not
 embedded in the middle (`/clients/unlock/:client`, not

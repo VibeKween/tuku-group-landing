@@ -41,7 +41,7 @@ function injectStylesheetOnce() {
   link.rel = 'stylesheet';
   // Cache-busting query param - see the matching comment in field/index.html.
   // Bump this same "?v=" string here whenever reader.css changes.
-  link.href = new URL('./reader.css?v=20260825b', import.meta.url).href;
+  link.href = new URL('./reader.css?v=20261017a', import.meta.url).href;
   link.setAttribute('data-fcr-css', '');
   document.head.appendChild(link);
 }

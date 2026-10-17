@@ -35,6 +35,7 @@ routes = [
   { pattern = "tukugroup.com/clients/lock/*", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/clients/board/*", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/clients/artifact/*", zone_name = "tukugroup.com" },
+  { pattern = "tukugroup.com/clients/guide/*", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/admin", zone_name = "tukugroup.com" },
   { pattern = "tukugroup.com/admin/*", zone_name = "tukugroup.com" },
 ]
@@ -46,7 +47,8 @@ binding = "CLIENT_ARCHIVE_DB"
 database_name = "tuku-client-archive"
 database_id = "b2e5201c-6b0d-47e4-81a3-02c3837135e9"
 
-# R2 bucket for self-contained artifact HTML files.
+# R2 bucket for self-contained artifact HTML files, plus multi-file guides
+# under guides/<slug>/ (served by /clients/guide/*, see src/handlers/guide.js).
 # Provisioned 2026-08-25.
 [[r2_buckets]]
 binding = "ARTIFACTS"

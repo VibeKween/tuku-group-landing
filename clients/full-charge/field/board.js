@@ -9,7 +9,7 @@
 // Cache-busting query param - see the matching comment in field/index.html.
 // Bump this same "?v=" string here, in index.html's board.js import, and in
 // reader.js's reader.css link whenever any of the three files change.
-import { FullChargeReader } from './reader.js?v=20260825b';
+import { FullChargeReader } from './reader.js?v=20261017a';
 
 const W = 2600, H = 1300, HDR = 180;
 const WORDS = ['purpose', 'clarity', 'craft', 'intention', 'candor', 'collaboration', 'thoughtfulness', 'momentum'];
@@ -21,6 +21,10 @@ const CAPTION_HEIGHT = 46; // .fc-caption's own height + margin - see index.html
 // same literal path; the /clients/:client/board API does not return one, so this is the fallback
 // and, in practice, the only source used today).
 const CHRONO_PATH = 'M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 2470 197';
+// The team on-site guide is a multi-page site, not a board artifact: it is
+// served by the archive worker's /clients/guide/<slug>/ route (same access
+// cookie) and always opens in its own tab, never in the in-page reader.
+const GUIDE = { url: '/clients/guide/full-charge/', title: 'Team on-site guide', kind: 'GUIDE' };
 
 function gaEvent(name, params) {
   if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
@@ -164,7 +168,63 @@ export class FullChargeBoard {
       this.cards.push({ ...card, cardX, cardY, tickX, hasCaption });
     });
 
+    // Never on the gate's ?still=1 texture - that view is unauthenticated.
+    this.guideTick = null;
+    if (!this.still) this._renderGuideCard(layer, connectorsSvg, payload);
+
     this._drawFutureReach(connectorsSvg, payload);
+  }
+
+  /**
+   * Pins the guide card at the first chrono tick no session uses, so it sits
+   * on the timeline as the next thing to come rather than over a real
+   * artifact. Same card markup and tilt as an artifact card, but a plain
+   * link to a new tab.
+   */
+  _renderGuideCard(layer, connectorsSvg, payload) {
+    const usedTicks = new Set((payload.sessions || []).map((s) => s.tick_x));
+    const tickX = TICKS.find((t) => !usedTicks.has(t));
+    if (tickX == null) return;
+    this.guideTick = tickX;
+
+    // No caption above this card, so drop it by the caption's height to line
+    // its top edge up with the captioned artifact cards.
+    const cardX = tickX - 170, cardY = 360 + CAPTION_HEIGHT;
+    this._drawConnector(connectorsSvg, tickX, cardY, this.cards.length);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'fc-card-wrap';
+    wrap.style.left = `${cardX}px`;
+    wrap.style.top = `${cardY}px`;
+    wrap.style.animation = 'fcRise 0.7s cubic-bezier(0.16,1,0.3,1) both 0.9s';
+
+    const card = document.createElement('a');
+    card.className = 'fc-card';
+    card.href = GUIDE.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.setAttribute('aria-label', `Open ${GUIDE.title} in a new tab`);
+    card.innerHTML = `
+      <div class="fc-tape"></div>
+      <div class="fc-preview">
+        <iframe src="${GUIDE.url}" title="guide preview" scrolling="no" tabindex="-1"></iframe>
+        <div class="fc-preview-fade"></div>
+      </div>
+      <div class="fc-card-footer">
+        <div>
+          <div class="fc-card-title">${escapeHtml(GUIDE.title)}</div>
+          <div class="fc-card-kind">${escapeHtml(GUIDE.kind)}</div>
+        </div>
+        <div class="fc-card-open">NEW TAB &nearr;</div>
+      </div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (this.suppressClick) { this.suppressClick = false; e.preventDefault(); return; }
+      gaEvent('guide_open', { client_id: 'full-charge' });
+    });
+    wrap.appendChild(card);
+    layer.appendChild(wrap);
+    this.cards.push({ wrap, cardEl: card, cardX, cardY, tickX, hasCaption: false });
   }
 
   /**
@@ -178,6 +238,7 @@ export class FullChargeBoard {
   _drawFutureReach(svg, payload) {
     if (!this.cards.length) return;
     const usedTicks = new Set((payload.sessions || []).map((s) => s.tick_x));
+    if (this.guideTick != null) usedTicks.add(this.guideTick);
     const nextTick = TICKS.find((t) => !usedTicks.has(t));
     if (nextTick == null) return;
 
