@@ -165,7 +165,7 @@ check "missing file -> 404"                  404 "$(code "${C[@]}" "$G/Guide/nop
 check "unknown extension -> 404"             404 "$(code "${C[@]}" "$G/MANIFEST.tsv")"
 check "HTML content type"                    "text/html; charset=utf-8" "$(header content-type "${C[@]}" "$G/")"
 check "HTML cache"                           "private, no-store" "$(header cache-control "${C[@]}" "$G/")"
-check "asset cache"                          "private, max-age=3600" "$(header cache-control "${C[@]}" "$G/$FILM")"
+check "asset cache"                          "private, no-cache" "$(header cache-control "${C[@]}" "$G/$FILM")"
 check "noindex"                              "noindex, nofollow" "$(header x-robots-tag "${C[@]}" "$G/$FILM")"
 check "mp4 content type"                     "video/mp4" "$(header content-type "${C[@]}" "$G/$FILM")"
 
@@ -182,6 +182,18 @@ for f in $(printf '%s\n' "${FILES[@]}" | grep '\.mp4$'); do
   check "$f HEAD length"                     "$size" "$(header content-length -I "${C[@]}" "$G/$f")"
   check "$f range past the end -> 416"       416 "$(code "${C[@]}" -H "Range: bytes=$size-" "$G/$f")"
 done
+
+echo "== signed in: revalidation (ETag / If-None-Match)"
+ETAG="$(header etag "${C[@]}" "$G/$FILM")"
+check "asset carries an ETag"                yes "$( [ -n "$ETAG" ] && echo yes)"
+check "matching If-None-Match -> 304"        304 "$(code "${C[@]}" -H "If-None-Match: $ETAG" "$G/$FILM")"
+check "weak and listed ETag -> 304"          304 "$(code "${C[@]}" -H "If-None-Match: \"x\", W/$ETAG" "$G/$FILM")"
+check "stale If-None-Match -> 200"           200 "$(code "${C[@]}" -H 'If-None-Match: "stale"' "$G/$FILM")"
+check "Range with stale ETag -> 206"         206 "$(code "${C[@]}" -H 'If-None-Match: "stale"' -H 'Range: bytes=0-1' "$G/$FILM")"
+check "Range response carries the ETag"      "$ETAG" "$(header etag "${C[@]}" -H 'Range: bytes=0-1' "$G/$FILM")"
+check "HTML ignores If-None-Match (no-store)" 200 "$(code "${C[@]}" -H "If-None-Match: $(header etag "${C[@]}" "$G/index.html")" "$G/index.html")"
+check "signed out + matching ETag -> 401"    401 "$(code -H "If-None-Match: $ETAG" "$G/$FILM")"
+check "expired cookie + matching ETag -> 401" 401 "$(code -H "Cookie: tuku_access_$SLUG=$EXPIRED" -H "If-None-Match: $ETAG" "$G/$FILM")"
 
 echo "== signed in: traversal and other clients"
 check "encoded ../ (%2e%2e%2f) refused"      400 "$(code --path-as-is "${C[@]}" "$G/Guide/%2e%2e%2f%2e%2e%2fx.html")"
@@ -214,6 +226,8 @@ check "artifact, signed in -> 200"           200 "$(code -H "Cookie: $UC" "$BASE
 check "artifact, signed out -> 401"          401 "$(code "$BASE$AURL")"
 LC="$(curl -s -D - -o /dev/null -X POST "$BASE/clients/lock/$SLUG" | tr -d '\r' | grep -i '^set-cookie:')"
 check "lock clears the cookie"               "yes" "$(echo "$LC" | grep -q 'Max-Age=0' && echo yes)"
+LOCKED_C="$(echo "$LC" | sed -E 's/^[Ss]et-[Cc]ookie: ([^;]*);.*/\1/')"
+check "after lock, If-None-Match -> 401, not 304" 401 "$(code -H "Cookie: $LOCKED_C" -H "If-None-Match: $ETAG" "$G/$FILM")"
 
 echo
 echo "$PASSED passed, $FAILED failed"

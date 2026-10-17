@@ -143,6 +143,14 @@ function parseRange(header, size) {
   return { offset: start, length: end - start + 1 };
 }
 
+/** RFC 9110 weak comparison of an If-None-Match header against one ETag. */
+function etagMatches(header, etag) {
+  if (!header) return false;
+  if (header.trim() === '*') return true;
+  const bare = (t) => t.trim().replace(/^W\//, '');
+  return header.split(',').some((t) => bare(t) === bare(etag));
+}
+
 export async function handleGuide(request, env, clientId, rawRest) {
   const guide = Object.prototype.hasOwnProperty.call(GUIDES, clientId) ? GUIDES[clientId] : null;
   if (!guide) {
@@ -189,9 +197,17 @@ export async function handleGuide(request, env, clientId, rawRest) {
 
   const headers = baseHeaders();
   headers.set('Content-Type', contentType);
-  headers.set('Cache-Control', ext === 'html' ? 'private, no-store' : 'private, max-age=3600');
+  // Assets may sit in the browser cache but must be revalidated here on
+  // every use (no-cache), so a locked browser can't keep replaying films it
+  // loaded earlier. The cookie check above always runs first: a signed-out
+  // request gets its 401 and never reaches this 304.
+  headers.set('Cache-Control', ext === 'html' ? 'private, no-store' : 'private, no-cache');
   headers.set('Accept-Ranges', 'bytes');
   headers.set('ETag', meta.httpEtag);
+
+  if (ext !== 'html' && etagMatches(request.headers.get('If-None-Match'), meta.httpEtag)) {
+    return new Response(null, { status: 304, headers });
+  }
 
   const range = parseRange(request.headers.get('Range'), meta.size);
   if (range === 'unsatisfiable') {
