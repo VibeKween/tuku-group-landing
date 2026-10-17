@@ -12,9 +12,17 @@ import { getCookie } from '../services/http.js';
  * guide object, and the bucket itself is never exposed.
  */
 
-// Clients with a guide uploaded to guides/<slug>/. Anything else is a 404,
-// even with a valid cookie for that client.
-const GUIDE_CLIENTS = new Set(['full-charge']);
+// Clients with a guide uploaded to guides/<slug>/, and the public link
+// preview a signed-out page load shows (see lockedPage). Anything else is a
+// 404, even with a valid cookie for that client. The image lives on the
+// public static site, never in R2: crawlers can't send the cookie.
+const GUIDES = {
+  'full-charge': {
+    title: 'Full Charge · On-site guide',
+    description: 'Oct 19 to 21 · From today to tomorrow',
+    image: '/images/full-charge-onsite-og.png',
+  },
+};
 
 const CONTENT_TYPES = {
   html: 'text/html; charset=utf-8',
@@ -39,6 +47,47 @@ function baseHeaders() {
   headers.set('Referrer-Policy', 'no-referrer');
   headers.set('X-Content-Type-Options', 'nosniff');
   return headers;
+}
+
+function escapeAttr(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * What a signed-out page load gets: link-preview tags for chat apps and
+ * mail clients (which never hold the cookie), then an immediate hop to the
+ * gate. Carries no guide content - only the fixed title, description and
+ * public image from GUIDES. location.replace keeps the #page fragment,
+ * which a meta refresh would drop; the meta refresh covers no-JS clients.
+ */
+function lockedPage(request, url, guide, gateUrl) {
+  const pageUrl = url.origin + url.pathname;
+  const image = url.origin + guide.image;
+  const html = `<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>${escapeAttr(guide.title)}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="${escapeAttr(guide.description)}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${escapeAttr(guide.title)}">
+<meta property="og:description" content="${escapeAttr(guide.description)}">
+<meta property="og:url" content="${escapeAttr(pageUrl)}">
+<meta property="og:image" content="${escapeAttr(image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeAttr(guide.title)}">
+<meta name="twitter:description" content="${escapeAttr(guide.description)}">
+<meta name="twitter:image" content="${escapeAttr(image)}">
+<meta http-equiv="refresh" content="0; url=${escapeAttr(gateUrl)}">
+<script>location.replace(${JSON.stringify(gateUrl)} + location.hash);</script>
+</head><body><a href="${escapeAttr(gateUrl)}">Unlock</a></body></html>
+`;
+  const headers = baseHeaders();
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+  headers.set('Cache-Control', 'private, no-store');
+  return new Response(request.method === 'HEAD' ? null : html, { status: 200, headers });
 }
 
 function plain(status, text, extra = {}) {
@@ -95,7 +144,8 @@ function parseRange(header, size) {
 }
 
 export async function handleGuide(request, env, clientId, rawRest) {
-  if (!GUIDE_CLIENTS.has(clientId)) {
+  const guide = Object.prototype.hasOwnProperty.call(GUIDES, clientId) ? GUIDES[clientId] : null;
+  if (!guide) {
     return plain(404, 'Not found');
   }
 
@@ -103,14 +153,14 @@ export async function handleGuide(request, env, clientId, rawRest) {
   const cookieValue = getCookie(request, `tuku_access_${clientId}`);
   const verified = await verifyAccessCookie(cookieValue, clientId, env.COOKIE_SECRET);
   if (!verified) {
-    // A page load (top-level or inside the guide's own frame) goes to the
-    // client's gate, which sends the visitor back here after unlock. A film,
-    // stylesheet or script gets a bare 401 - never a redirect to an HTML
-    // page it can't use, and never content.
+    // A page load (top-level or inside the guide's own frame) gets the
+    // link-preview page, which sends the visitor straight on to the client's
+    // gate; the gate sends them back here after unlock. A film, stylesheet
+    // or script gets a bare 401 - never HTML it can't use, and never content.
     const accept = request.headers.get('Accept') || '';
     if (accept.includes('text/html')) {
       const next = encodeURIComponent(url.pathname + url.search);
-      return plain(302, 'Locked', { Location: `/clients/${clientId}/?next=${next}` });
+      return lockedPage(request, url, guide, `/clients/${clientId}/?next=${next}`);
     }
     return plain(401, 'Unauthorized');
   }

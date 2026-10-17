@@ -107,7 +107,8 @@ Signed out:
 
 ```bash
 B=https://tukugroup.com/clients/guide/full-charge
-curl -sI -H 'Accept: text/html' "$B/" | grep -iE '^(HTTP|location)'          # 302, location /clients/full-charge/?next=...
+curl -s -H 'Accept: text/html' "$B/" | grep -E 'og:title|og:image"|refresh'   # 200 preview: og:title, og:image, refresh to /clients/full-charge/?next=...
+curl -sI https://tukugroup.com/images/full-charge-onsite-og.png | grep -i '^HTTP'   # 200, public share image from Pages
 curl -sI "$B/Guide/media/motion-reel.mp4" | grep -i '^HTTP'                   # 401
 curl -sI -H 'Range: bytes=0-1' "$B/Guide/media/motion-reel.mp4" | grep -i '^HTTP'   # 401
 curl -s "$B/Guide/media/motion-reel.mp4" | head -c 40; echo                  # Unauthorized
@@ -157,10 +158,11 @@ All local: `wrangler dev --local` with a temp config, a temp persisted D1, R2 an
 
 - `test/guide-local.sh` with no argument (synthetic guide): 53 passed, 0 failed.
 - `test/guide-local.sh "$DIST"` (the staged guide, 31 files, 95.7 MB): 67 passed, 0 failed. It covered these checks:
-  - Signed out: a page gets a 302 to the gate with `?next=`; a film, a ranged film request, a HEAD and a CSS or JPG file each get a 401. An expired cookie, a forged signature and another client's cookie each get a 401.
+  - Signed out (as first built): a page gets a 302 to the gate with `?next=`; a film, a ranged film request, a HEAD and a CSS or JPG file each get a 401. An expired cookie, a forged signature and another client's cookie each get a 401.
   - Signed in: all 31 files return 200 and match the staged bytes. The response headers are right. Each of the three films answers 206 with the correct `Content-Range`, and its middle 64 KiB matches the file. A HEAD answers with the full length, and a range past the end gets a 416.
   - Traversal: `%2e%2e%2f`, `..%2f`, `%5c`, `%252e` and `%00` each get a 400. A literal `../` that leaves the prefix gets a 404. A slug without a guide gets a 404.
   - Existing routes: unlock, lock, board, admin page, admin clients, admin upload and the artifact all work, signed in and out.
 - `check-guide-links.py`: 174 links resolve under `/clients/guide/full-charge/`.
 - Chrome, through a local proxy that stands in for Pages: the signed-out guide URL went to the gate. Unlock returned to the films page with `#films` kept. The field showed the card with `href=/clients/guide/full-charge/`, `target=_blank` and `rel=noopener`, and the gate's still preview showed no guide card. Chrome did not load the films in the automation tab, because the tab was hidden. So the films were played over HTTP with ffmpeg instead: all three probed and decoded a frame at 60% through ranged seeks (motion 48 s, athlete 54 s, PWA 97.9 s).
-- Not tested: Safari and iPhone playback. The post-deploy checks above cover it.
+- Link preview, added the same day: a signed-out page load now gets a 200 page with Open Graph tags and no guide content, which moves the browser on to the gate. The 302 checks above describe the first build. `test/guide-local.sh` now passes 77 of 77 against the staged guide and 63 of 63 against the synthetic guide. Chrome, signed out, opened the films page URL and landed on the gate with `?next=` and `#films` kept. Films fetched with `cache: 'no-store'` returned 401.
+- Not tested: Safari and iPhone playback, and how a real chat app or mail client renders the preview. Paste the link into one after deploy. The post-deploy checks above cover it.

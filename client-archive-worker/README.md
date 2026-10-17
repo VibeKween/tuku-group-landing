@@ -84,7 +84,7 @@ doesn't guarantee the routes actually took effect.
 - `POST /clients/lock/:client` — clears it.
 - `GET /clients/board/:client` — requires the cookie; returns the same shape as `board.fixture.json`.
 - `GET /clients/artifact/:client/:id` — requires the cookie; streams the R2 object. `?download=1` adds `Content-Disposition`.
-- `GET|HEAD /clients/guide/:client/<path>` — a multi-file guide (pages, images, films) served from R2 under `guides/:client/`, for clients listed in `GUIDE_CLIENTS` in `src/handlers/guide.js` (today `full-charge`). Requires the cookie on every file: a signed-out page load gets a 302 to `/clients/:client/?next=<path>`, anything else a 401. Answers byte ranges (206) so Safari can play and seek the films. The one route where the slug is not last; its pattern still needs only a trailing wildcard. Deploy steps: `DEPLOY-RUNBOOK-guide.md`. Local test: `test/guide-local.sh`.
+- `GET|HEAD /clients/guide/:client/<path>` — a multi-file guide (pages, images, films) served from R2 under `guides/:client/`, for clients listed in `GUIDES` in `src/handlers/guide.js` (today `full-charge`). Requires the cookie on every file: a signed-out page load gets a 200 link-preview page (Open Graph tags, the client's public share image under `/images/`, no guide content) that sends the browser straight to `/clients/:client/?next=<path>`; anything else gets a 401. Answers byte ranges (206) so Safari can play and seek the films. The one route where the slug is not last; its pattern still needs only a trailing wildcard. Deploy steps: `DEPLOY-RUNBOOK-guide.md`. Local test: `test/guide-local.sh`.
 
 The client slug is always the LAST path segment in every route above, not
 embedded in the middle (`/clients/unlock/:client`, not

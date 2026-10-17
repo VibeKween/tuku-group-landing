@@ -123,9 +123,21 @@ FILM="$(printf '%s\n' "${FILES[@]}" | grep '\.mp4$' | head -1)"
 CSS="$(printf '%s\n' "${FILES[@]}" | grep -E '\.(css|jpg)$' | head -1)"
 
 echo "== signed out"
-check "index, HTML request -> 302"            302 "$(code "${HTML[@]}" "$G/")"
-check "302 goes to the gate with ?next="      "/clients/$SLUG/?next=%2Fclients%2Fguide%2F$SLUG%2FGuide%2Fteam%2Findex.html" \
-                                              "$(header location "${HTML[@]}" "$G/Guide/team/index.html")"
+check "index, HTML request -> 200 preview"   200 "$(code "${HTML[@]}" "$G/")"
+LOCKED="$(curl -s "${HTML[@]}" "$G/Guide/team/index.html")"
+GATE="/clients/$SLUG/?next=%2Fclients%2Fguide%2F$SLUG%2FGuide%2Fteam%2Findex.html"
+has() { case "$LOCKED" in *"$1"*) echo yes ;; *) echo no ;; esac; }
+check "preview og:title"                     yes "$(has '<meta property="og:title" content="Full Charge · On-site guide">')"
+check "preview og:description"               yes "$(has '<meta property="og:description" content="Oct 19 to 21 · From today to tomorrow">')"
+check "preview og:image is the public image" yes "$(has "<meta property=\"og:image\" content=\"$BASE/images/full-charge-onsite-og.png\">")"
+check "preview og:url is the page"           yes "$(has "<meta property=\"og:url\" content=\"$G/Guide/team/index.html\">")"
+check "preview twitter:card"                 yes "$(has '<meta name="twitter:card" content="summary_large_image">')"
+check "preview noindex meta"                 yes "$(has '<meta name="robots" content="noindex, nofollow">')"
+check "preview meta refresh to the gate"     yes "$(has "content=\"0; url=$GATE\"")"
+check "preview location.replace to the gate" yes "$(has "location.replace(\"$GATE\" + location.hash)")"
+check "preview is tiny, no frame or film"   yes "$( [ ${#LOCKED} -lt 2500 ] && ! printf '%s' "$LOCKED" | grep -qE '<iframe|<video|<link' && echo yes)"
+check "preview noindex header"               "noindex, nofollow" "$(header x-robots-tag "${HTML[@]}" "$G/")"
+check "preview HEAD -> 200, no body"         "200 0" "$(curl -s -I -o /dev/null -w '%{http_code} %{size_download}' "${HTML[@]}" "$G/")"
 check "film -> 401"                           401 "$(code "$G/$FILM")"
 check "film with Range -> 401"                401 "$(code -H 'Range: bytes=0-1' "$G/$FILM")"
 check "film HEAD -> 401"                      401 "$(code -I "$G/$FILM")"
@@ -136,7 +148,7 @@ check "expired cookie -> 401"                 401 "$(code -H "Cookie: tuku_acces
 check "forged signature -> 401"               401 "$(code -H "Cookie: tuku_access_$SLUG=$FORGED" "$G/$FILM")"
 check "other client's cookie -> 401"          401 "$(code -H "Cookie: tuku_access_other-client=$OTHER" "$G/$FILM")"
 check "other client's cookie under our name"  401 "$(code -H "Cookie: tuku_access_$SLUG=$OTHER" "$G/$FILM")"
-check "no-store on the 302"                   "private, no-store" "$(header cache-control "${HTML[@]}" "$G/")"
+check "no-store on the preview"                "private, no-store" "$(header cache-control "${HTML[@]}" "$G/")"
 
 echo "== signed in: every file"
 bad=0
