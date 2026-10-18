@@ -24,7 +24,7 @@ const CHRONO_PATH = 'M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 
 // The team on-site guide is a multi-page site, not a board artifact: it is
 // served by the archive worker's /clients/guide/<slug>/ route (same access
 // cookie) and always opens in its own tab, never in the in-page reader.
-const GUIDE = { url: '/clients/guide/full-charge/', title: 'On-site guide', kind: 'Oct 19 to 21 · From today to tomorrow' };
+const GUIDE = { url: '/clients/guide/full-charge/', title: 'How are we planning?', kind: 'Oct 19 to 21 · From today to tomorrow' };
 
 function gaEvent(name, params) {
   if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
@@ -474,7 +474,9 @@ export class FullChargeBoard {
     const s = Math.min(0.9, (this.stage.clientWidth - (narrow ? 24 : 60)) / 580, Math.max(0.42, availH / 640));
     this.view = {
       s,
-      x: Math.min(narrow ? 12 : 40, this.stage.clientWidth / 2 - 390 * s),
+      // Frame the newest card: the on-site guide when it is on the board, else the first session's card (tick 300).
+      // The framing is the same as the first card's, shifted along the timeline to the focus card's tick.
+      x: Math.min(narrow ? 12 : 40, this.stage.clientWidth / 2 - 390 * s) - ((this.guideTick ?? 300) - 300) * s,
       y: hdr - (narrow ? 34 : 20) - 198 * s,
     };
     this._apply(animate !== false);
