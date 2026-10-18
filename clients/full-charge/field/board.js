@@ -24,7 +24,7 @@ const CHRONO_PATH = 'M110 202 C560 190, 1020 214, 1600 199 C2000 189, 2230 208, 
 // The team on-site guide is a multi-page site, not a board artifact: it is
 // served by the archive worker's /clients/guide/<slug>/ route (same access
 // cookie) and always opens in its own tab, never in the in-page reader.
-const GUIDE = { url: '/clients/guide/full-charge/', title: 'How are we planning?', kind: 'Oct 19 to 21 · From today to tomorrow' };
+const GUIDE = { url: '/clients/guide/full-charge/', title: 'On-site guide', caption: 'how are we planning?', date: '2026-10-19', kind: 'Oct 19 to 21 · From today to tomorrow' };
 
 function gaEvent(name, params) {
   if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
@@ -187,9 +187,8 @@ export class FullChargeBoard {
     if (tickX == null) return;
     this.guideTick = tickX;
 
-    // No caption above this card, so drop it by the caption's height to line
-    // its top edge up with the captioned artifact cards.
-    const cardX = tickX - 170, cardY = 360 + CAPTION_HEIGHT;
+    // The guide card carries a caption and a date like a session's card (Falon, 2026-10-17: "how are we planning?").
+    const cardX = tickX - 170, cardY = 360;
     this._drawConnector(connectorsSvg, tickX, cardY, this.cards.length);
 
     const wrap = document.createElement('div');
@@ -197,6 +196,18 @@ export class FullChargeBoard {
     wrap.style.left = `${cardX}px`;
     wrap.style.top = `${cardY}px`;
     wrap.style.animation = 'fcRise 0.7s cubic-bezier(0.16,1,0.3,1) both 0.9s';
+
+    const dateLabel = document.createElement('div');
+    dateLabel.className = 'fc-date';
+    dateLabel.style.left = `${tickX - 38}px`;
+    dateLabel.style.top = '252px';
+    dateLabel.textContent = this._formatShortDate(GUIDE.date);
+    layer.appendChild(dateLabel);
+
+    const caption = document.createElement('div');
+    caption.className = 'fc-caption';
+    caption.textContent = GUIDE.caption;
+    wrap.appendChild(caption);
 
     const card = document.createElement('a');
     card.className = 'fc-card';
@@ -224,7 +235,7 @@ export class FullChargeBoard {
     });
     wrap.appendChild(card);
     layer.appendChild(wrap);
-    this.cards.push({ wrap, cardEl: card, cardX, cardY, tickX, hasCaption: false });
+    this.cards.push({ wrap, cardEl: card, cardX, cardY, tickX, hasCaption: true });
   }
 
   /**
