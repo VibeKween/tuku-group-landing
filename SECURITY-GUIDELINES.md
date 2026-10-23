@@ -24,6 +24,11 @@
 - ❌ Database connection strings
 - ❌ Service account files
 
+### Internal Files
+- ❌ Internal docs, pricing, invoices, or client material in a path not listed in `_redirects`
+
+Cloudflare Pages serves every tracked file in this repo at tukugroup.com. See `operations/DEPLOYMENT-PROCESS.md`, Private Files.
+
 ## ✅ Security Best Practices
 
 ### 1. Environment Variables Only

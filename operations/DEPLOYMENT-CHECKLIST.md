@@ -14,9 +14,10 @@ cp website/cloud-system-static.js .
 cp website/favicon.ico .
 mkdir -p images && cp website/images/favicon.png images/
 cp website/CNAME .
+cp website/_redirects .
 
 # 2. Stage for deployment
-git add index.html css/ cloud-system-static.js favicon.ico images/favicon.png CNAME
+git add index.html css/ cloud-system-static.js favicon.ico images/favicon.png CNAME _redirects
 
 # 3. Commit
 git commit -m "🔧 Deploy [feature] to production
@@ -36,6 +37,7 @@ git push origin main
 
 - [ ] Changes tested locally in `/website/` directory
 - [ ] All modified `/website/` files copied to root
+- [ ] Any new internal file or folder is listed in `_redirects` (everything committed is public, see `DEPLOYMENT-PROCESS.md`, Private Files)
 - [ ] `git status` shows root files staged for commit
 - [ ] Commit message describes changes clearly
 - [ ] Ready to deploy to live site (tukugroup.com)
@@ -48,6 +50,7 @@ Wait ~30 seconds after push, then verify:
 - [ ] Favicon displays in browser tab
 - [ ] All functionality works as expected
 - [ ] Mobile behavior matches local testing
+- [ ] Private paths return 302 (command in `DEPLOYMENT-PROCESS.md`, Verification Steps)
 
 ## 🆘 Common Issues
 

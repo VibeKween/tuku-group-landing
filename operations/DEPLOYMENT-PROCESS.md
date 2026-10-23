@@ -28,6 +28,21 @@ This repository has a **dual directory structure** that can cause deployment dis
 
 Cloudflare Pages deploys from the **root directory**, not the `/website/` directory.
 
+## 🔒 Private Files: Everything Committed Is Public
+
+Cloudflare Pages serves **every tracked file in the repo**, not only the site pages. A doc, script, or internal note committed anywhere in this repo can be opened at `https://tukugroup.com/<path>`.
+
+`_redirects` at root sends private paths to the homepage. It is the one list of what stays private.
+
+**Before committing any new internal folder or file:**
+1. Add its path to `website/_redirects`
+2. Copy it to root: `cp website/_redirects .`
+3. After deploy, confirm the path redirects (see Verification Steps)
+
+Pages applies `_redirects` before serving files, so a listed path redirects even though the file exists. Paths with spaces are written with `%20`.
+
+The lasting fix is to deploy only a public folder. See Future Improvements.
+
 ## Mandatory Deployment Checklist
 
 ### ✅ Before Making Changes:
@@ -53,11 +68,14 @@ Cloudflare Pages deploys from the **root directory**, not the `/website/` direct
    
    # For domain configuration
    cp website/CNAME .
+
+   # For private path rules
+   cp website/_redirects .
    ```
 
 2. **Stage deployment files:**
    ```bash
-   git add index.html css/ cloud-system-static.js favicon.ico images/favicon.png CNAME
+   git add index.html css/ cloud-system-static.js favicon.ico images/favicon.png CNAME _redirects
    ```
 
 3. **Commit with descriptive message:**
@@ -94,6 +112,11 @@ Cloudflare Pages deploys from the **root directory**, not the `/website/` direct
 - **Symptom:** "what do you see?" button had different behavior locally vs live
 - **Solution:** Copied updated `website/index.html` and `website/css/main.css` to root
 
+### 4. Internal Files Served Publicly (October 2026)
+- **Problem:** Cloudflare Pages serves the whole repo root, so internal files were public
+- **Symptom:** Internal pricing, a client invoice, an unredacted case study, `CLAUDE.md`, `operations/`, `docs/`, and the payment server code all loaded on tukugroup.com
+- **Solution:** Added `_redirects` to send private paths to the homepage (see Private Files)
+
 ## Local Development vs Production
 
 ### Local Development:
@@ -114,7 +137,7 @@ Create this alias for easy deployment:
 
 ```bash
 # Add to your shell profile (.zshrc, .bashrc, etc.)
-alias deploy-tuku="cp website/index.html . && cp -r website/css . && cp website/cloud-system-static.js . && cp website/favicon.ico . && mkdir -p images && cp website/images/favicon.png images/ && cp website/CNAME . && echo '✅ Files synchronized for deployment'"
+alias deploy-tuku="cp website/index.html . && cp -r website/css . && cp website/cloud-system-static.js . && cp website/favicon.ico . && mkdir -p images && cp website/images/favicon.png images/ && cp website/CNAME . && cp website/_redirects . && echo '✅ Files synchronized for deployment'"
 ```
 
 ## Verification Steps
@@ -124,6 +147,14 @@ After deployment, verify these URLs return 200 (not 404):
 - https://tukugroup.com/images/favicon.png  
 - https://tukugroup.com/css/main.css
 - https://tukugroup.com/cloud-system-static.js
+
+These private paths must return a 302 to `/`:
+
+```bash
+for p in CLAUDE.md docs/TECHNICAL-SPECS.md operations/DEPLOYMENT-PROCESS.md payment/ TUKU-PRICING-2025.txt; do
+  curl -s -o /dev/null -w "%{http_code} $p\n" "https://tukugroup.com/$p"
+done
+```
 
 ## Emergency Rollback
 
@@ -146,7 +177,9 @@ Consider consolidating to single directory structure:
 - Configure Cloudflare Pages to deploy from `/website/` directory
 - Update local development server accordingly
 
+Deploying from one public folder also retires the `_redirects` list. Only files in that folder would be served, so internal files would be private by default.
+
 ---
 
-**Last Updated:** October 2024  
+**Last Updated:** October 2026  
 **Next Review:** Before any major feature additions

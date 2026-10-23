@@ -1,0 +1,31 @@
+# Cloudflare Pages serves the whole repo root, so every tracked file is public
+# unless a rule here sends it away. Private paths redirect to the homepage.
+# Add any new internal folder or file here before it is committed.
+# See operations/DEPLOYMENT-PROCESS.md, "Private files".
+
+# Internal folders
+/docs/*                        /  302
+/operations/*                  /  302
+/website/*                     /  302
+/workers/*                     /  302
+/client-archive-worker/*       /  302
+/payment/*                     /  302
+/payment                       /  302
+/fewer-better-slower/*         /  302
+/fewer-better-slower           /  302
+/payment-archive/*             /  302
+/signals/Thesis%20Work/*       /  302
+
+# Internal root files
+/CLAUDE.md                          /  302
+/README.md                          /  302
+/SECURITY-GUIDELINES.md             /  302
+/BRAND-GUIDELINES.txt               /  302
+/PROJECT-INSTRUCTIONS-COMPLETE.txt  /  302
+/TUKU-PRICING-2025.txt              /  302
+/convert-to-pdf.js                  /  302
+/invoice-tuku-cg-002.html           /  302
+/invoice-tuku-cg-002                /  302
+/.gitignore                         /  302
+/.htaccess                          /  302
+/_redirects                         /  302

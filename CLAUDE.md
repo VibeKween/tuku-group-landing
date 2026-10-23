@@ -20,6 +20,8 @@ This project has a dual directory structure that requires special deployment han
 2. Copy changed files to root for deployment
 3. Commit both locations to prevent discrepancies
 
+**Everything committed is public.** Cloudflare Pages serves every tracked file. Before committing an internal file or folder, list it in `_redirects`. See `operations/DEPLOYMENT-PROCESS.md`, Private Files.
+
 **Quick Reference:**
 ```bash
 # Copy files to root after changes
@@ -28,6 +30,7 @@ cp website/portfolio-approach.html .
 cp -r website/css .
 cp website/cloud-system-static.js .
 cp website/favicon.ico .
+cp website/_redirects .
 cp -r website/fewer-better-slower .
 cp -r website/ideas .
 cp website/tuku-balloon.js .

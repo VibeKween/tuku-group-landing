@@ -128,9 +128,12 @@ cp website/index.html .
 cp website/approach.html .
 cp -r website/css .
 cp website/cloud-system-static.js .
+cp website/_redirects .
 ```
 
 Commit both locations or the deploy will serve stale files.
+
+Cloudflare Pages serves every tracked file, not only the pages. `_redirects` keeps internal paths private. See `operations/DEPLOYMENT-PROCESS.md`, Private Files.
 
 ```
 //
