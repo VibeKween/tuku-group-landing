@@ -10,9 +10,8 @@
     "migrate:local": "wrangler d1 execute CLIENT_ARCHIVE_DB --local --file=migrations/0001_init.sql",
     "migrate:remote": "wrangler d1 execute CLIENT_ARCHIVE_DB --remote --file=migrations/0001_init.sql"
   },
-  "dependencies": {},
   "devDependencies": {
-    "wrangler": "^3.0.0"
+    "wrangler": "^4.152.0"
   },
   "private": true
 }
